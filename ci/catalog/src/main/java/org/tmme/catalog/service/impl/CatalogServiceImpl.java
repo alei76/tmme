@@ -17,48 +17,50 @@ import org.tmme.catalog.service.CatalogService;
 @Service
 public class CatalogServiceImpl implements CatalogService {
 
-    @Autowired
-    private ItemRepository itemRepository;
+	@Autowired
+	private ItemRepository itemRepository;
 
-    @Autowired
-    private ItemTypeRepository itemTypeRepository;
+	@Autowired
+	private ItemTypeRepository itemTypeRepository;
 
-    @Override
-    public void createItemType(final String type) {
-        itemTypeRepository.save(new ItemType(type));
-    }
+	@Override
+	public void createItemType(final String type) {
+		itemTypeRepository.save(new ItemType(type));
+	}
 
-    @Override
-    public void createItem(final String typeName, final String body) {
-        final ItemType itemType = itemTypeRepository.findByName(typeName);
-        Validate.notNull(itemType, "Item type does not exist for name " + typeName);
-        final Item item = ItemParser.parseItem(typeName, body);
-        item.setType(itemType);
-        itemRepository.save(item);
-    }
+	@Override
+	public void createItem(final String typeName, final String body) {
+		final ItemType itemType = itemTypeRepository.findByName(typeName);
+		Validate.notNull(itemType, "Item type does not exist for name "
+				+ typeName);
+		final Item item = ItemParser.parseItem(body);
+		item.setType(itemType);
+		itemRepository.save(item);
+	}
 
-    @Override
-    public void createItems(final String typeName, final String body) {
-        final ItemType itemType = itemTypeRepository.findByName(typeName);
-        Validate.notNull(itemType, "Item type does not exist for name " + typeName);
-        final List<Item> items = ItemParser.parseItems(typeName, body);
-        CollectionUtils.forAllDo(items, new Closure() {
-            @Override
-            public void execute(final Object input) {
-                ((Item) input).setType(itemType);
-            }
-        });
-        itemRepository.save(items);
-    }
+	@Override
+	public void createItems(final String typeName, final String body) {
+		final ItemType itemType = itemTypeRepository.findByName(typeName);
+		Validate.notNull(itemType, "Item type does not exist for name "
+				+ typeName);
+		final List<Item> items = ItemParser.parseItems(body);
+		CollectionUtils.forAllDo(items, new Closure() {
+			@Override
+			public void execute(final Object input) {
+				((Item) input).setType(itemType);
+			}
+		});
+		itemRepository.save(items);
+	}
 
-    @Override
-    public List<ItemType> getItemTypes() {
-        return itemTypeRepository.findAll();
-    }
+	@Override
+	public List<ItemType> getItemTypes() {
+		return itemTypeRepository.findAll();
+	}
 
-    @Override
-    public List<Item> getItems(final String typeName) {
-        return itemRepository.findByTypeName(typeName);
-    }
+	@Override
+	public List<Item> getItems(final String typeName) {
+		return itemRepository.findByTypeName(typeName);
+	}
 
 }

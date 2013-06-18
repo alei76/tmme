@@ -1,5 +1,10 @@
 package org.tmme.catalog.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.codehaus.jackson.annotate.JsonAnyGetter;
+import org.codehaus.jackson.annotate.JsonAnySetter;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
@@ -9,26 +14,42 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Item {
 
-    @Id
-    private String id;
+	@Id
+	private String id;
 
-    private ItemType type;
+	private ItemType type;
 
-    public String getId() {
-        return id;
-    }
+	private final Map<String, Object> values = new HashMap<String, Object>();
 
-    public void setId(final String id) {
-        this.id = id;
-    }
+	public Object get(final String name) {
+		return values.get(name);
+	}
 
-    @JsonIgnore
-    public ItemType getType() {
-        return type;
-    }
+	@JsonAnyGetter
+	public Map<String, Object> any() {
+		return values;
+	}
 
-    public void setType(final ItemType type) {
-        this.type = type;
-    }
+	@JsonAnySetter
+	public void set(final String name, final Object value) {
+		values.put(name, value);
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(final String id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public ItemType getType() {
+		return type;
+	}
+
+	public void setType(final ItemType type) {
+		this.type = type;
+	}
 
 }

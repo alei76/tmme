@@ -5,6 +5,6 @@ import org.tmme.catalog.model.ItemType;
 
 public interface ItemTypeRepository extends MongoRepository<ItemType, String> {
 
-    ItemType findByName(String name);
+	ItemType findByName(String name);
 
 }

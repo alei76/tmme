@@ -7,14 +7,14 @@ import org.tmme.catalog.model.ItemType;
 
 public interface CatalogService {
 
-    void createItemType(String typeName);
+	void createItemType(String typeName);
 
-    List<ItemType> getItemTypes();
+	List<ItemType> getItemTypes();
 
-    void createItem(String typeName, String body);
+	void createItem(String typeName, String body);
 
-    void createItems(String typeName, String body);
+	void createItems(String typeName, String body);
 
-    List<Item> getItems(String typeName);
+	List<Item> getItems(String typeName);
 
 }
