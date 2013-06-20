@@ -8,6 +8,7 @@ import org.codehaus.jackson.annotate.JsonAnySetter;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "items")
@@ -16,7 +17,7 @@ public class Item {
 
 	@Id
 	private String id;
-
+	@DBRef
 	private ItemType type;
 
 	private final Map<String, Object> values = new HashMap<String, Object>();

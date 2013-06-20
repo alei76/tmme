@@ -2,6 +2,7 @@ package org.tmme.catalog.model;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "itemtypes")
@@ -10,6 +11,8 @@ public class ItemType {
 
 	@Id
 	private String id;
+
+	@Indexed(unique = true)
 	private String name;
 
 	public ItemType() {
