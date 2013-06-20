@@ -1,4 +1,4 @@
-package org.tmme.catalog.model;
+package org.tmme.repositories.model;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;

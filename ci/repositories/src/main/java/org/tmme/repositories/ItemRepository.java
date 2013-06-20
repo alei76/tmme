@@ -1,9 +1,9 @@
-package org.tmme.catalog.repository;
+package org.tmme.repositories;
 
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.tmme.catalog.model.Item;
+import org.tmme.repositories.model.Item;
 
 public interface ItemRepository extends MongoRepository<Item, String> {
 

@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.tmme.catalog.model.Item;
-import org.tmme.catalog.model.ItemType;
 import org.tmme.catalog.service.CatalogService;
+import org.tmme.repositories.model.Item;
+import org.tmme.repositories.model.ItemType;
 
 @Controller
 public class CatalogController {

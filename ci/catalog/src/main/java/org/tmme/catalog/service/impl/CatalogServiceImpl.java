@@ -7,12 +7,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tmme.catalog.model.Item;
-import org.tmme.catalog.model.ItemParser;
-import org.tmme.catalog.model.ItemType;
-import org.tmme.catalog.repository.ItemRepository;
-import org.tmme.catalog.repository.ItemTypeRepository;
 import org.tmme.catalog.service.CatalogService;
+import org.tmme.repositories.ItemRepository;
+import org.tmme.repositories.ItemTypeRepository;
+import org.tmme.repositories.model.Item;
+import org.tmme.repositories.model.ItemParser;
+import org.tmme.repositories.model.ItemType;
 
 @Service
 public class CatalogServiceImpl implements CatalogService {

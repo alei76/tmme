@@ -1,4 +1,4 @@
-package org.tmme.catalog.model;
+package org.tmme.repositories.model;
 
 import java.util.HashMap;
 import java.util.Map;

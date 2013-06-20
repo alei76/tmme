@@ -17,6 +17,7 @@
       <spring.social.facebook>1.0.2.RELEASE</spring.social.facebook>
       <spring.social.twitter>1.0.3.RELEASE</spring.social.twitter>
       <slf4j>1.7.5</slf4j>
+      <repositories>0.0.1-SNAPSHOT</repositories>
     </properties>
 
 <dependencyManagement>
@@ -234,6 +235,11 @@
 		<groupId>commons-collections</groupId>
 		<artifactId>commons-collections</artifactId>
 		<version>3.2.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.tmme</groupId>
+		<artifactId>repositories</artifactId>
+		<version>${repositories}</version>
 	</dependency>	
                
     
@@ -241,11 +247,14 @@
 </dependencyManagement>
 
    <modules>
+         <module>repositories</module>
 <!--    	<module>analytics</module> -->
 <!--       <module>recommender</module> -->
 <!--       <module>search</module> -->
 <!--       <module>social</module> -->
       <module>catalog</module>
+
+
    </modules>  
    
 	<build>

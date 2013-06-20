@@ -2,8 +2,8 @@ package org.tmme.catalog.service;
 
 import java.util.List;
 
-import org.tmme.catalog.model.Item;
-import org.tmme.catalog.model.ItemType;
+import org.tmme.repositories.model.Item;
+import org.tmme.repositories.model.ItemType;
 
 public interface CatalogService {
 
