@@ -1,6 +1,4 @@
 .classpath
 .project
 ci/.settings/*
-ci/catalog/.settings/*
-ci/repositories/.settings/*
-ci/*/target/*
+ci/target/*
