@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.tmme.ci.social.service.ConnectorService;
 
 @Controller
-@RequestMapping("/social")
+@RequestMapping("/social/connect")
 public class ConnectionController {
 
 	private static final String SAME_PATH = "";

@@ -33,7 +33,7 @@
 	      <p>You have successfully logged-in</p>
 	      <div><form action="<c:url value="/logout.do"/>"><input type="submit" value="Logout"></form></div>
 	      
-	      <a href="<c:url value="/social"/>">Connect To Social Networks</a>
+	      <a href="<c:url value="/social/connect"/>">Connect To Social Networks</a>
 	    </authz:authorize>		
 	</div>
 

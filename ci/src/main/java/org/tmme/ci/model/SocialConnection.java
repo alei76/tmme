@@ -1,6 +1,7 @@
 package org.tmme.ci.model;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,6 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SocialConnection {
 
+	@Id
+	private String id;
 	@Indexed(unique = true)
 	private String providerId;
 	@Indexed(unique = true)
@@ -170,6 +173,21 @@ public class SocialConnection {
 	 */
 	public void setUsername(final String username) {
 		this.username = username;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(final String id) {
+		this.id = id;
 	}
 
 }
