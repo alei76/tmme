@@ -6,4 +6,6 @@ public interface UserService {
 
 	void createUser(User user);
 
+	void autoLogin(String username);
+
 }
