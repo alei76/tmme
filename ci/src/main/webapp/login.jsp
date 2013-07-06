@@ -25,17 +25,15 @@
 	        <p><label>Password: <input type='password' name='j_password'></label></p>
 	        <p><input name="login" value="Login" type="submit"></p>
 	      </form>
+	      
+	      <a href="<c:url value="/user/register"/>">Register</a>
+	      
 	    </authz:authorize>
 	    <authz:authorize ifAllGranted="ROLE_USER">
 	      <p>You have successfully logged-in</p>
 	      <div><form action="<c:url value="/logout.do"/>"><input type="submit" value="Logout"></form></div>
 	      
-		<form action="<c:url value="/connect/facebook" />" method="post">
-			<input type="hidden" name="scope" value="publish_stream,user_photos,offline_access" />
-			<div><p>You aren't connected to Facebook yet</p></div>
-			<p><button type="submit">Facebook</button></p>
-		</form>
-		      
+	      <a href="<c:url value="/social"/>">Connect To Social Networks</a>
 	    </authz:authorize>		
 	</div>
 

@@ -20,7 +20,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.tmme.ci.model.SocialConnection;
-import org.tmme.ci.model.User;
 import org.tmme.ci.repositories.SocialConnectionRepository;
 
 @Repository
@@ -114,8 +113,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
 	@Override
 	public <A> Connection<A> getPrimaryConnection(final Class<A> apiType) {
 		final String providerId = getProviderId(apiType);
-		final Connection<A> connection = (Connection<A>) findPrimaryConnection(
-				null, providerId);
+		final Connection<A> connection = (Connection<A>) findPrimaryConnection(providerId);
 		if (connection == null) {
 			throw new NotConnectedException(providerId);
 		}
@@ -125,12 +123,10 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <A> Connection<A> findPrimaryConnection(final Class<A> apiType) {
-		return (Connection<A>) findPrimaryConnection(null,
-				getProviderId(apiType));
+		return (Connection<A>) findPrimaryConnection(getProviderId(apiType));
 	}
 
-	private Connection<?> findPrimaryConnection(final User user,
-			final String providerId) {
+	private Connection<?> findPrimaryConnection(final String providerId) {
 		final List<SocialConnection> connections = helper
 				.findByUserIdAndProviderId(userId, providerId);
 		if (connections != null && !connections.isEmpty()) {
