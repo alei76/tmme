@@ -12,6 +12,8 @@ public class SocialConnection {
 	private String providerId;
 	@Indexed(unique = true)
 	private String providerUserId;
+	@Indexed(unique = true)
+	private String username;
 	private String displayName;
 	private String profileUrl;
 	private String imageUrl;
@@ -19,7 +21,6 @@ public class SocialConnection {
 	private String secret;
 	private String refreshToken;
 	private long expireTime;
-	private User user;
 
 	/**
 	 * @return the providerId
@@ -157,18 +158,18 @@ public class SocialConnection {
 	}
 
 	/**
-	 * @return the user
+	 * @return the username
 	 */
-	public User getUser() {
-		return user;
+	public String getUsername() {
+		return username;
 	}
 
 	/**
-	 * @param user
-	 *            the user to set
+	 * @param username
+	 *            the username to set
 	 */
-	public void setUser(final User user) {
-		this.user = user;
+	public void setUsername(final String username) {
+		this.username = username;
 	}
 
 }

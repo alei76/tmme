@@ -25,22 +25,22 @@ import org.tmme.ci.repositories.SocialConnectionRepository;
 @Repository
 public class ConnectionRepositoryImpl implements ConnectionRepository {
 
-	private final String userId;
+	private final String username;
 	private final TextEncryptor textEncryptor;
 	private final SocialConnectionRepository helper;
 	private final ConnectionFactoryLocator connectionFactoryLocator;
 
 	private final ConnectionMapper connectionMapper;
 
-	public ConnectionRepositoryImpl(final String userId,
+	public ConnectionRepositoryImpl(final String username,
 			final TextEncryptor textEncryptor,
 			final SocialConnectionRepository helper,
 			final ConnectionFactoryLocator connectionFactoryLocator) {
-		Validate.notBlank(userId);
+		Validate.notBlank(username);
 		Validate.notNull(textEncryptor);
 		Validate.notNull(helper);
 		Validate.notNull(connectionFactoryLocator);
-		this.userId = userId;
+		this.username = username;
 		this.textEncryptor = textEncryptor;
 		this.helper = helper;
 		this.connectionFactoryLocator = connectionFactoryLocator;
@@ -57,7 +57,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
 					Collections.<Connection<?>> emptyList());
 		}
 		final List<SocialConnection> userConnections = helper
-				.findByUserId(userId);
+				.findByUsername(username);
 		final List<Connection<?>> connectionList = connectionMapper
 				.mapConnections(userConnections);
 		for (final Connection<?> connection : connectionList) {
@@ -73,7 +73,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
 	@Override
 	public List<Connection<?>> findConnections(final String providerId) {
 		final List<SocialConnection> connections = helper
-				.findByUserIdAndProviderId(userId, providerId);
+				.findByUsernameAndProviderId(username, providerId);
 		return connectionMapper.mapConnections(connections);
 	}
 
@@ -94,7 +94,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
 	@Override
 	public Connection<?> getConnection(final ConnectionKey connectionKey) {
 		final SocialConnection connection = helper
-				.findByUserIdAndProviderIdAndProviderUserId(userId,
+				.findByUsernameAndProviderIdAndProviderUserId(username,
 						connectionKey.getProviderId(),
 						connectionKey.getProviderUserId());
 		return connectionMapper.mapConnection(connection);
@@ -128,7 +128,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
 
 	private Connection<?> findPrimaryConnection(final String providerId) {
 		final List<SocialConnection> connections = helper
-				.findByUserIdAndProviderId(userId, providerId);
+				.findByUsernameAndProviderId(username, providerId);
 		if (connections != null && !connections.isEmpty()) {
 			return connectionMapper.mapConnection(connections.get(0));
 		}
@@ -148,6 +148,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
 		social.setSecret(encrypt(data.getSecret()));
 		social.setRefreshToken(encrypt(data.getRefreshToken()));
 		social.setExpireTime(data.getExpireTime());
+		social.setUsername(username);
 		helper.save(social);
 	}
 
@@ -155,7 +156,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
 	public void updateConnection(final Connection<?> connection) {
 		final ConnectionData data = connection.createData();
 		final SocialConnection social = helper
-				.findByUserIdAndProviderIdAndProviderUserId(userId,
+				.findByUsernameAndProviderIdAndProviderUserId(username,
 						data.getProviderId(), data.getProviderUserId());
 		social.setDisplayName(data.getDisplayName());
 		social.setProfileUrl(data.getProfileUrl());
@@ -164,20 +165,21 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
 		social.setSecret(encrypt(data.getSecret()));
 		social.setRefreshToken(encrypt(data.getRefreshToken()));
 		social.setExpireTime(data.getExpireTime());
+		social.setUsername(username);
 		helper.save(social);
 	}
 
 	@Override
 	public void removeConnections(final String providerId) {
 		final List<SocialConnection> connections = helper
-				.findByUserIdAndProviderId(userId, providerId);
+				.findByUsernameAndProviderId(username, providerId);
 		helper.delete(connections);
 	}
 
 	@Override
 	public void removeConnection(final ConnectionKey connectionKey) {
 		final SocialConnection connection = helper
-				.findByUserIdAndProviderIdAndProviderUserId(userId,
+				.findByUsernameAndProviderIdAndProviderUserId(username,
 						connectionKey.getProviderId(),
 						connectionKey.getProviderUserId());
 		helper.delete(connection);

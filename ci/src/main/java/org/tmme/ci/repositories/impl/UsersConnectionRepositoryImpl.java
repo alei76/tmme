@@ -43,7 +43,7 @@ public class UsersConnectionRepositoryImpl implements UsersConnectionRepository 
 		final List<String> userIds = new ArrayList<String>();
 		if (socialConnections != null && !socialConnections.isEmpty()) {
 			for (final SocialConnection socialConnection : socialConnections) {
-				userIds.add(socialConnection.getUser().getId());
+				userIds.add(socialConnection.getUsername());
 			}
 		}
 		return userIds;
@@ -59,15 +59,15 @@ public class UsersConnectionRepositoryImpl implements UsersConnectionRepository 
 		final Set<String> userIds = new HashSet<String>();
 		if (socialConnections != null && !socialConnections.isEmpty()) {
 			for (final SocialConnection socialConnection : socialConnections) {
-				userIds.add(socialConnection.getUser().getId());
+				userIds.add(socialConnection.getUsername());
 			}
 		}
 		return userIds;
 	}
 
 	@Override
-	public ConnectionRepository createConnectionRepository(final String userId) {
-		return new ConnectionRepositoryImpl(userId, textEncryptor, helper,
+	public ConnectionRepository createConnectionRepository(final String userName) {
+		return new ConnectionRepositoryImpl(userName, textEncryptor, helper,
 				connectionFactoryLocator);
 	}
 
