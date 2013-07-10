@@ -2,18 +2,28 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+   xmlns:util="http://www.springframework.org/schema/util"
+   xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-      http://www.springframework.org/schema/data/mongo
-      http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
+	  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+      http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+      http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-     <mongo:repositories base-package="org.tmme.ci.repositories" />
-   
+	 <context:component-scan base-package="org.tmme.ci.*.repository" />
+
+     <mongo:repositories base-package="org.tmme.ci.*.repository" />
 	 <mongo:mongo host="${mongodb.host}" port="${mongodb.port}" />
-	 <mongo:db-factory dbname="catalogdb" />
+	 <mongo:db-factory dbname="cidb" />
  
 	 <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	 </bean>
+	 
+	 <util:list id="collectionBlackList" value-type="java.lang.String">
+    	<value>socialconnections</value>
+    	<value>users</value>
+    	<value>system.indexes</value>
+	</util:list>
            	
 </beans>

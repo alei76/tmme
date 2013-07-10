@@ -8,9 +8,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.tmme.ci.id.repository.UserRepository;
 import org.tmme.ci.id.service.UserService;
 import org.tmme.ci.model.User;
-import org.tmme.ci.repositories.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {

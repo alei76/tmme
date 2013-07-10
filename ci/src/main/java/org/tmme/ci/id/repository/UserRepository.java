@@ -1,4 +1,4 @@
-package org.tmme.ci.repositories;
+package org.tmme.ci.id.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.tmme.ci.model.User;

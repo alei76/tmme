@@ -1,15 +1,15 @@
 package org.tmme.ci.catalog.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.tmme.ci.model.Item;
-import org.tmme.ci.model.ItemType;
 
 public interface CatalogService {
 
 	void createItemType(String typeName);
 
-	List<ItemType> getItemTypes();
+	Set<String> getItemTypes();
 
 	void createItem(String typeName, String body);
 

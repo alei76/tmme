@@ -2,6 +2,7 @@ package org.tmme.ci.catalog.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.tmme.ci.catalog.service.CatalogService;
 import org.tmme.ci.model.Item;
-import org.tmme.ci.model.ItemType;
 
 @Controller
 @RequestMapping("/catalog")
@@ -59,7 +59,7 @@ public class CatalogController {
 
 	@RequestMapping(value = "/types", method = RequestMethod.GET)
 	public @ResponseBody
-	List<ItemType> getItemTypes() {
+	Set<String> getItemTypes() {
 		return catalogService.getItemTypes();
 	}
 

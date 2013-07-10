@@ -1,4 +1,4 @@
-package org.tmme.ci.repositories.impl;
+package org.tmme.ci.social.repository.impl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,11 +15,9 @@ import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.stereotype.Repository;
 import org.tmme.ci.model.SocialConnection;
-import org.tmme.ci.repositories.SocialConnectionRepository;
+import org.tmme.ci.social.repository.SocialConnectionRepository;
 
-@Repository
 public class UsersConnectionRepositoryImpl implements UsersConnectionRepository {
 
 	@Autowired

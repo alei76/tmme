@@ -1,4 +1,4 @@
-package org.tmme.ci.repositories;
+package org.tmme.ci.social.repository;
 
 import java.util.List;
 

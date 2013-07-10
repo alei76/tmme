@@ -28,7 +28,7 @@
 	
 	<bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" factory-method="noOpText" />
 	
-	 <bean id="usersConnectionRepository" class="org.tmme.ci.repositories.impl.UsersConnectionRepositoryImpl" />
+	 <bean id="usersConnectionRepository" class="org.tmme.ci.social.repository.impl.UsersConnectionRepositoryImpl" />
 	
 	 <bean id="connectionRepository" factory-method="createConnectionRepository"
         factory-bean="usersConnectionRepository" scope="request">

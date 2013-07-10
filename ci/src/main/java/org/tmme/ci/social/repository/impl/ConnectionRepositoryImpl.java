@@ -1,4 +1,4 @@
-package org.tmme.ci.repositories.impl;
+package org.tmme.ci.social.repository.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,13 +16,11 @@ import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.NotConnectedException;
-import org.springframework.stereotype.Repository;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.tmme.ci.model.SocialConnection;
-import org.tmme.ci.repositories.SocialConnectionRepository;
+import org.tmme.ci.social.repository.SocialConnectionRepository;
 
-@Repository
 public class ConnectionRepositoryImpl implements ConnectionRepository {
 
 	private final String username;
