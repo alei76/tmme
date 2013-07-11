@@ -40,7 +40,7 @@ public class CatalogServiceImpl implements CatalogService {
 
 	@Override
 	public List<Item> getItems(final String typeName) {
-		return catalogRepository.getByCollectionName(typeName);
+		return catalogRepository.getItemsByCollectionName(typeName);
 	}
 
 }

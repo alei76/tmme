@@ -24,6 +24,9 @@
     	<value>socialconnections</value>
     	<value>users</value>
     	<value>system.indexes</value>
+    	<value>reviews</value>
+    	<value>purchases</value>
+    	<value>visits</value>
 	</util:list>
            	
 </beans>

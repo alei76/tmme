@@ -9,12 +9,14 @@ public interface CatalogRepository {
 
 	Set<String> getCollections();
 
-	void createCollection(String name);
+	void createCollection(String collectionName);
 
-	List<Item> getByCollectionName(String name);
+	List<Item> getItemsByCollectionName(String collectionName);
 
-	void save(Item item, String name);
+	void save(Item item, String collectionName);
 
-	void save(List<Item> items, String name);
+	void save(List<Item> items, String collectionName);
+
+	boolean itemExists(String itemId, String collectionName);
 
 }

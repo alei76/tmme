@@ -43,7 +43,7 @@ public class CatalogRepositoryImpl implements CatalogRepository {
 	}
 
 	@Override
-	public List<Item> getByCollectionName(final String name) {
+	public List<Item> getItemsByCollectionName(final String name) {
 		return notBlackListed(name) ? mongoTemplate.findAll(Item.class, name)
 				: Collections.<Item> emptyList();
 	}
@@ -64,6 +64,12 @@ public class CatalogRepositoryImpl implements CatalogRepository {
 
 	private boolean notBlackListed(final String collectionName) {
 		return !collectionBlackList.contains(collectionName);
+	}
+
+	@Override
+	public boolean itemExists(final String itemId, final String collectionName) {
+		return notBlackListed(collectionName)
+				&& mongoTemplate.findById(itemId, Item.class, collectionName) != null;
 	}
 
 }
