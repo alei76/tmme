@@ -36,5 +36,7 @@
 			</bean>
 		</property>
 	</bean>    
+	
+	<bean id="connectController" class="org.springframework.social.connect.web.ConnectController" />
     
 </beans>

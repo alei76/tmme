@@ -1,13 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
     <context:component-scan base-package="org.tmme.ci.*.service" />
     
     <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />
     
+    <!-- Social -->
+    
+    <bean id="connectionFactoryLocator"
+       class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
+       <property name="connectionFactories">
+           <list>
+               <bean
+                   class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+                   <constructor-arg value="${facebook.clientId}" />
+                   <constructor-arg value="${facebook.clientSecret}" />
+               </bean>
+			<bean
+                   class="org.springframework.social.twitter.connect.TwitterConnectionFactory">
+                   <constructor-arg value="${twitter.consumerKey}" />
+                   <constructor-arg value="${twitter.consumerSecret}" />
+               </bean>
+           </list>
+       </property>
+   </bean>	
+	
+   <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" factory-method="noOpText" />
+   
+   
+    <!-- Recommender -->
+    
+    <bean id="recommenderDataModel" class="org.apache.mahout.cf.taste.impl.model.mongodb.MongoDBDataModel" >
+    	<constructor-arg value="${mongodb.host}" />
+    	<constructor-arg value="${mongodb.port}" />
+    	<constructor-arg value="${mongodb.db}" />
+    	<constructor-arg value="ratings" />
+    	<constructor-arg value="true" />
+    	<constructor-arg value="false" />
+    	<constructor-arg>
+    		<bean class="java.text.SimpleDateFormat">
+    			<constructor-arg value="EE MMM dd yyyy HH:mm:ss 'GMT'Z (zzz)" />
+    			<constructor-arg>
+    				<util:constant static-field="java.util.Locale.ENGLISH" />
+    			</constructor-arg>
+    		</bean>
+    	</constructor-arg>
+    	<constructor-arg value="userId" />
+    	<constructor-arg value="itemId" />
+    	<constructor-arg value="rate" />
+    	<constructor-arg value="mongo_data_model_map" />
+    </bean> 
+    
+    <bean id="recommenderConverter" class="org.tmme.ci.recommender.converter.RecommenderConverter" />
+
+    <bean id="recommender" class="org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender">
+       <constructor-arg ref="recommenderDataModel" />
+       <constructor-arg>
+       		<bean class="org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity">
+       			<constructor-arg ref="recommenderDataModel" />
+       		</bean>
+       </constructor-arg>
+    </bean>
+    
+    <bean id="collaborativeFilteringRecommenderService" class="org.tmme.ci.recommender.service.impl.CollaborativeFilteringRecommenderService" />
+    <bean id="contentBasedRecommenderService" class="org.tmme.ci.recommender.service.impl.ContentBasedRecommenderService" />
+    
+
 </beans>

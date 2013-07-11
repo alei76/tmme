@@ -19,4 +19,6 @@ public interface CatalogRepository {
 
 	boolean itemExists(String itemId, String collectionName);
 
+	List<Item> getItemsByIds(List<String> itemIds);
+
 }

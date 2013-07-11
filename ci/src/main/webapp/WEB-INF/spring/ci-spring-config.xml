@@ -8,6 +8,5 @@
 	<import resource="ci-spring-security.xml"/>
 	<import resource="ci-spring-service.xml"/>
 	<import resource="ci-spring-controller.xml"/>
-	<import resource="ci-spring-social.xml"/>
 	
 </beans>

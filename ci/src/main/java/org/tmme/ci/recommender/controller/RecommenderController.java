@@ -2,7 +2,8 @@ package org.tmme.ci.recommender.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +18,11 @@ import org.tmme.ci.recommender.service.RecommenderService;
 @RequestMapping("/recommender")
 public class RecommenderController {
 
-	@Autowired
-	private RecommenderService recommenderService;
+	@Resource(name = "collaborativeFilteringRecommenderService")
+	private RecommenderService cfRecommenderService;
+
+	@Resource(name = "contentBasedRecommenderService")
+	private RecommenderService cbRecommenderService;
 
 	@RequestMapping(value = "/{type}.{itemid}", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)

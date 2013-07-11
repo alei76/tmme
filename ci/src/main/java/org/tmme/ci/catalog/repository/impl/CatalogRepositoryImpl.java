@@ -10,6 +10,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import org.tmme.ci.catalog.repository.CatalogRepository;
 import org.tmme.ci.model.Item;
@@ -70,6 +72,13 @@ public class CatalogRepositoryImpl implements CatalogRepository {
 	public boolean itemExists(final String itemId, final String collectionName) {
 		return notBlackListed(collectionName)
 				&& mongoTemplate.findById(itemId, Item.class, collectionName) != null;
+	}
+
+	@Override
+	public List<Item> getItemsByIds(final List<String> itemIds) {
+		final Query query = new Query(Criteria.where("id").in(itemIds));
+		final List<Item> items = mongoTemplate.find(query, Item.class);
+		return items;
 	}
 
 }
