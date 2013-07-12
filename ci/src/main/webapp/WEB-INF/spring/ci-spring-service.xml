@@ -41,7 +41,7 @@
     	<constructor-arg value="${mongodb.host}" />
     	<constructor-arg value="${mongodb.port}" />
     	<constructor-arg value="${mongodb.db}" />
-    	<constructor-arg value="ratings" />
+    	<constructor-arg value="reviews" />
     	<constructor-arg value="true" />
     	<constructor-arg value="false" />
     	<constructor-arg>
@@ -58,7 +58,8 @@
     	<constructor-arg value="mongo_data_model_map" />
     </bean> 
     
-    <bean id="recommenderConverter" class="org.tmme.ci.recommender.converter.RecommenderConverter" />
+    <bean id="recommendedItemsConverter" class="org.tmme.ci.recommender.converter.RecommendedItemsConverter" />
+    <bean id="idConverter" class="org.tmme.ci.recommender.converter.IdConverter" />
 
     <bean id="recommender" class="org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender">
        <constructor-arg ref="recommenderDataModel" />

@@ -29,6 +29,7 @@
     	<value>reviews</value>
     	<value>purchases</value>
     	<value>visits</value>
+    	<value>mongo_data_model_map</value>
 	</util:list>
 	
 	 <bean id="usersConnectionRepository" class="org.tmme.ci.social.repository.impl.UsersConnectionRepositoryImpl" />

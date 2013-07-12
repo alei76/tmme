@@ -42,11 +42,11 @@ public class RecommenderController {
 		return null;
 	}
 
-	@RequestMapping(value = "/user/{userid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/{username}", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public @ResponseBody
-	List<Item> userBased(@PathVariable(value = "userid") final String userId) {
-		return null;
+	List<Item> userBased(@PathVariable(value = "username") final String username) {
+		return cfRecommenderService.recommend(username, 5);
 	}
 
 }

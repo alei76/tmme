@@ -26,7 +26,7 @@ public class CatalogRepositoryImpl implements CatalogRepository {
 	private List<String> collectionBlackList;
 
 	@Override
-	public Set<String> getCollections() {
+	public Set<String> getCollectionNames() {
 		final Set<String> collections = mongoTemplate.getCollectionNames();
 		CollectionUtils.filter(collections, new Predicate() {
 			@Override
@@ -45,7 +45,7 @@ public class CatalogRepositoryImpl implements CatalogRepository {
 	}
 
 	@Override
-	public List<Item> getItemsByCollectionName(final String name) {
+	public List<Item> findItemsByCollectionName(final String name) {
 		return notBlackListed(name) ? mongoTemplate.findAll(Item.class, name)
 				: Collections.<Item> emptyList();
 	}
@@ -69,15 +69,21 @@ public class CatalogRepositoryImpl implements CatalogRepository {
 	}
 
 	@Override
-	public boolean itemExists(final String itemId, final String collectionName) {
-		return notBlackListed(collectionName)
-				&& mongoTemplate.findById(itemId, Item.class, collectionName) != null;
+	public Item findById(final String itemId, final String collectionName) {
+		Item item = null;
+		if (notBlackListed(collectionName)) {
+			item = mongoTemplate.findById(itemId, Item.class, collectionName);
+		}
+		return item;
 	}
 
 	@Override
-	public List<Item> getItemsByIds(final List<String> itemIds) {
-		final Query query = new Query(Criteria.where("id").in(itemIds));
-		final List<Item> items = mongoTemplate.find(query, Item.class);
+	public List<Item> findItemsByIds(final List<String> ids) {
+		List<Item> items = Collections.<Item> emptyList();
+		if (!CollectionUtils.isEmpty(items)) {
+			final Query query = new Query(Criteria.where("id").in(ids));
+			items = mongoTemplate.find(query, Item.class);
+		}
 		return items;
 	}
 

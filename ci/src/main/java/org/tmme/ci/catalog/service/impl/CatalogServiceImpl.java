@@ -35,12 +35,12 @@ public class CatalogServiceImpl implements CatalogService {
 
 	@Override
 	public Set<String> getItemTypes() {
-		return catalogRepository.getCollections();
+		return catalogRepository.getCollectionNames();
 	}
 
 	@Override
 	public List<Item> getItems(final String typeName) {
-		return catalogRepository.getItemsByCollectionName(typeName);
+		return catalogRepository.findItemsByCollectionName(typeName);
 	}
 
 }

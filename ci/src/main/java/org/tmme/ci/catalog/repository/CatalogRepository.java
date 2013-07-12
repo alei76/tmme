@@ -7,18 +7,18 @@ import org.tmme.ci.model.Item;
 
 public interface CatalogRepository {
 
-	Set<String> getCollections();
+	Set<String> getCollectionNames();
 
 	void createCollection(String collectionName);
 
-	List<Item> getItemsByCollectionName(String collectionName);
+	List<Item> findItemsByCollectionName(String collectionName);
 
 	void save(Item item, String collectionName);
 
 	void save(List<Item> items, String collectionName);
 
-	boolean itemExists(String itemId, String collectionName);
+	Item findById(String itemId, String collectionName);
 
-	List<Item> getItemsByIds(List<String> itemIds);
+	List<Item> findItemsByIds(List<String> ids);
 
 }
