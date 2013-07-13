@@ -39,5 +39,10 @@
         <constructor-arg value="#{request.userPrincipal.name}" />
         <aop:scoped-proxy proxy-target-class="false" />
      </bean>	
+     
+     <bean id="reviewPopulator" class="org.tmme.ci.analytics.repository.populator.ReviewPopulator" init-method="populate" >
+     	<constructor-arg value="${analytics.startup.enabled}" />
+		<constructor-arg value="/analytics/reviews.csv" />
+     </bean>
            	
 </beans>
