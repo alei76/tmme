@@ -36,13 +36,13 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 	private UserRepository userRepository;
 
 	@Override
-	public void review(final String username, final String typeName,
+	public void review(final String userId, final String typeName,
 			final String itemId, final Review review) {
-		new ActionPerformable(itemId, typeName, username) {
+		new ActionPerformable(itemId, typeName, userId) {
 			@Override
 			void action() {
 				review.setItemId(itemId);
-				review.setUserId(username);
+				review.setUserId(userId);
 				review.setCreatedAt(new Date());
 				reviewRepository.save(review);
 			}
@@ -50,23 +50,23 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 	}
 
 	@Override
-	public void purchase(final String username, final String typeName,
+	public void purchase(final String userId, final String typeName,
 			final String itemId) {
-		new ActionPerformable(itemId, typeName, username) {
+		new ActionPerformable(itemId, typeName, userId) {
 			@Override
 			void action() {
-				purchaseRepository.save(new Purchase(username, itemId));
+				purchaseRepository.save(new Purchase(userId, itemId));
 			}
 		}.execute();
 	}
 
 	@Override
-	public void visit(final String username, final String typeName,
+	public void visit(final String userId, final String typeName,
 			final String itemId) {
-		new ActionPerformable(itemId, typeName, username) {
+		new ActionPerformable(itemId, typeName, userId) {
 			@Override
 			void action() {
-				visitRepository.save(new Visit(username, itemId));
+				visitRepository.save(new Visit(userId, itemId));
 			}
 		}.execute();
 	}
@@ -74,14 +74,14 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 	private abstract class ActionPerformable {
 
 		private final String itemId;
-		private final String username;
+		private final String email;
 		private final String collectionName;
 
 		ActionPerformable(final String itemId, final String collectionName,
-				final String username) {
+				final String email) {
 			this.itemId = itemId;
 			this.collectionName = collectionName;
-			this.username = username;
+			this.email = email;
 		}
 
 		abstract void action();
@@ -94,9 +94,9 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 						collectionName);
 				throw new IllegalArgumentException("Item does not exist");
 			}
-			final User user = userRepository.findByUsername(username);
+			final User user = userRepository.findByEmail(email);
 			if (user == null) {
-				LOG.error("User {} does not exist", username);
+				LOG.error("User {} does not exist", email);
 				throw new IllegalArgumentException("User does not exist");
 			}
 			action();

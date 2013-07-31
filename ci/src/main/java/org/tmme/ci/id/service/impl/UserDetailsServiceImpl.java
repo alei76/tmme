@@ -20,12 +20,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private UserRepository userRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(final String username)
+	public UserDetails loadUserByUsername(final String email)
 			throws UsernameNotFoundException {
-		final org.tmme.ci.model.User user = userRepository
-				.findByUsername(username);
+		final org.tmme.ci.model.User user = userRepository.findByEmail(email);
 		if (user == null) {
-			throw new UsernameNotFoundException("The username " + username
+			throw new UsernameNotFoundException("The email " + email
 					+ " was not found");
 		}
 		final List<String> roles = user.getRoles();
@@ -34,6 +33,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		for (final String role : roles) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(role));
 		}
-		return new User(username, user.getPassword(), grantedAuthorities);
+		return new User(email, user.getPassword(), grantedAuthorities);
 	}
 }

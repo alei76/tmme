@@ -19,32 +19,32 @@ public class AnalyticsController {
 	@Autowired
 	private AnalyticsService analyticsService;
 
-	@RequestMapping(value = "/user/{username}/review/{type}.{itemid}", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/{userid}/review/{type}.{itemid}", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public @ResponseBody
-	void review(@PathVariable(value = "username") final String username,
+	void review(@PathVariable(value = "userid") final String userId,
 			@PathVariable(value = "type") final String typeName,
 			@PathVariable(value = "itemid") final String itemId,
 			final @RequestBody Review review) {
-		analyticsService.review(username, typeName, itemId, review);
+		analyticsService.review(userId, typeName, itemId, review);
 	}
 
-	@RequestMapping(value = "/user/{username}/purchase/{type}.{itemid}", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/{userid}/purchase/{type}.{itemid}", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public @ResponseBody
-	void purchase(@PathVariable(value = "username") final String username,
+	void purchase(@PathVariable(value = "userid") final String userId,
 			@PathVariable(value = "type") final String typeName,
 			@PathVariable(value = "itemid") final String itemId) {
-		analyticsService.purchase(username, typeName, itemId);
+		analyticsService.purchase(userId, typeName, itemId);
 	}
 
-	@RequestMapping(value = "/user/{username}/visit/{type}.{itemid}", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/{userid}/visit/{type}.{itemid}", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public @ResponseBody
-	void visit(@PathVariable(value = "username") final String username,
+	void visit(@PathVariable(value = "userid") final String userId,
 			@PathVariable(value = "type") final String typeName,
 			@PathVariable(value = "itemid") final String itemId) {
-		analyticsService.visit(username, typeName, itemId);
+		analyticsService.visit(userId, typeName, itemId);
 	}
 
 }

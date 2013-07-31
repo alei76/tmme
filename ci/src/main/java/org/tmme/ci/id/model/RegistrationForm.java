@@ -8,28 +8,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class RegistrationForm {
 
 	@NotEmpty
-	private String username;
+	@Email
+	private String email;
 
 	@Size(min = 6, message = "must be at least 6 characters")
 	private String password;
 
 	@NotEmpty
-	private String firstName;
-
-	@NotEmpty
-	private String lastName;
-
-	@NotEmpty
-	@Email
-	private String email;
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(final String username) {
-		this.username = username;
-	}
+	private String confirmPassword;
 
 	public String getPassword() {
 		return password;
@@ -39,28 +25,20 @@ public class RegistrationForm {
 		this.password = password;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(final String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(final String lastName) {
-		this.lastName = lastName;
-	}
-
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(final String email) {
 		this.email = email;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(final String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 }

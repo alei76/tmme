@@ -4,10 +4,10 @@ import org.tmme.ci.model.Review;
 
 public interface AnalyticsService {
 
-	void review(String username, String typeName, String itemId, Review review);
+	void review(String userId, String typeName, String itemId, Review review);
 
-	void purchase(String username, String typeName, String itemId);
+	void purchase(String userId, String typeName, String itemId);
 
-	void visit(String username, String typeName, String itemId);
+	void visit(String userId, String typeName, String itemId);
 
 }

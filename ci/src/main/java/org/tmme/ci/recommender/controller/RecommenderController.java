@@ -27,7 +27,8 @@ public class RecommenderController {
 	@RequestMapping(value = "/{type}.{itemid}", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public @ResponseBody
-	List<Item> itemBased(@PathVariable(value = "type") final String typeName,
+	List<Item> contentBased(
+			@PathVariable(value = "type") final String typeName,
 			@PathVariable(value = "itemid") final String itemId) {
 		return null;
 	}
@@ -35,18 +36,18 @@ public class RecommenderController {
 	@RequestMapping(value = "/user/{userid}/{type}.{itemid}", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public @ResponseBody
-	List<Item> itemAndUserBased(
-			@PathVariable(value = "userid") final String userId,
+	List<Item> mixed(@PathVariable(value = "userid") final String userId,
 			@PathVariable(value = "type") final String typeName,
 			@PathVariable(value = "itemid") final String itemId) {
 		return null;
 	}
 
-	@RequestMapping(value = "/user/{username}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/{userid}", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public @ResponseBody
-	List<Item> userBased(@PathVariable(value = "username") final String username) {
-		return cfRecommenderService.recommend(username, 5);
+	List<Item> collaborativeFiltering(
+			@PathVariable(value = "userid") final String userId) {
+		return cfRecommenderService.recommend(userId, 5);
 	}
 
 }

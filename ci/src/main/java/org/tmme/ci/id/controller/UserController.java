@@ -15,7 +15,6 @@ import org.tmme.ci.id.service.UserService;
 import org.tmme.ci.model.User;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
@@ -37,7 +36,7 @@ public class UserController {
 		if (user == null) {
 			return null;
 		}
-		userService.autoLogin(user.getUsername());
+		userService.autoLogin(user.getEmail());
 		return user == null ? null : "redirect:/";
 	}
 
@@ -45,11 +44,8 @@ public class UserController {
 			final BindingResult formBinding) {
 		try {
 			final User user = new User();
-			user.setFirstname(form.getFirstName());
-			user.setLastname(form.getLastName());
-			user.setUsername(form.getUsername());
-			user.setPassword(form.getPassword());
 			user.setEmail(form.getEmail());
+			user.setPassword(form.getPassword());
 			user.setRoles(Collections.singletonList("ROLE_USER"));
 			userService.createUser(user);
 			return user;

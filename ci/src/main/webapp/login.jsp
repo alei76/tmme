@@ -4,7 +4,9 @@
 <html>
 
 <head>
-<title>CI Engine</title>
+	<meta charset="utf-8">
+	<title>Log in</title>
+	<link href="ui/css/flat-ui.css" rel="stylesheet">
 </head>
 
 <body>
@@ -19,14 +21,21 @@
 		</c:if>
 		
 	    <authz:authorize ifNotGranted="ROLE_USER">
-	      <h2>Login</h2>
-	      <form id="loginForm" name="loginForm" action="<c:url value="/login.do"/>" method="post">
-	        <p><label>Username: <input type='text' name='j_username'></label></p>
-	        <p><label>Password: <input type='password' name='j_password'></label></p>
-	        <p><input name="login" value="Login" type="submit"></p>
-	      </form>
-	      
-	      <a href="<c:url value="/user/register"/>">Register</a>
+		    <form method="post" action="<c:url value="/login.do"/>">
+				<div class="login-form">
+					<div class="control-group">
+						<input type="text" class="login-field" value="" placeholder="Email" name='j_username' id="login-email" />
+						<label class="login-field-icon fui-mail" for="login-email"></label>
+					</div>
+					<div class="control-group">
+						<input type="password" class="login-field" value="" placeholder="Password" name="j_password" id="login-pass" />
+						<label class="login-field-icon fui-lock" for="login-pass"></label>
+					</div>
+					<input type="submit" value="Log in" class="btn btn-primary btn-large btn-block" href="#"/>
+				</div>
+			</form>
+	    
+        <a href="register">Register</a>
 	      
 	    </authz:authorize>
 	    <authz:authorize ifAllGranted="ROLE_USER">
