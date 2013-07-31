@@ -7,6 +7,7 @@
 	<meta charset="utf-8">
 	<title>Register</title>
 	<link href="ui/css/flat-ui.css" rel="stylesheet">
+	<link href="ui/images/favicon.ico" rel="shortcut icon">
 </head>
 
 <body>

@@ -1,9 +1,12 @@
+<%@ taglib prefix="authz" uri="http://www.springframework.org/security/tags" %>
+
 <html>
 
 <head>
 	<meta charset="utf-8">
-	<title>Log in</title>
+	<title>Home</title>
 	<link href="ui/css/flat-ui.css" rel="stylesheet">
+	<link href="ui/images/favicon.ico" rel="shortcut icon">
 </head>
 
 <body>
@@ -17,10 +20,11 @@
 			</button>
 			<div class="nav-collapse collapse">
 				<ul class="nav">
-					<li class="active"><a href="home">Home</a></li>
 					<li><a href="register">Register</a></li>
 					<li><a href="login">Log in</a></li>
-					<li><a href="social">Social</a></li>
+					<authz:authorize ifAllGranted="ROLE_USER">
+						<li><a href="social/connect">Social</a></li>
+					</authz:authorize>
 				</ul>
 			</div>
 		</div>

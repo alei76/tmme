@@ -4,22 +4,29 @@
 <html>
 
 <head>
-<title>CI Engine</title>
+	<meta charset="utf-8">
+	<title>Social</title>
+	<link href="ui/css/flat-ui.css" rel="stylesheet">
+	<link href="ui/images/favicon.ico" rel="shortcut icon">
 </head>
 
 <body>
 
-	<form action="<c:url value="${request.contextPath}/social/connect/facebook" />" method="post">
-		<input type="hidden" name="scope" value="offline_access,user_activities,user_likes,user_interests,user_location,user_status" />
-		<p><button type="submit">Connect to Facebook</button></p>
-	</form>
-	
-	<form action="<c:url value="${request.contextPath}/social/connect/facebook" />" method="post">
-		<button type="submit">Disconnect from Facebook</button>	
-		<input type="hidden" name="_method" value="delete" />
-	</form>
-	
-	<a href="<c:url value="/profile"/>">FacebookProfile</a>
+	    <authz:authorize ifNotGranted="ROLE_USER">
+		    <p>Need to login to link to your social accounts</p>
+		</authz:authorize>
+		
+		
+		<authz:authorize ifAllGranted="ROLE_USER">
+			<form action="<c:url value="${request.contextPath}/social/connect/facebook" />" method="post">
+				<input type="hidden" name="scope" value="offline_access,user_activities,user_likes,user_interests,user_location,user_status" />
+				<p><button type="submit">Connect to Facebook</button></p>
+			</form>
+			<form action="<c:url value="${request.contextPath}/social/connect/facebook" />" method="post">
+				<button type="submit">Disconnect from Facebook</button>	
+				<input type="hidden" name="_method" value="delete" />
+			</form>
+		</authz:authorize>
 	
 </body>
 
