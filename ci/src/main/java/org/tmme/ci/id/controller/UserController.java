@@ -20,8 +20,13 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login() {
+		return "login";
+	}
+
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String form(final Model model) {
+	public String registerForm(final Model model) {
 		model.addAttribute(new RegistrationForm());
 		return "register";
 	}
