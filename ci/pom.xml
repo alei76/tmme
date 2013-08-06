@@ -17,7 +17,6 @@
       <spring.social.facebook>1.0.2.RELEASE</spring.social.facebook>
       <spring.social.twitter>1.0.3.RELEASE</spring.social.twitter>
       <slf4j>1.7.5</slf4j>
-      <spring.framework.security.oauth>1.1.0.BUILD-SNAPSHOT</spring.framework.security.oauth>
     </properties>
 
   <dependencies>
@@ -299,17 +298,6 @@
 		<groupId>commons-collections</groupId>
 		<artifactId>commons-collections</artifactId>
 		<version>3.2.1</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework.security.oauth</groupId>
-		<artifactId>spring-security-oauth2</artifactId>
-		<version>${spring.framework.security.oauth}</version>
-		<exclusions>
-			<exclusion>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
-			</exclusion>
-		</exclusions>
 	</dependency>
 	<dependency>
 		<groupId>cglib</groupId>
