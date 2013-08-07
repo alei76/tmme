@@ -2,11 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 
     <context:component-scan base-package="org.tmme.ci.*.service" />
     
@@ -78,9 +80,24 @@
 
     <bean id="solrRestTemplate" class="org.springframework.web.client.RestTemplate" />
     
-    <bean id="solrUpdateUrl" class="java.lang.String">
+    <bean id="solrSearchService" class="org.tmme.ci.search.service.impl.SearchServiceImpl">
     	<constructor-arg value="${solr.url}/update/json?commit=true" />
+    	<constructor-arg>
+    		<set>
+    			<value>_version_</value>
+    		</set>
+    	</constructor-arg>
     </bean>
+    
+    <bean id="solrIndexer" class="org.tmme.ci.search.populator.SolrIndexer" >
+    	<constructor-arg value="${solr.update.index.oneshot}" />
+    </bean>
+    
+    <task:scheduler id="solrIndexerScheduler" pool-size="1" />
+    <task:scheduled-tasks scheduler="solrIndexerScheduler">
+    	<task:scheduled ref="solrIndexer" method="updateIndex" cron="${solr.update.index.cron}" />
+    </task:scheduled-tasks>
+    
     
 
 </beans>

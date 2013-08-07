@@ -1,6 +1,6 @@
 package org.tmme.ci.catalog.service.impl;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,7 +50,7 @@ public class CatalogServiceImpl implements CatalogService {
 	@Override
 	public Map<String, List<Item>> getItems() {
 		final Set<String> itemTypes = getItemTypes();
-		final Map<String, List<Item>> items = Collections.emptyMap();
+		final Map<String, List<Item>> items = new HashMap<String, List<Item>>();
 		if (CollectionUtils.isNotEmpty(itemTypes)) {
 			CollectionUtils.forAllDo(itemTypes, new Closure() {
 				@Override

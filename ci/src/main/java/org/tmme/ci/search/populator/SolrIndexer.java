@@ -17,18 +17,27 @@ public class SolrIndexer {
 	private CatalogService catalogService;
 	@Autowired
 	private SearchService searchService;
+	private final boolean oneShot;
+	private boolean notRun = true;
+
+	public SolrIndexer(final boolean oneShot) {
+		this.oneShot = oneShot;
+	}
 
 	public void updateIndex() {
-		final Map<String, List<Item>> itemsMap = catalogService.getItems();
-		if (!itemsMap.isEmpty()) {
-			final Collection<List<Item>> items = itemsMap.values();
-			if (!items.isEmpty()) {
-				final Iterator<List<Item>> it = items.iterator();
-				while (it.hasNext()) {
-					final String itemsAsJson = ItemParser.parseItems(it.next());
-					searchService.updateIndex(itemsAsJson);
+		if (!oneShot || oneShot && notRun) {
+			final Map<String, List<Item>> itemsMap = catalogService.getItems();
+			if (!itemsMap.isEmpty()) {
+				final Collection<List<Item>> items = itemsMap.values();
+				if (!items.isEmpty()) {
+					final Iterator<List<Item>> it = items.iterator();
+					while (it.hasNext()) {
+						final String itemsAsJson = ItemParser.parseItems(it
+								.next());
+						searchService.updateIndex(itemsAsJson);
+					}
+					notRun = false;
 				}
-
 			}
 		}
 

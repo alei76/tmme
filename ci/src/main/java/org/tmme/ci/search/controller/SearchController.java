@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.tmme.ci.model.Item;
@@ -22,8 +23,9 @@ public class SearchController {
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public @ResponseBody
-	List<Item> search() {
-		return searchService.search("name:Turtle's");
+	List<Item> search(
+			@RequestParam(value = "q", required = true) final String searchQuery) {
+		return searchService.search(searchQuery);
 	}
 
 }

@@ -6,7 +6,7 @@ import org.tmme.ci.model.Item;
 
 public interface SearchService {
 
-	List<Item> search(String query);
+	List<Item> search(String searchQuery);
 
 	void updateIndex(String json);
 
