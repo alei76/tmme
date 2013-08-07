@@ -1,8 +1,12 @@
 package org.tmme.ci.catalog.service.impl;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.Closure;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tmme.ci.catalog.repository.CatalogRepository;
@@ -41,6 +45,21 @@ public class CatalogServiceImpl implements CatalogService {
 	@Override
 	public List<Item> getItems(final String typeName) {
 		return catalogRepository.findItemsByCollectionName(typeName);
+	}
+
+	@Override
+	public Map<String, List<Item>> getItems() {
+		final Set<String> itemTypes = getItemTypes();
+		final Map<String, List<Item>> items = Collections.emptyMap();
+		if (CollectionUtils.isNotEmpty(itemTypes)) {
+			CollectionUtils.forAllDo(itemTypes, new Closure() {
+				@Override
+				public void execute(final Object typeName) {
+					items.put((String) typeName, getItems((String) typeName));
+				}
+			});
+		}
+		return items;
 	}
 
 }

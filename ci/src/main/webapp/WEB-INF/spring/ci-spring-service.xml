@@ -72,5 +72,15 @@
     <bean id="collaborativeFilteringRecommenderService" class="org.tmme.ci.recommender.service.impl.CollaborativeFilteringRecommenderService" />
     <bean id="contentBasedRecommenderService" class="org.tmme.ci.recommender.service.impl.ContentBasedRecommenderService" />
     
+    <bean id="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+    	<constructor-arg value="${solr.url}" />
+    </bean>
+
+    <bean id="solrRestTemplate" class="org.springframework.web.client.RestTemplate" />
+    
+    <bean id="solrUpdateUrl" class="java.lang.String">
+    	<constructor-arg value="${solr.url}/update/json?commit=true" />
+    </bean>
+    
 
 </beans>

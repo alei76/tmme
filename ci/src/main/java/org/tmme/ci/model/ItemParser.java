@@ -25,4 +25,13 @@ public abstract class ItemParser {
 		}
 	}
 
+	public static String parseItems(final List<Item> items) {
+		final ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.writeValueAsString(items);
+		} catch (final Exception ex) {
+			throw new IllegalArgumentException("Cannot parse items: " + items);
+		}
+	}
+
 }

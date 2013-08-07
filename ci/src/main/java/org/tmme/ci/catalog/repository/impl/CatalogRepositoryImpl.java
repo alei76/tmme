@@ -80,7 +80,7 @@ public class CatalogRepositoryImpl implements CatalogRepository {
 	@Override
 	public List<Item> findItemsByIds(final List<String> ids) {
 		List<Item> items = Collections.<Item> emptyList();
-		if (!CollectionUtils.isEmpty(ids)) {
+		if (CollectionUtils.isNotEmpty(ids)) {
 			final Query query = new Query(Criteria.where("id").in(ids));
 			items = mongoTemplate.find(query, Item.class);
 		}

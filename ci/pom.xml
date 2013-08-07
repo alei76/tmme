@@ -200,10 +200,10 @@
        <version>${spring.social.twitter}</version>
    </dependency> 
    <dependency>
-      <artifactId>solr-solrj</artifactId>
-      <groupId>org.apache.solr</groupId>
-      <version>1.4.0</version>
-	  <exclusions>
+		<groupId>org.apache.solr</groupId>
+		<artifactId>solr-solrj</artifactId>
+		<version>4.4.0</version>
+	  	<exclusions>
 			<exclusion>
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
@@ -212,7 +212,7 @@
 	      		<groupId>org.slf4j</groupId>
 	      		<artifactId>slf4j-api</artifactId>
 	      	</exclusion>			 
-	   </exclusions>      
+	   	</exclusions>      
     </dependency>
 	<dependency>
 		<groupId>org.apache.tiles</groupId>
