@@ -1,6 +1,7 @@
 package org.tmme.ci.search.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -39,15 +40,15 @@ public class SearchServiceImpl implements SearchService {
 	@Autowired
 	private RestTemplate solrRestTemplate;
 
-	private final Set<String> ignorableKeys;
+	private final Set<String> ignorableFields;
 	private final String solrUpdateUrl;
 
 	public SearchServiceImpl(final String solrUpdateUrl,
-			final Set<String> ignorableKeys) {
+			final Set<String> ignorableFields) {
 		Validate.notBlank(solrUpdateUrl);
-		Validate.notEmpty(ignorableKeys);
+		Validate.notEmpty(ignorableFields);
 		this.solrUpdateUrl = solrUpdateUrl;
-		this.ignorableKeys = ignorableKeys;
+		this.ignorableFields = ignorableFields;
 	}
 
 	@Override
@@ -95,15 +96,12 @@ public class SearchServiceImpl implements SearchService {
 		final List<Item> items = new ArrayList<Item>();
 		while (it.hasNext()) {
 			final SolrDocument document = it.next();
-			final Map<String, Object> fieldValueMap = document
-					.getFieldValueMap();
 			final Map<String, Object> clonedValueMap = new HashMap<String, Object>();
-			// need to use this ugly way of "cloning" because the fieldValueMap
-			// has several unsupported operations
-			final Set<String> keys = fieldValueMap.keySet();
-			for (final String key : keys) {
-				if (!ignorableKeys.contains(key)) {
-					clonedValueMap.put(key, fieldValueMap.get(key));
+			final Collection<String> fieldNames = document.getFieldNames();
+			for (final String fieldName : fieldNames) {
+				if (!ignorableFields.contains(fieldName)) {
+					clonedValueMap.put(fieldName,
+							document.getFieldValue(fieldName));
 				}
 			}
 			final String json = JsonSerializer.serialize(clonedValueMap);
