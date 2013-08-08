@@ -29,6 +29,8 @@
     	<value>reviews</value>
     	<value>purchases</value>
     	<value>visits</value>
+    	<value>accept-recommendations</value>
+    	<value>reject-recommendations</value>
     	<value>mongo_data_model_map</value>
 	</util:list>
 	

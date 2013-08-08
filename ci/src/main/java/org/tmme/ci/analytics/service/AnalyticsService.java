@@ -10,4 +10,8 @@ public interface AnalyticsService {
 
 	void visit(String userId, String typeName, String itemId);
 
+	void acceptRecommendation(String userId, String typeName, String itemId);
+
+	void rejectRecommendation(String userId, String typeName, String itemId);
+
 }

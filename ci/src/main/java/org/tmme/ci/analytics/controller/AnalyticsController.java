@@ -47,4 +47,24 @@ public class AnalyticsController {
 		analyticsService.visit(userId, typeName, itemId);
 	}
 
+	@RequestMapping(value = "/user/{userid}/accept/{type}.{itemid}", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.CREATED)
+	public @ResponseBody
+	void acceptRecommendation(
+			@PathVariable(value = "userid") final String userId,
+			@PathVariable(value = "type") final String typeName,
+			@PathVariable(value = "itemid") final String itemId) {
+		analyticsService.acceptRecommendation(userId, typeName, itemId);
+	}
+
+	@RequestMapping(value = "/user/{userid}/reject/{type}.{itemid}", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.CREATED)
+	public @ResponseBody
+	void rejectRecommendation(
+			@PathVariable(value = "userid") final String userId,
+			@PathVariable(value = "type") final String typeName,
+			@PathVariable(value = "itemid") final String itemId) {
+		analyticsService.rejectRecommendation(userId, typeName, itemId);
+	}
+
 }

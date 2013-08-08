@@ -6,14 +6,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tmme.ci.analytics.repository.AcceptRecommendationRepository;
 import org.tmme.ci.analytics.repository.PurchaseRepository;
+import org.tmme.ci.analytics.repository.RejectRecommendationRepository;
 import org.tmme.ci.analytics.repository.ReviewRepository;
 import org.tmme.ci.analytics.repository.VisitRepository;
 import org.tmme.ci.analytics.service.AnalyticsService;
 import org.tmme.ci.catalog.repository.CatalogRepository;
 import org.tmme.ci.id.repository.UserRepository;
+import org.tmme.ci.model.AcceptRecommendation;
 import org.tmme.ci.model.Item;
 import org.tmme.ci.model.Purchase;
+import org.tmme.ci.model.RejectRecommendation;
 import org.tmme.ci.model.Review;
 import org.tmme.ci.model.User;
 import org.tmme.ci.model.Visit;
@@ -34,6 +38,10 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 	private CatalogRepository catalogRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private AcceptRecommendationRepository acceptRecommendationRepository;
+	@Autowired
+	private RejectRecommendationRepository rejectRecommendationRepository;
 
 	@Override
 	public void review(final String userId, final String typeName,
@@ -69,6 +77,31 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 				visitRepository.save(new Visit(userId, itemId));
 			}
 		}.execute();
+	}
+
+	@Override
+	public void acceptRecommendation(final String userId,
+			final String typeName, final String itemId) {
+		new ActionPerformable(itemId, typeName, userId) {
+			@Override
+			void action() {
+				acceptRecommendationRepository.save(new AcceptRecommendation(
+						userId, itemId));
+			}
+		};
+	}
+
+	@Override
+	public void rejectRecommendation(final String userId,
+			final String typeName, final String itemId) {
+		new ActionPerformable(itemId, typeName, userId) {
+			@Override
+			void action() {
+				rejectRecommendationRepository.save(new RejectRecommendation(
+						userId, itemId));
+			}
+		};
+
 	}
 
 	private abstract class ActionPerformable {
