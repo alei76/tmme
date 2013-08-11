@@ -99,5 +99,22 @@
     </task:scheduled-tasks>
     
     
-
+    <bean id="facebookService" class="org.tmme.ci.social.service.impl.FacebookServiceImpl" />
+    
+	<bean id="likeServices" class="java.util.HashMap" >
+		<constructor-arg>
+	        <map key-type="java.lang.String" value-type="org.tmme.ci.social.service.LikeService">
+				<entry key="facebook" value-ref="facebookService" />	        
+			</map>
+    	</constructor-arg>
+	</bean>
+	
+	<bean id="checkinServices" class="java.util.HashMap" >
+		<constructor-arg>
+	        <map key-type="java.lang.String" value-type="org.tmme.ci.social.service.CheckinService">
+	            <entry key="facebook" value-ref="facebookService" />
+	        </map>
+    	</constructor-arg>
+	</bean>	
+	
 </beans>

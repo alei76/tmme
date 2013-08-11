@@ -29,30 +29,33 @@ public class ConnectionController {
 		return "social";
 	}
 
-	@RequestMapping(value = "/{providerId}", method = RequestMethod.POST)
-	public RedirectView connect(@PathVariable final String providerId,
+	@RequestMapping(value = "/{providerid}", method = RequestMethod.POST)
+	public RedirectView connect(
+			@PathVariable(value = "providerid") final String providerId,
 			final NativeWebRequest request) {
 		return new RedirectView(connectorService.connect(providerId, request));
 	}
 
-	@RequestMapping(value = "/{providerId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{providerid}", method = RequestMethod.DELETE)
 	public RedirectView removeConnections(
-			@PathVariable final String providerId,
+			@PathVariable(value = "providerid") final String providerId,
 			final HttpServletRequest request, final HttpServletResponse response) {
 		connectorService.removeConnections(providerId, new ServletWebRequest(
 				request, response));
 		return new RedirectView(SAME_PATH, false);
 	}
 
-	@RequestMapping(value = "/{providerId}", method = RequestMethod.GET, params = "code")
-	public RedirectView oauth2Callback(@PathVariable final String providerId,
+	@RequestMapping(value = "/{providerid}", method = RequestMethod.GET, params = "code")
+	public RedirectView oauth2Callback(
+			@PathVariable(value = "providerid") final String providerId,
 			final NativeWebRequest request) {
 		connectorService.oauth2Callback(providerId, request);
 		return new RedirectView(SAME_PATH, false);
 	}
 
-	@RequestMapping(value = "/{providerId}", method = RequestMethod.GET, params = "oauth_token")
-	public RedirectView oauth1Callback(@PathVariable final String providerId,
+	@RequestMapping(value = "/{providerid}", method = RequestMethod.GET, params = "oauth_token")
+	public RedirectView oauth1Callback(
+			@PathVariable(value = "providerid") final String providerId,
 			final NativeWebRequest request) {
 		connectorService.oauth1Callback(providerId, request);
 		return new RedirectView(SAME_PATH, false);
