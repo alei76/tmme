@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		      http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+      http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+
+	<context:property-placeholder location="classpath:recommender.properties" />
+
+	<context:component-scan base-package="org.tmme.ci.recommender.controller" />
+
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<mvc:default-servlet-handler />
+
+	<bean id="recommenderDataModel"
+		class="org.apache.mahout.cf.taste.impl.model.mongodb.MongoDBDataModel">
+		<constructor-arg value="${mongodb.host}" />
+		<constructor-arg value="${mongodb.port}" />
+		<constructor-arg value="${mongodb.db}" />
+		<constructor-arg value="reviews" />
+		<constructor-arg value="true" />
+		<constructor-arg value="false" />
+		<constructor-arg>
+			<bean class="java.text.SimpleDateFormat">
+				<constructor-arg value="EE MMM dd yyyy HH:mm:ss 'GMT'Z (zzz)" />
+				<constructor-arg>
+					<util:constant static-field="java.util.Locale.ENGLISH" />
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+		<constructor-arg value="userId" />
+		<constructor-arg value="itemId" />
+		<constructor-arg value="rate" />
+		<constructor-arg value="mongo_data_model_map" />
+	</bean>
+
+	<bean id="recommendedItemsConverter"
+		class="org.tmme.ci.recommender.converter.RecommendedItemsConverter" >
+		<constructor-arg ref="recommenderDataModel" />
+	</bean>
+	
+	<bean id="idConverter" class="org.tmme.ci.recommender.converter.IdConverter" >
+		<constructor-arg ref="recommenderDataModel" />
+	</bean>
+	
+	<bean id="recommenderFactory"
+		class="org.tmme.ci.recommender.cf.factory.impl.RecommenderFactoryImpl" />
+
+
+	<bean id="recommender" factory-bean="recommenderFactory"
+		factory-method="createRecommender">
+		<constructor-arg value="${cf.recommender.type}" />
+		<constructor-arg value="${cf.recommender.similarity}" />
+		<constructor-arg ref="recommenderDataModel" />
+	</bean>
+
+	<bean id="collaborativeFilteringRecommenderService"
+		class="org.tmme.ci.recommender.service.impl.CollaborativeFilteringRecommenderService" >
+		<constructor-arg ref="recommender" />
+		<constructor-arg ref="catalogRepository" />
+		<constructor-arg ref="recommendedItemsConverter" />
+		<constructor-arg ref="idConverter" />
+	</bean>
+		
+	<bean id="contentBasedRecommenderService"
+		class="org.tmme.ci.recommender.service.impl.ContentBasedRecommenderService" />
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"
+		scope="prototype">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>
+
+	<util:list id="collectionBlackList" value-type="java.lang.String">
+		<value>socialconnections</value>
+		<value>users</value>
+		<value>system.indexes</value>
+		<value>reviews</value>
+		<value>purchases</value>
+		<value>visits</value>
+		<value>accept-recommendations</value>
+		<value>reject-recommendations</value>
+		<value>mongo_data_model_map</value>
+	</util:list>
+
+	<bean id="catalogRepository"
+		class="org.tmme.ci.catalog.repository.impl.CatalogRepositoryImpl">
+		<constructor-arg ref="mongoTemplate" />
+		<constructor-arg ref="collectionBlackList" />
+	</bean>
+
+	<mongo:repositories base-package="org.tmme.ci.*.repository">
+		<mongo:repository id="catalogRepository" />
+	</mongo:repositories>
+
+	<mongo:mongo host="${mongodb.host}" port="${mongodb.port}" />
+	<mongo:db-factory dbname="${mongodb.db}" />
+
+
+</beans>

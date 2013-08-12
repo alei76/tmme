@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		      http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+      http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+
+	<context:property-placeholder location="classpath:social.properties" />
+
+	<context:component-scan base-package="org.tmme.ci.social.controller" />
+
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<mvc:default-servlet-handler />
+
+	<bean id="connectionFactoryLocator"
+		class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
+		<property name="connectionFactories">
+			<list>
+				<bean
+					class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+					<constructor-arg value="${facebook.clientId}" />
+					<constructor-arg value="${facebook.clientSecret}" />
+				</bean>
+				<bean
+					class="org.springframework.social.twitter.connect.TwitterConnectionFactory">
+					<constructor-arg value="${twitter.consumerKey}" />
+					<constructor-arg value="${twitter.consumerSecret}" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors"
+		factory-method="noOpText" />
+
+	<bean id="usersConnectionRepository"
+		class="org.tmme.ci.social.repository.impl.UsersConnectionRepositoryImpl">
+		<constructor-arg ref="textEncryptor" />
+		<constructor-arg ref="socialConnectionRepository" />
+		<constructor-arg ref="connectionFactoryLocator" />
+		<constructor-arg ref="mongoTemplate" />
+	</bean>
+
+	<bean id="connectionRepository" factory-method="createConnectionRepository"
+		factory-bean="usersConnectionRepository" scope="request">
+		<constructor-arg value="#{request.getParameter('user')}" />
+		<aop:scoped-proxy proxy-target-class="false" />
+	</bean>
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"
+		scope="prototype">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>
+
+	<mongo:repositories base-package="org.tmme.ci.social.repository">
+		<mongo:repository id="socialConnectionRepository"
+			mongo-template-ref="mongoTemplate" />
+		<mongo:repository id="socialUsersConnectionRepository"
+			mongo-template-ref="mongoTemplate" />		
+	</mongo:repositories>
+
+	<mongo:mongo host="${mongodb.host}" port="${mongodb.port}" />
+	<mongo:db-factory dbname="${mongodb.db}" />
+
+	<bean id="facebookService" class="org.tmme.ci.social.service.impl.FacebookServiceImpl" >
+		<constructor-arg ref="connectionRepository" />
+	</bean>
+
+	<bean id="likeServices" class="java.util.HashMap">
+		<constructor-arg>
+			<map key-type="java.lang.String" value-type="org.tmme.ci.social.service.LikeService">
+				<entry key="facebook" value-ref="facebookService" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="checkinServices" class="java.util.HashMap">
+		<constructor-arg>
+			<map key-type="java.lang.String" value-type="org.tmme.ci.social.service.CheckinService">
+				<entry key="facebook" value-ref="facebookService" />
+			</map>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="connectorService" class="org.tmme.ci.social.service.impl.ConnectorServiceImpl" >
+		<constructor-arg ref="connectController" />
+	</bean>
+	
+	<bean id="connectController" class="org.springframework.social.connect.web.ConnectController" />
+
+</beans>
