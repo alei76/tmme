@@ -2,3 +2,5 @@
 .project
 ci/.settings/*
 ci/target/*
+ci/*/.settings/*
+ci/*/target/*
