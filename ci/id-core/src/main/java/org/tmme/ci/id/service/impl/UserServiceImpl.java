@@ -7,9 +7,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.tmme.ci.id.models.User;
 import org.tmme.ci.id.repository.UserRepository;
 import org.tmme.ci.id.service.UserService;
+import org.tmme.ci.models.User;
 
 public class UserServiceImpl implements UserService {
 
@@ -49,6 +49,11 @@ public class UserServiceImpl implements UserService {
 		} catch (final Exception e) {
 			SecurityContextHolder.getContext().setAuthentication(null);
 		}
+	}
+
+	@Override
+	public User getByEmail(final String email) {
+		return userRepository.findByEmail(email);
 	}
 
 }

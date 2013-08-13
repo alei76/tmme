@@ -16,10 +16,10 @@ import org.tmme.ci.analytics.repository.RejectRecommendationRepository;
 import org.tmme.ci.analytics.repository.ReviewRepository;
 import org.tmme.ci.analytics.repository.VisitRepository;
 import org.tmme.ci.analytics.service.AnalyticsService;
-import org.tmme.ci.catalog.repository.CatalogRepository;
-import org.tmme.ci.id.models.User;
-import org.tmme.ci.id.repository.UserRepository;
+import org.tmme.ci.clients.CatalogClient;
+import org.tmme.ci.clients.UserClient;
 import org.tmme.ci.models.Item;
+import org.tmme.ci.models.User;
 
 public class AnalyticsServiceImpl implements AnalyticsService {
 
@@ -29,10 +29,11 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 	private final ReviewRepository reviewRepository;
 	private final VisitRepository visitRepository;
 	private final PurchaseRepository purchaseRepository;
-	private final CatalogRepository catalogRepository;
-	private final UserRepository userRepository;
 	private final AcceptRecommendationRepository acceptRecommendationRepository;
 	private final RejectRecommendationRepository rejectRecommendationRepository;
+
+	private final CatalogClient catalogClient;
+	private final UserClient userClient;
 
 	public AnalyticsServiceImpl(
 			final ReviewRepository reviewRepository,
@@ -40,22 +41,21 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 			final PurchaseRepository purchaseRepository,
 			final AcceptRecommendationRepository acceptRecommendationRepository,
 			final RejectRecommendationRepository rejectRecommendationRepository,
-			final CatalogRepository catalogRepository,
-			final UserRepository userRepository) {
+			final CatalogClient catalogClient, final UserClient userClient) {
 		Validate.notNull(reviewRepository);
 		Validate.notNull(visitRepository);
 		Validate.notNull(purchaseRepository);
 		Validate.notNull(acceptRecommendationRepository);
 		Validate.notNull(rejectRecommendationRepository);
-		Validate.notNull(catalogRepository);
-		Validate.notNull(userRepository);
+		Validate.notNull(catalogClient);
+		Validate.notNull(userClient);
 		this.reviewRepository = reviewRepository;
 		this.visitRepository = visitRepository;
 		this.purchaseRepository = purchaseRepository;
 		this.acceptRecommendationRepository = acceptRecommendationRepository;
 		this.rejectRecommendationRepository = rejectRecommendationRepository;
-		this.catalogRepository = catalogRepository;
-		this.userRepository = userRepository;
+		this.catalogClient = catalogClient;
+		this.userClient = userClient;
 	}
 
 	@Override
@@ -135,14 +135,13 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 		abstract void action();
 
 		void execute() {
-			final Item item = catalogRepository
-					.findById(itemId, collectionName);
+			final Item item = catalogClient.findById(itemId, collectionName);
 			if (item == null) {
 				LOG.error("Item {} does not exist in collection {}", itemId,
 						collectionName);
 				throw new IllegalArgumentException("Item does not exist");
 			}
-			final User user = userRepository.findByEmail(email);
+			final User user = userClient.findByEmail(email);
 			if (user == null) {
 				LOG.error("User {} does not exist", email);
 				throw new IllegalArgumentException("User does not exist");

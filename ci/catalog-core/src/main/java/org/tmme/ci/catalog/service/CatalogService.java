@@ -20,4 +20,6 @@ public interface CatalogService {
 
 	Map<String, List<Item>> getItems();
 
+	Item getItem(String typeName, String itemId);
+
 }

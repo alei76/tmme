@@ -7,16 +7,15 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.tmme.ci</groupId>
-	<artifactId>analytics-ws</artifactId>
+	<artifactId>id-ws</artifactId>
 	<packaging>war</packaging>
-	<name>Analytics WS</name>
-	<description>Analytics Web Services</description>
-
+	<name>Id WS</name>
+	<description>Id Web Services</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.tmme.ci</groupId>
-			<artifactId>analytics-core</artifactId>
+			<artifactId>id-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -99,10 +98,14 @@
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
 	</dependencies>
 
-	<build>
-		<finalName>analytics</finalName>
-	</build>
 
+	<build>
+		<finalName>id</finalName>
+	</build>
 </project>

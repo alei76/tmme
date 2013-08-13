@@ -1,7 +1,8 @@
-package org.tmme.ci.id.models;
+package org.tmme.ci.models;
 
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -36,6 +37,7 @@ public class User {
 	/**
 	 * @return the password
 	 */
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -66,6 +68,7 @@ public class User {
 	/**
 	 * @return the roles
 	 */
+	@JsonIgnore
 	public List<String> getRoles() {
 		return roles;
 	}

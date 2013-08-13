@@ -68,6 +68,13 @@ public class CatalogController {
 		return catalogService.getItems(typeName);
 	}
 
+	@RequestMapping(value = "/item/{type}.{itemid}", method = RequestMethod.GET)
+	public @ResponseBody
+	Item getItem(@PathVariable(value = "type") final String typeName,
+			@PathVariable(value = "itemid") final String itemId) {
+		return catalogService.getItem(typeName, itemId);
+	}
+
 	@ExceptionHandler({ IllegalArgumentException.class, IOException.class,
 			NullPointerException.class })
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Bad Request")

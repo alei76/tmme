@@ -64,4 +64,9 @@ public class CatalogServiceImpl implements CatalogService {
 		return items;
 	}
 
+	@Override
+	public Item getItem(final String typeName, final String itemId) {
+		return catalogRepository.findById(itemId, typeName);
+	}
+
 }

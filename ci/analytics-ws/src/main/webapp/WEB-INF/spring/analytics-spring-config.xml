@@ -29,25 +29,7 @@
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	</bean>
 
-	<util:list id="collectionBlackList" value-type="java.lang.String">
-		<value>socialconnections</value>
-		<value>users</value>
-		<value>system.indexes</value>
-		<value>reviews</value>
-		<value>purchases</value>
-		<value>visits</value>
-		<value>accept-recommendations</value>
-		<value>reject-recommendations</value>
-		<value>mongo_data_model_map</value>
-	</util:list>
-
-	<bean id="catalogRepository"
-		class="org.tmme.ci.catalog.repository.impl.CatalogRepositoryImpl">
-		<constructor-arg ref="mongoTemplate" />
-		<constructor-arg ref="collectionBlackList" />
-	</bean>
-
-	<mongo:repositories base-package="org.tmme.ci.*.repository">
+	<mongo:repositories base-package="org.tmme.ci.analytics.repository">
 		<mongo:repository id="reviewRepository"
 			mongo-template-ref="mongoTemplate" />
 		<mongo:repository id="purchaseRepository"
@@ -60,9 +42,6 @@
 			mongo-template-ref="mongoTemplate" />
 		<mongo:repository id="rejectRecommendationRepository"
 			mongo-template-ref="mongoTemplate" />
-		<mongo:repository id="userRepository"
-			mongo-template-ref="mongoTemplate" />
-		<mongo:repository id="catalogRepository" />
 	</mongo:repositories>
 
 	<mongo:mongo host="${mongodb.host}" port="${mongodb.port}" />
@@ -82,8 +61,32 @@
 		<constructor-arg ref="purchaseRepository" />
 		<constructor-arg ref="acceptRecommendationRepository" />
 		<constructor-arg ref="rejectRecommendationRepository" />
-		<constructor-arg ref="catalogRepository" />
-		<constructor-arg ref="userRepository" />
+		<constructor-arg ref="catalogClient" />
+		<constructor-arg ref="userClient" />
+	</bean>
+
+	<bean id="genericClient" class="org.tmme.ci.common.utils.RestClient"
+		scope="prototype">
+		<constructor-arg>
+			<bean class="org.springframework.web.client.RestTemplate">
+				<property name="messageConverters">
+					<list>
+						<bean
+							class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+					</list>
+				</property>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="catalogClient" class="org.tmme.ci.clients.impl.CatalogClientImpl">
+		<constructor-arg ref="genericClient" />
+		<constructor-arg value="${catalog.url}" />
+	</bean>
+
+	<bean id="userClient" class="org.tmme.ci.clients.impl.UserClientImpl">
+		<constructor-arg ref="genericClient" />
+		<constructor-arg value="${id.url}" />
 	</bean>
 
 </beans>

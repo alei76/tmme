@@ -24,8 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(final String email)
 			throws UsernameNotFoundException {
-		final org.tmme.ci.id.models.User user = userRepository
-				.findByEmail(email);
+		final org.tmme.ci.models.User user = userRepository.findByEmail(email);
 		if (user == null) {
 			throw new UsernameNotFoundException("The email " + email
 					+ " was not found");

@@ -91,11 +91,15 @@
 	<mongo:mongo host="${mongodb.host}" port="${mongodb.port}" />
 	<mongo:db-factory dbname="${mongodb.db}" />
 	
-	<bean id="socialRestTemplate" class="org.springframework.web.client.RestTemplate" />
-	
 	<bean id="socialClient" class="org.tmme.ci.clients.impl.SocialClientImpl" >
-		<constructor-arg ref="socialRestTemplate" />
+		<constructor-arg ref="restClient" />
 		<constructor-arg value="${social.connect.url}" />
+	</bean>
+	
+	<bean id="restClient" class="org.tmme.ci.common.utils.RestClient" >
+		<constructor-arg>
+			<bean class="org.springframework.web.client.RestTemplate" />
+		</constructor-arg>
 	</bean>
 
 </beans>

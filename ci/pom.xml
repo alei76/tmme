@@ -369,6 +369,7 @@
 		<module>analytics-core</module>
 		<module>analytics-ws</module>
 		<module>id-core</module>
+		<module>id-ws</module>
 		<module>search-core</module>
 		<module>search-ws</module>
 		<module>recommender-core</module>

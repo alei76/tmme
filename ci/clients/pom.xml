@@ -13,9 +13,13 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
+			<groupId>org.tmme.ci</groupId>
+			<artifactId>common</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.tmme.ci</groupId>
+			<artifactId>models</artifactId>
+		</dependency>		
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
