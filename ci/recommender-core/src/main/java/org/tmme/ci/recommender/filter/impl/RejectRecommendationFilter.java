@@ -20,7 +20,7 @@ public class RejectRecommendationFilter implements Filter<Item> {
 
 	@Override
 	public List<Item> filter(final List<Item> elements, final String userId) {
-		final List<Item> filtered = new ArrayList<>();
+		final List<Item> filtered = new ArrayList<Item>();
 		if (!CollectionUtils.isEmpty(elements)) {
 			final List<String> itemIds = analyticsClient
 					.getRejectedRecommendations(userId);
