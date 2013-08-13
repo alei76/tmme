@@ -39,14 +39,12 @@
 	<bean id="passwordEncoder"
 		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />
 
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"
-		scope="prototype">
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	</bean>
 
 	<mongo:repositories base-package="org.tmme.ci.id.repository">
-		<mongo:repository id="userRepository"
-			mongo-template-ref="mongoTemplate" />
+		<mongo:repository id="userRepository" />
 	</mongo:repositories>
 
 	<mongo:mongo host="${mongodb.host}" port="${mongodb.port}" />

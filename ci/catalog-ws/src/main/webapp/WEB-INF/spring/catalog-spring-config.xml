@@ -24,8 +24,7 @@
 
 	<mvc:default-servlet-handler />
 
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"
-		scope="prototype">
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	</bean>
 

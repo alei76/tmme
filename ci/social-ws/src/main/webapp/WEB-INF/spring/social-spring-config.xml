@@ -61,16 +61,13 @@
 		<aop:scoped-proxy proxy-target-class="false" />
 	</bean>
 
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"
-		scope="prototype">
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	</bean>
 
 	<mongo:repositories base-package="org.tmme.ci.social.repository">
-		<mongo:repository id="socialConnectionRepository"
-			mongo-template-ref="mongoTemplate" />
-		<mongo:repository id="socialUsersConnectionRepository"
-			mongo-template-ref="mongoTemplate" />		
+		<mongo:repository id="socialConnectionRepository" />
+		<mongo:repository id="socialUsersConnectionRepository" />		
 	</mongo:repositories>
 
 	<mongo:mongo host="${mongodb.host}" port="${mongodb.port}" />
