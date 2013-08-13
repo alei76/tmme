@@ -19,6 +19,6 @@ public interface CatalogRepository {
 
 	Item findById(String itemId, String collectionName);
 
-	List<Item> findItemsByIds(List<String> ids);
+	List<Item> findItemsByIds(List<String> ids, String collectionName);
 
 }

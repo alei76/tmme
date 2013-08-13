@@ -13,7 +13,8 @@ public class ContentBasedRecommenderService implements RecommenderService {
 			.getLogger(ContentBasedRecommenderService.class);
 
 	@Override
-	public List<Item> recommend(final String itemId, final int count) {
+	public List<Item> recommend(final String itemId, final String type,
+			final int count) {
 		return null;
 	}
 

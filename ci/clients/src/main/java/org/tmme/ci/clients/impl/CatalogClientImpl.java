@@ -1,6 +1,6 @@
 package org.tmme.ci.clients.impl;
 
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -28,18 +28,18 @@ public class CatalogClientImpl implements CatalogClient {
 
 	@Override
 	public Item getItemById(final String itemId, final String itemType) {
-		return restClient.exchange(catalogUrl + "/" + itemType + "." + itemId,
-				new HttpEntity<Object>(buildHeaders()), HttpMethod.GET,
-				Item.class);
+		return restClient.exchange(catalogUrl + "/item/" + itemType + "."
+				+ itemId, new HttpEntity<Object>(buildHeaders()),
+				HttpMethod.GET, Item.class);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Item> getItemsByIds(final List<String> itemIds) {
-		return restClient.exchange(
-				catalogUrl + "/items/" + Arrays.toString(itemIds.toArray()),
-				new HttpEntity<Object>(buildHeaders()), HttpMethod.GET,
-				List.class);
+	public List<Item> getItemsByIds(final List<String> itemIds,
+			final String itemType) {
+		return restClient.exchange(catalogUrl + "/items/" + itemType
+				+ queryString(itemIds), new HttpEntity<Object>(buildHeaders()),
+				HttpMethod.GET, List.class);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -48,6 +48,18 @@ public class CatalogClientImpl implements CatalogClient {
 		return restClient.exchange(catalogUrl + "/items",
 				new HttpEntity<Object>(buildHeaders()), HttpMethod.GET,
 				Map.class);
+	}
+
+	private String queryString(final List<String> itemIds) {
+		final Iterator<String> it = itemIds.iterator();
+		final StringBuilder sb = new StringBuilder("?itemids=");
+		while (it.hasNext()) {
+			sb.append(it.next());
+			if (it.hasNext()) {
+				sb.append(",");
+			}
+		}
+		return sb.toString();
 	}
 
 	private HttpHeaders buildHeaders() {

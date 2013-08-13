@@ -41,12 +41,13 @@ public class RecommenderController {
 		return null;
 	}
 
-	@RequestMapping(value = "/user/{userid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/{userid}/{type}", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public @ResponseBody
 	List<Item> collaborativeFiltering(
-			@PathVariable(value = "userid") final String userId) {
-		return cfRecommenderService.recommend(userId, 5);
+			@PathVariable(value = "userid") final String userId,
+			@PathVariable(value = "type") final String typeName) {
+		return cfRecommenderService.recommend(userId, typeName, 5);
 	}
 
 }

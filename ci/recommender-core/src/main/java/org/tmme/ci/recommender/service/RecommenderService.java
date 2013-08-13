@@ -6,6 +6,6 @@ import org.tmme.ci.models.Item;
 
 public interface RecommenderService {
 
-	List<Item> recommend(final String id, final int count);
+	List<Item> recommend(final String id, final String type, final int count);
 
 }

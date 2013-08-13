@@ -3,6 +3,7 @@ package org.tmme.ci.recommender.service.impl;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
@@ -45,14 +46,18 @@ public class CollaborativeFilteringRecommenderService implements
 	}
 
 	@Override
-	public List<Item> recommend(final String id, final int count) {
+	public List<Item> recommend(final String id, final String type,
+			final int count) {
 		try {
 			final List<RecommendedItem> recommendedItems = recommender
 					.recommend(idConverter.convert(id), count);
 			final List<String> itemIds = recommendedItemsConverter
 					.convert(recommendedItems);
-			final List<Item> items = catalogClient.getItemsByIds(itemIds);
-			return filter.filter(items, id);
+			if (!CollectionUtils.isEmpty(itemIds)) {
+				final List<Item> items = catalogClient.getItemsByIds(itemIds,
+						type);
+				return filter.filter(items, id);
+			}
 		} catch (final TasteException ex) {
 			LOG.error("Exception while trying to get recommendations {}",
 					ex.getMessage());

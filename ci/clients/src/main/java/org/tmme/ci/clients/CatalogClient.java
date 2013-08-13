@@ -9,7 +9,7 @@ public interface CatalogClient {
 
 	Item getItemById(String itemId, String itemType);
 
-	List<Item> getItemsByIds(List<String> itemIds);
+	List<Item> getItemsByIds(List<String> itemIds, String itemType);
 
 	Map<String, List<Item>> getItems();
 

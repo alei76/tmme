@@ -52,7 +52,7 @@
 		init-method="populate">
 		<constructor-arg ref="reviewRepository" />
 		<constructor-arg value="${analytics.startup.enabled}" />
-		<constructor-arg value="/analytics/reviews.csv" />
+		<constructor-arg value="${catalina.base}/conf/analytics/reviews.csv" />
 	</bean>
 
 	<bean id="analyticsService" class="org.tmme.ci.analytics.service.impl.AnalyticsServiceImpl">

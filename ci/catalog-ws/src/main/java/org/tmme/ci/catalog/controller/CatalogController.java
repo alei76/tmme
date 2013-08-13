@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.tmme.ci.catalog.service.CatalogService;
@@ -32,14 +33,14 @@ public class CatalogController {
 	@Autowired
 	private CatalogService catalogService;
 
-	@RequestMapping(value = "/{type}", method = RequestMethod.POST)
+	@RequestMapping(value = "/itemtypes/{type}", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public @ResponseBody
 	void createItemType(@PathVariable(value = "type") final String typeName) {
 		catalogService.createItemType(typeName);
 	}
 
-	@RequestMapping(value = "/{type}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/item/{type}", method = RequestMethod.PUT)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public @ResponseBody
 	void createItem(@PathVariable(value = "type") final String typeName,
@@ -48,7 +49,7 @@ public class CatalogController {
 		catalogService.createItem(typeName, body);
 	}
 
-	@RequestMapping(value = "/bulk/{type}", method = RequestMethod.POST)
+	@RequestMapping(value = "/items/{type}", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public @ResponseBody
 	void createItems(@PathVariable(value = "type") final String typeName,
@@ -57,16 +58,10 @@ public class CatalogController {
 		catalogService.createItems(typeName, body);
 	}
 
-	@RequestMapping(value = "/types", method = RequestMethod.GET)
+	@RequestMapping(value = "/itemtypes", method = RequestMethod.GET)
 	public @ResponseBody
 	Set<String> getItemTypes() {
 		return catalogService.getItemTypes();
-	}
-
-	@RequestMapping(value = "/{type}", method = RequestMethod.GET)
-	public @ResponseBody
-	List<Item> getItems(@PathVariable(value = "type") final String typeName) {
-		return catalogService.getItems(typeName);
 	}
 
 	@RequestMapping(value = "/item/{type}.{itemid}", method = RequestMethod.GET)
@@ -76,11 +71,18 @@ public class CatalogController {
 		return catalogService.getItem(typeName, itemId);
 	}
 
-	@RequestMapping(value = "/items/{itemids}", method = RequestMethod.GET)
+	@RequestMapping(value = "/items/{type}", method = RequestMethod.GET)
+	public @ResponseBody
+	List<Item> getItems(@PathVariable(value = "type") final String typeName) {
+		return catalogService.getItems(typeName);
+	}
+
+	@RequestMapping(value = "/items/{type}", method = RequestMethod.GET, params = "itemids")
 	public @ResponseBody
 	List<Item> getItem(
-			@PathVariable(value = "itemIds") final List<String> itemIds) {
-		return catalogService.getItems(itemIds);
+			@PathVariable(value = "type") final String typeName,
+			@RequestParam(value = "itemids", required = true) final List<String> itemIds) {
+		return catalogService.getItems(typeName, itemIds);
 	}
 
 	@RequestMapping(value = "/items", method = RequestMethod.GET)

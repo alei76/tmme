@@ -70,8 +70,8 @@ public class CatalogServiceImpl implements CatalogService {
 	}
 
 	@Override
-	public List<Item> getItems(final List<String> itemIds) {
-		return catalogRepository.findItemsByIds(itemIds);
+	public List<Item> getItems(final String typeName, final List<String> itemIds) {
+		return catalogRepository.findItemsByIds(itemIds, typeName);
 	}
 
 }
