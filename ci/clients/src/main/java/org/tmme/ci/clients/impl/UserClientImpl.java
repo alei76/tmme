@@ -24,8 +24,7 @@ public class UserClientImpl implements UserClient {
 	public User findByEmail(final String email) {
 		final HttpHeaders headers = new HttpHeaders();
 		headers.add("Accept", "application/json");
-		return restClient.exchange(idUrl + email, new HttpEntity<Object>(
-				headers), HttpMethod.GET, User.class);
+		return restClient.exchange(idUrl + "?user=" + email,
+				new HttpEntity<Object>(headers), HttpMethod.GET, User.class);
 	}
-
 }
