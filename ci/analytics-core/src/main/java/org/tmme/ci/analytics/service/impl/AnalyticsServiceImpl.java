@@ -107,7 +107,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 				acceptRecommendationRepository.save(new AcceptRecommendation(
 						userId, itemId));
 			}
-		};
+		}.execute();
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 				rejectRecommendationRepository.save(new RejectRecommendation(
 						userId, itemId));
 			}
-		};
+		}.execute();
 
 	}
 

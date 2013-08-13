@@ -20,16 +20,18 @@ public class RejectRecommendationFilter implements Filter<Item> {
 
 	@Override
 	public List<Item> filter(final List<Item> elements, final String userId) {
+		if (CollectionUtils.isEmpty(elements)) {
+			return elements;
+		}
+		final List<String> itemIds = analyticsClient
+				.getRejectedRecommendations(userId);
+		if (CollectionUtils.isEmpty(itemIds)) {
+			return elements;
+		}
 		final List<Item> filtered = new ArrayList<Item>();
-		if (!CollectionUtils.isEmpty(elements)) {
-			final List<String> itemIds = analyticsClient
-					.getRejectedRecommendations(userId);
-			if (!CollectionUtils.isEmpty(itemIds)) {
-				for (final Item element : elements) {
-					if (!itemIds.contains(element.getId())) {
-						filtered.add(element);
-					}
-				}
+		for (final Item element : elements) {
+			if (!itemIds.contains(element.getId())) {
+				filtered.add(element);
 			}
 		}
 		return filtered;

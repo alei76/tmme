@@ -26,10 +26,9 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> getRejectedRecommendations(final String userId) {
-		return restClient.exchange(analyticsUrl + "/rejects/user/" + userId,
+		return restClient.exchange(analyticsUrl + "/rejects?user=" + userId,
 				new HttpEntity<Object>(buildHeaders()), HttpMethod.GET,
 				List.class);
-
 	}
 
 	private HttpHeaders buildHeaders() {

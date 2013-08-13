@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.tmme.ci.analytics.models.Review;
@@ -68,10 +69,11 @@ public class AnalyticsController {
 		analyticsService.rejectRecommendation(userId, typeName, itemId);
 	}
 
-	@RequestMapping(value = "/rejects/user/{userid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/rejects", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	public @ResponseBody
-	List<String> rejects(@PathVariable(value = "userid") final String userId) {
+	List<String> rejects(
+			@RequestParam(value = "user", required = true) final String userId) {
 		return analyticsService.getRejects(userId);
 	}
 

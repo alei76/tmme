@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.Validate;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,21 +34,23 @@ public class CatalogClientImpl implements CatalogClient {
 				HttpMethod.GET, Item.class);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Item> getItemsByIds(final List<String> itemIds,
 			final String itemType) {
+		final ParameterizedTypeReference<List<Item>> typeRef = new ParameterizedTypeReference<List<Item>>() {
+		};
 		return restClient.exchange(catalogUrl + "/items/" + itemType
 				+ queryString(itemIds), new HttpEntity<Object>(buildHeaders()),
-				HttpMethod.GET, List.class);
+				HttpMethod.GET, typeRef);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, List<Item>> getItems() {
-		return restClient.exchange(catalogUrl + "/items",
-				new HttpEntity<Object>(buildHeaders()), HttpMethod.GET,
-				Map.class);
+		final ParameterizedTypeReference<Map<String, List<Item>>> typeRef = new ParameterizedTypeReference<Map<String, List<Item>>>() {
+		};
+		return restClient
+				.exchange(catalogUrl + "/items", new HttpEntity<Object>(
+						buildHeaders()), HttpMethod.GET, typeRef);
 	}
 
 	private String queryString(final List<String> itemIds) {
