@@ -135,7 +135,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 		abstract void action();
 
 		void execute() {
-			final Item item = catalogClient.findById(itemId, collectionName);
+			final Item item = catalogClient.getItemById(itemId, collectionName);
 			if (item == null) {
 				LOG.error("Item {} does not exist in collection {}", itemId,
 						collectionName);

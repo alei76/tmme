@@ -1,5 +1,6 @@
 package org.tmme.ci.catalog.repository.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -80,7 +81,7 @@ public class CatalogRepositoryImpl implements CatalogRepository {
 
 	@Override
 	public List<Item> findItemsByIds(final List<String> ids) {
-		List<Item> items = Collections.<Item> emptyList();
+		List<Item> items = new ArrayList<Item>();
 		if (CollectionUtils.isNotEmpty(ids)) {
 			final Query query = new Query(Criteria.where("id").in(ids));
 			items = mongoTemplate.find(query, Item.class);

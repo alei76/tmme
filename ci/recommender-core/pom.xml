@@ -14,7 +14,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.tmme.ci</groupId>
-			<artifactId>catalog-core</artifactId>
+			<artifactId>clients</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.mahout</groupId>

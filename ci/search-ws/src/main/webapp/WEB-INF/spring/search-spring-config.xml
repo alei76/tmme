@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 	xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
-		      http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 
@@ -25,7 +23,7 @@
 	</mvc:annotation-driven>
 
 	<mvc:default-servlet-handler />
-	
+
 	<bean id="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
 		<constructor-arg value="${solr.url}" />
 	</bean>
@@ -44,7 +42,7 @@
 	</bean>
 
 	<bean id="solrIndexer" class="org.tmme.ci.search.populator.SolrIndexer">
-		<constructor-arg ref="catalogService" />
+		<constructor-arg ref="catalogClient" />
 		<constructor-arg ref="solrSearchService" />
 		<constructor-arg value="${solr.update.index.oneshot}" />
 	</bean>
@@ -53,40 +51,24 @@
 	<task:scheduled-tasks scheduler="solrIndexerScheduler">
 		<task:scheduled ref="solrIndexer" method="updateIndex"
 			cron="${solr.update.index.cron}" />
-	</task:scheduled-tasks>	
+	</task:scheduled-tasks>
 
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"
-		scope="prototype">
-		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
-	</bean>
-
-	<util:list id="collectionBlackList" value-type="java.lang.String">
-		<value>socialconnections</value>
-		<value>users</value>
-		<value>system.indexes</value>
-		<value>reviews</value>
-		<value>purchases</value>
-		<value>visits</value>
-		<value>accept-recommendations</value>
-		<value>reject-recommendations</value>
-		<value>mongo_data_model_map</value>
-	</util:list>
-
-	<bean id="catalogRepository"
-		class="org.tmme.ci.catalog.repository.impl.CatalogRepositoryImpl">
-		<constructor-arg ref="mongoTemplate" />
-		<constructor-arg ref="collectionBlackList" />
-	</bean>
-
-	<mongo:repositories base-package="org.tmme.ci.catalog.repository">
-		<mongo:repository id="catalogRepository" />
-	</mongo:repositories>
-
-	<mongo:mongo host="${mongodb.host}" port="${mongodb.port}" />
-	<mongo:db-factory dbname="${mongodb.db}" />
-
-	<bean id="catalogService" class="org.tmme.ci.catalog.service.impl.CatalogServiceImpl">
-		<constructor-arg ref="catalogRepository" />
+	<bean id="catalogClient" class="org.tmme.ci.clients.impl.CatalogClientImpl">
+		<constructor-arg>
+			<bean class="org.tmme.ci.common.utils.RestClient">
+				<constructor-arg>
+					<bean class="org.springframework.web.client.RestTemplate">
+						<property name="messageConverters">
+							<list>
+								<bean
+									class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+							</list>
+						</property>
+					</bean>
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+		<constructor-arg value="${catalog.url}" />
 	</bean>
 
 </beans>

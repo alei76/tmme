@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
-		      http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
 
@@ -47,14 +45,14 @@
 	</bean>
 
 	<bean id="recommendedItemsConverter"
-		class="org.tmme.ci.recommender.converter.RecommendedItemsConverter" >
+		class="org.tmme.ci.recommender.converter.RecommendedItemsConverter">
 		<constructor-arg ref="recommenderDataModel" />
 	</bean>
-	
-	<bean id="idConverter" class="org.tmme.ci.recommender.converter.IdConverter" >
+
+	<bean id="idConverter" class="org.tmme.ci.recommender.converter.IdConverter">
 		<constructor-arg ref="recommenderDataModel" />
 	</bean>
-	
+
 	<bean id="recommenderFactory"
 		class="org.tmme.ci.recommender.cf.factory.impl.RecommenderFactoryImpl" />
 
@@ -67,45 +65,34 @@
 	</bean>
 
 	<bean id="collaborativeFilteringRecommenderService"
-		class="org.tmme.ci.recommender.service.impl.CollaborativeFilteringRecommenderService" >
+		class="org.tmme.ci.recommender.service.impl.CollaborativeFilteringRecommenderService">
 		<constructor-arg ref="recommender" />
-		<constructor-arg ref="catalogRepository" />
+		<constructor-arg ref="catalogClient" />
 		<constructor-arg ref="recommendedItemsConverter" />
 		<constructor-arg ref="idConverter" />
 	</bean>
-		
+
 	<bean id="contentBasedRecommenderService"
 		class="org.tmme.ci.recommender.service.impl.ContentBasedRecommenderService" />
 
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"
+
+	<bean id="genericClient" class="org.tmme.ci.common.utils.RestClient"
 		scope="prototype">
-		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+		<constructor-arg>
+			<bean class="org.springframework.web.client.RestTemplate">
+				<property name="messageConverters">
+					<list>
+						<bean
+							class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+					</list>
+				</property>
+			</bean>
+		</constructor-arg>
 	</bean>
 
-	<util:list id="collectionBlackList" value-type="java.lang.String">
-		<value>socialconnections</value>
-		<value>users</value>
-		<value>system.indexes</value>
-		<value>reviews</value>
-		<value>purchases</value>
-		<value>visits</value>
-		<value>accept-recommendations</value>
-		<value>reject-recommendations</value>
-		<value>mongo_data_model_map</value>
-	</util:list>
-
-	<bean id="catalogRepository"
-		class="org.tmme.ci.catalog.repository.impl.CatalogRepositoryImpl">
-		<constructor-arg ref="mongoTemplate" />
-		<constructor-arg ref="collectionBlackList" />
+	<bean id="catalogClient" class="org.tmme.ci.clients.impl.CatalogClientImpl">
+		<constructor-arg ref="genericClient" />
+		<constructor-arg value="${catalog.url}" />
 	</bean>
-
-	<mongo:repositories base-package="org.tmme.ci.*.repository">
-		<mongo:repository id="catalogRepository" />
-	</mongo:repositories>
-
-	<mongo:mongo host="${mongodb.host}" port="${mongodb.port}" />
-	<mongo:db-factory dbname="${mongodb.db}" />
-
 
 </beans>

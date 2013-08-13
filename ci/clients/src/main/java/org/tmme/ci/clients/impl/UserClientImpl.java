@@ -4,6 +4,7 @@ import org.apache.commons.lang3.Validate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.tmme.ci.clients.UserClient;
 import org.tmme.ci.common.utils.RestClient;
 import org.tmme.ci.models.User;
@@ -23,7 +24,7 @@ public class UserClientImpl implements UserClient {
 	@Override
 	public User findByEmail(final String email) {
 		final HttpHeaders headers = new HttpHeaders();
-		headers.add("Accept", "application/json");
+		headers.setContentType(MediaType.APPLICATION_JSON);
 		return restClient.exchange(idUrl + "?user=" + email,
 				new HttpEntity<Object>(headers), HttpMethod.GET, User.class);
 	}

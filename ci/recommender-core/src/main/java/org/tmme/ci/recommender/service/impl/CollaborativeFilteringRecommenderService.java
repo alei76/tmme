@@ -10,7 +10,7 @@ import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
-import org.tmme.ci.catalog.repository.CatalogRepository;
+import org.tmme.ci.clients.CatalogClient;
 import org.tmme.ci.models.Item;
 import org.tmme.ci.recommender.service.RecommenderService;
 
@@ -20,20 +20,24 @@ public class CollaborativeFilteringRecommenderService implements
 	private static final Logger LOG = LoggerFactory
 			.getLogger(CollaborativeFilteringRecommenderService.class);
 
-	private Recommender recommender;
-	private CatalogRepository catalogRepository;
-	private Converter<List<RecommendedItem>, List<String>> recommendedItemsConverter;
-	private Converter<String, Long> idConverter;
+	private final Recommender recommender;
+	private final CatalogClient catalogClient;
+	private final Converter<List<RecommendedItem>, List<String>> recommendedItemsConverter;
+	private final Converter<String, Long> idConverter;
 
 	public CollaborativeFilteringRecommenderService(
 			final Recommender recommender,
-			final CatalogRepository catalogRepository,
+			final CatalogClient catalogClient,
 			final Converter<List<RecommendedItem>, List<String>> recommendedItemsConverter,
 			final Converter<String, Long> idConverter) {
 		Validate.notNull(recommender);
-		Validate.notNull(catalogRepository);
+		Validate.notNull(catalogClient);
 		Validate.notNull(recommendedItemsConverter);
 		Validate.notNull(idConverter);
+		this.recommender = recommender;
+		this.catalogClient = catalogClient;
+		this.recommendedItemsConverter = recommendedItemsConverter;
+		this.idConverter = idConverter;
 	}
 
 	@Override
@@ -43,7 +47,7 @@ public class CollaborativeFilteringRecommenderService implements
 					.recommend(idConverter.convert(id), count);
 			final List<String> itemIds = recommendedItemsConverter
 					.convert(recommendedItems);
-			return catalogRepository.findItemsByIds(itemIds);
+			return catalogClient.getItemsByIds(itemIds);
 		} catch (final TasteException ex) {
 			LOG.error("Exception while trying to get recommendations {}",
 					ex.getMessage());

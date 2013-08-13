@@ -2,6 +2,7 @@ package org.tmme.ci.catalog.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,6 +74,19 @@ public class CatalogController {
 	Item getItem(@PathVariable(value = "type") final String typeName,
 			@PathVariable(value = "itemid") final String itemId) {
 		return catalogService.getItem(typeName, itemId);
+	}
+
+	@RequestMapping(value = "/items/{itemids}", method = RequestMethod.GET)
+	public @ResponseBody
+	List<Item> getItem(
+			@PathVariable(value = "itemIds") final List<String> itemIds) {
+		return catalogService.getItems(itemIds);
+	}
+
+	@RequestMapping(value = "/items", method = RequestMethod.GET)
+	public @ResponseBody
+	Map<String, List<Item>> getAllItems() {
+		return catalogService.getItems();
 	}
 
 	@ExceptionHandler({ IllegalArgumentException.class, IOException.class,
