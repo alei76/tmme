@@ -158,7 +158,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 	public List<String> getRejects(final String userId) {
 		final List<RejectRecommendation> rejections = rejectRecommendationRepository
 				.findByUserId(userId);
-		final List<String> itemIds = new ArrayList<>();
+		final List<String> itemIds = new ArrayList<String>();
 		if (CollectionUtils.isNotEmpty(rejections)) {
 			CollectionUtils.forAllDo(rejections, new Closure() {
 				@Override
