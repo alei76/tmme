@@ -1,5 +1,7 @@
 package org.tmme.ci.analytics.service;
 
+import java.util.List;
+
 import org.tmme.ci.analytics.models.Review;
 
 public interface AnalyticsService {
@@ -13,5 +15,7 @@ public interface AnalyticsService {
 	void acceptRecommendation(String userId, String typeName, String itemId);
 
 	void rejectRecommendation(String userId, String typeName, String itemId);
+
+	List<String> getRejects(String userId);
 
 }

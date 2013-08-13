@@ -1,7 +1,11 @@
 package org.tmme.ci.analytics.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.apache.commons.collections.Closure;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -148,6 +152,23 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 			}
 			action();
 		}
+	}
+
+	@Override
+	public List<String> getRejects(final String userId) {
+		final List<RejectRecommendation> rejections = rejectRecommendationRepository
+				.findByUserId(userId);
+		final List<String> itemIds = new ArrayList<>();
+		if (CollectionUtils.isNotEmpty(rejections)) {
+			CollectionUtils.forAllDo(rejections, new Closure() {
+				@Override
+				public void execute(final Object rejectRecommendation) {
+					itemIds.add(((RejectRecommendation) rejectRecommendation)
+							.getItemId());
+				}
+			});
+		}
+		return itemIds;
 	}
 
 }

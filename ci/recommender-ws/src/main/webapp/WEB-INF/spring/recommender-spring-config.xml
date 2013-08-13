@@ -70,6 +70,7 @@
 		<constructor-arg ref="catalogClient" />
 		<constructor-arg ref="recommendedItemsConverter" />
 		<constructor-arg ref="idConverter" />
+		<constructor-arg ref="filter" />
 	</bean>
 
 	<bean id="contentBasedRecommenderService"
@@ -93,6 +94,15 @@
 	<bean id="catalogClient" class="org.tmme.ci.clients.impl.CatalogClientImpl">
 		<constructor-arg ref="genericClient" />
 		<constructor-arg value="${catalog.url}" />
+	</bean>
+
+	<bean id="analyticsClient" class="org.tmme.ci.clients.impl.AnalyticsClientImpl">
+		<constructor-arg ref="genericClient" />
+		<constructor-arg value="${analytics.url}" />
+	</bean>
+	
+	<bean id="filter" class="org.tmme.ci.recommender.filter.impl.RejectRecommendationFilter">
+		<constructor-arg ref="analyticsClient" />
 	</bean>
 
 </beans>

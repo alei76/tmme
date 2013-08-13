@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
 import org.tmme.ci.clients.CatalogClient;
 import org.tmme.ci.models.Item;
+import org.tmme.ci.recommender.filter.Filter;
 import org.tmme.ci.recommender.service.RecommenderService;
 
 public class CollaborativeFilteringRecommenderService implements
@@ -24,20 +25,23 @@ public class CollaborativeFilteringRecommenderService implements
 	private final CatalogClient catalogClient;
 	private final Converter<List<RecommendedItem>, List<String>> recommendedItemsConverter;
 	private final Converter<String, Long> idConverter;
+	private final Filter<Item> filter;
 
 	public CollaborativeFilteringRecommenderService(
 			final Recommender recommender,
 			final CatalogClient catalogClient,
 			final Converter<List<RecommendedItem>, List<String>> recommendedItemsConverter,
-			final Converter<String, Long> idConverter) {
+			final Converter<String, Long> idConverter, final Filter<Item> filter) {
 		Validate.notNull(recommender);
 		Validate.notNull(catalogClient);
 		Validate.notNull(recommendedItemsConverter);
 		Validate.notNull(idConverter);
+		Validate.notNull(filter);
 		this.recommender = recommender;
 		this.catalogClient = catalogClient;
 		this.recommendedItemsConverter = recommendedItemsConverter;
 		this.idConverter = idConverter;
+		this.filter = filter;
 	}
 
 	@Override
@@ -47,7 +51,8 @@ public class CollaborativeFilteringRecommenderService implements
 					.recommend(idConverter.convert(id), count);
 			final List<String> itemIds = recommendedItemsConverter
 					.convert(recommendedItems);
-			return catalogClient.getItemsByIds(itemIds);
+			final List<Item> items = catalogClient.getItemsByIds(itemIds);
+			return filter.filter(items, id);
 		} catch (final TasteException ex) {
 			LOG.error("Exception while trying to get recommendations {}",
 					ex.getMessage());

@@ -1,5 +1,7 @@
 package org.tmme.ci.analytics.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -64,6 +66,13 @@ public class AnalyticsController {
 			@PathVariable(value = "type") final String typeName,
 			@PathVariable(value = "itemid") final String itemId) {
 		analyticsService.rejectRecommendation(userId, typeName, itemId);
+	}
+
+	@RequestMapping(value = "/rejects/user/{userid}", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public @ResponseBody
+	List<String> rejects(@PathVariable(value = "userid") final String userId) {
+		return analyticsService.getRejects(userId);
 	}
 
 }

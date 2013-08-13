@@ -2,12 +2,14 @@ package org.tmme.ci.analytics.models;
 
 import org.apache.commons.lang3.Validate;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "reject-recommendations")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RejectRecommendation {
 
+	@Indexed
 	private String userId;
 	private String itemId;
 
