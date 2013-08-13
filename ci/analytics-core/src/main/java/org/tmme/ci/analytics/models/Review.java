@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Review {
 
 	private String description;
-	private int rate;
+	private double rate;
 	private String userId;
 	private String itemId;
 	private Date createdAt;
@@ -33,7 +33,7 @@ public class Review {
 	/**
 	 * @return the rate
 	 */
-	public int getRate() {
+	public double getRate() {
 		return rate;
 	}
 
@@ -41,7 +41,7 @@ public class Review {
 	 * @param rate
 	 *            the rate to set
 	 */
-	public void setRate(final int rate) {
+	public void setRate(final double rate) {
 		this.rate = rate;
 	}
 

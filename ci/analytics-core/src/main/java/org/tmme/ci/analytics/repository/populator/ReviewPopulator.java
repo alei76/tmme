@@ -46,7 +46,7 @@ public class ReviewPopulator {
 					final Review review = new Review();
 					review.setUserId(tokens[0]);
 					review.setItemId(tokens[1]);
-					review.setRate(Integer.valueOf(tokens[2]));
+					review.setRate(Double.valueOf(tokens[2]));
 					reviews.add(review);
 				}
 				reviewRepository.save(reviews);

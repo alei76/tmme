@@ -24,24 +24,17 @@
 
 	<mvc:default-servlet-handler />
 
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"
-		scope="prototype">
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	</bean>
 
 	<mongo:repositories base-package="org.tmme.ci.analytics.repository">
-		<mongo:repository id="reviewRepository"
-			mongo-template-ref="mongoTemplate" />
-		<mongo:repository id="purchaseRepository"
-			mongo-template-ref="mongoTemplate" />
-		<mongo:repository id="visitRepository"
-			mongo-template-ref="mongoTemplate" />
-		<mongo:repository id="purchaseRepository"
-			mongo-template-ref="mongoTemplate" />
-		<mongo:repository id="acceptRecommendationRepository"
-			mongo-template-ref="mongoTemplate" />
-		<mongo:repository id="rejectRecommendationRepository"
-			mongo-template-ref="mongoTemplate" />
+		<mongo:repository id="reviewRepository" />
+		<mongo:repository id="purchaseRepository" />
+		<mongo:repository id="visitRepository" />
+		<mongo:repository id="purchaseRepository" />
+		<mongo:repository id="acceptRecommendationRepository" />
+		<mongo:repository id="rejectRecommendationRepository" />
 	</mongo:repositories>
 
 	<mongo:mongo host="${mongodb.host}" port="${mongodb.port}" />
