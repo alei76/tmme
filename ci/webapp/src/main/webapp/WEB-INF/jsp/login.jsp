@@ -1,18 +1,34 @@
 <%@ taglib prefix="authz" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<html>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>Log in</title>
-	<link href="ui/css/flat-ui.css" rel="stylesheet">
-	<link href="ui/images/favicon.ico" rel="shortcut icon">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title>CI Sample Login Page</title>
+
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet" />
+    <link href="ui/css/custom-style.css" rel="stylesheet" />
+
+
 </head>
+<body>
+<div class="container">
+    <a href="#myModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
+
+
+
+
+</div>
+</body>
+</html>
+
+<%--
 
 <body>
 
-	<div>
+<div>
 		<c:if test="${not empty param.authentication_error}">
 			<p>Your login attempt was not successful.</p>
 		</c:if>
@@ -45,4 +61,4 @@
 
 </body>
 
-</html>
+</html>--%>
