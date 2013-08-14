@@ -11,16 +11,19 @@ import org.tmme.ci.recommender.filter.Filter;
 
 public class RejectRecommendationFilter implements Filter<Item> {
 
+	private final boolean useAnalytics;
 	private final AnalyticsClient analyticsClient;
 
-	public RejectRecommendationFilter(final AnalyticsClient analyticsClient) {
+	public RejectRecommendationFilter(final AnalyticsClient analyticsClient,
+			final boolean useAnalytics) {
 		Validate.notNull(analyticsClient);
 		this.analyticsClient = analyticsClient;
+		this.useAnalytics = useAnalytics;
 	}
 
 	@Override
 	public List<Item> filter(final List<Item> elements, final String userId) {
-		if (CollectionUtils.isEmpty(elements)) {
+		if (!useAnalytics || CollectionUtils.isEmpty(elements)) {
 			return elements;
 		}
 		final List<String> itemIds = analyticsClient

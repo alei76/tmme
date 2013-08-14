@@ -103,6 +103,7 @@
 	
 	<bean id="filter" class="org.tmme.ci.recommender.filter.impl.RejectRecommendationFilter">
 		<constructor-arg ref="analyticsClient" />
+		<constructor-arg value="${use.analytics}" />
 	</bean>
 
 </beans>
