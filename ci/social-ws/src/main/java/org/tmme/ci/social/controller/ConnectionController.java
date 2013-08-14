@@ -2,6 +2,7 @@ package org.tmme.ci.social.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +35,12 @@ public class ConnectionController {
 
 	private static final Pattern PATTERN = Pattern
 			.compile("(redirect_uri=)((http).+)");
+
+	@RequestMapping(value = "/status", method = RequestMethod.GET, params = "user")
+	public @ResponseBody
+	Map<String, Boolean> status(final NativeWebRequest request) {
+		return connectorService.connectionStatus(request);
+	}
 
 	@RequestMapping(value = "/{providerid}", method = RequestMethod.POST, params = "user")
 	public @ResponseBody

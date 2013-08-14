@@ -1,6 +1,7 @@
 package org.tmme.ci.webapp.controller;
 
 import java.security.Principal;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.view.RedirectView;
 import org.tmme.ci.clients.SocialClient;
 
@@ -25,8 +25,10 @@ public class SocialConnectController {
 	private SocialClient socialClient;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String social(final NativeWebRequest request, final Model model) {
-		// connectorService.connectionStatus(request, model);
+	public String social(final Model model, final Principal principal) {
+		final Map<String, Boolean> status = socialClient
+				.connectionStatus(principal.getName());
+		model.addAllAttributes(status);
 		return "social";
 	}
 

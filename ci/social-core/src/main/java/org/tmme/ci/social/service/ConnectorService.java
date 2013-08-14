@@ -1,6 +1,7 @@
 package org.tmme.ci.social.service;
 
-import org.springframework.ui.Model;
+import java.util.Map;
+
 import org.springframework.web.context.request.NativeWebRequest;
 
 public interface ConnectorService {
@@ -13,6 +14,6 @@ public interface ConnectorService {
 
 	void oauth1Callback(String providerId, NativeWebRequest request);
 
-	void connectionStatus(NativeWebRequest request, Model model);
+	Map<String, Boolean> connectionStatus(NativeWebRequest request);
 
 }

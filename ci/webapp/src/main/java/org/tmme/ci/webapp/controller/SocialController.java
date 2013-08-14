@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.tmme.ci.clients.SocialClient;
 
 @Controller
@@ -20,14 +21,16 @@ public class SocialController {
 	private SocialClient socialClient;
 
 	@RequestMapping(value = "/likes/{providerid}", method = RequestMethod.GET)
-	public List<String> likes(
+	public @ResponseBody
+	List<String> likes(
 			@PathVariable(value = "providerid") final String providerId,
 			final HttpServletRequest request, final Principal principal) {
 		return socialClient.likes(principal.getName(), providerId);
 	}
 
 	@RequestMapping(value = "/checkins/{providerid}", method = RequestMethod.GET)
-	public List<String> checkins(
+	public @ResponseBody
+	List<String> checkins(
 			@PathVariable(value = "providerid") final String providerId,
 			final Principal principal) {
 		return socialClient.checkins(principal.getName(), providerId);

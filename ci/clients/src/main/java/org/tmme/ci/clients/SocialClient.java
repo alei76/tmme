@@ -1,6 +1,7 @@
 package org.tmme.ci.clients;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SocialClient {
 
@@ -17,5 +18,7 @@ public interface SocialClient {
 	List<String> likes(String userId, String providerId);
 
 	List<String> checkins(String userId, String providerId);
+
+	Map<String, Boolean> connectionStatus(String userId);
 
 }

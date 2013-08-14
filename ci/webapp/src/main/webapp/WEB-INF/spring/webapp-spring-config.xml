@@ -94,7 +94,7 @@
 
 	<bean id="socialClient" class="org.tmme.ci.clients.impl.SocialClientImpl">
 		<constructor-arg ref="restClient" />
-		<constructor-arg value="${social.connect.url}" />
+		<constructor-arg value="${social.url}" />
 	</bean>
 
 	<bean id="restClient" class="org.tmme.ci.common.utils.RestClient">
