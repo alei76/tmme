@@ -56,6 +56,7 @@
 		<constructor-arg ref="rejectRecommendationRepository" />
 		<constructor-arg ref="catalogClient" />
 		<constructor-arg ref="userClient" />
+		<constructor-arg value="${analytics.checks.enabled}" />
 	</bean>
 
 	<bean id="genericClient" class="org.tmme.ci.common.utils.RestClient"

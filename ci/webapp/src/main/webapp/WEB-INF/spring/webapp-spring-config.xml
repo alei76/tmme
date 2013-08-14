@@ -48,37 +48,40 @@
 			</bean>
 		</property>
 	</bean>
-	
-	<http access-denied-page="/login.jsp?authorization_error=true" disable-url-rewriting="true"
-		xmlns="http://www.springframework.org/schema/security">
-		<form-login authentication-failure-url="/login.jsp?authentication_error=true" default-target-url="/index.jsp"
-			login-page="/login.jsp" login-processing-url="/login.do" />
+
+	<http access-denied-page="/login.jsp?authorization_error=true"
+		disable-url-rewriting="true" xmlns="http://www.springframework.org/schema/security">
+		<form-login authentication-failure-url="/login.jsp?authentication_error=true"
+			default-target-url="/index.jsp" login-page="/login.jsp"
+			login-processing-url="/login.do" />
 		<logout logout-success-url="/index.jsp" logout-url="/logout.do" />
 		<anonymous />
+		<intercept-url pattern="/social/**" access="ROLE_USER" />
 	</http>
 
-	<authentication-manager alias="authenticationManager" xmlns="http://www.springframework.org/schema/security">
+	<authentication-manager alias="authenticationManager"
+		xmlns="http://www.springframework.org/schema/security">
 		<authentication-provider user-service-ref="userDetailsService">
-			<password-encoder hash="sha" >
-				<salt-source user-property="username"/>
+			<password-encoder hash="sha">
+				<salt-source user-property="username" />
 			</password-encoder>
 		</authentication-provider>
 	</authentication-manager>
 
-	<bean id="userDetailsService" class="org.tmme.ci.id.service.impl.UserDetailsServiceImpl" >
+	<bean id="userDetailsService" class="org.tmme.ci.id.service.impl.UserDetailsServiceImpl">
 		<constructor-arg ref="userRepository" />
-	</bean>	
-	
-	<bean id="userService" class="org.tmme.ci.id.service.impl.UserServiceImpl" >
+	</bean>
+
+	<bean id="userService" class="org.tmme.ci.id.service.impl.UserServiceImpl">
 		<constructor-arg ref="userRepository" />
 		<constructor-arg ref="passwordEncoder" />
 		<constructor-arg ref="userDetailsService" />
-	</bean>			
+	</bean>
 
 	<bean id="passwordEncoder"
 		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />
 
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate" >
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	</bean>
 
@@ -88,13 +91,13 @@
 
 	<mongo:mongo host="${mongodb.host}" port="${mongodb.port}" />
 	<mongo:db-factory dbname="${mongodb.db}" />
-	
-	<bean id="socialClient" class="org.tmme.ci.clients.impl.SocialClientImpl" >
+
+	<bean id="socialClient" class="org.tmme.ci.clients.impl.SocialClientImpl">
 		<constructor-arg ref="restClient" />
 		<constructor-arg value="${social.connect.url}" />
 	</bean>
-	
-	<bean id="restClient" class="org.tmme.ci.common.utils.RestClient" >
+
+	<bean id="restClient" class="org.tmme.ci.common.utils.RestClient">
 		<constructor-arg>
 			<bean class="org.springframework.web.client.RestTemplate" />
 		</constructor-arg>

@@ -1,5 +1,7 @@
 package org.tmme.ci.clients;
 
+import java.util.List;
+
 public interface SocialClient {
 
 	String connect(String userId, String providerId, String referer);
@@ -11,5 +13,9 @@ public interface SocialClient {
 
 	void oauth1Callback(String userId, String providerId, String oauthToken,
 			String referer);
+
+	List<String> likes(String userId, String providerId);
+
+	List<String> checkins(String userId, String providerId);
 
 }

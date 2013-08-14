@@ -39,13 +39,16 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 	private final CatalogClient catalogClient;
 	private final UserClient userClient;
 
+	private final boolean enableChecks;
+
 	public AnalyticsServiceImpl(
 			final ReviewRepository reviewRepository,
 			final VisitRepository visitRepository,
 			final PurchaseRepository purchaseRepository,
 			final AcceptRecommendationRepository acceptRecommendationRepository,
 			final RejectRecommendationRepository rejectRecommendationRepository,
-			final CatalogClient catalogClient, final UserClient userClient) {
+			final CatalogClient catalogClient, final UserClient userClient,
+			final boolean enableChecks) {
 		Validate.notNull(reviewRepository);
 		Validate.notNull(visitRepository);
 		Validate.notNull(purchaseRepository);
@@ -60,6 +63,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 		this.rejectRecommendationRepository = rejectRecommendationRepository;
 		this.catalogClient = catalogClient;
 		this.userClient = userClient;
+		this.enableChecks = enableChecks;
 	}
 
 	@Override
@@ -139,16 +143,19 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 		abstract void action();
 
 		void execute() {
-			final Item item = catalogClient.getItemById(itemId, collectionName);
-			if (item == null) {
-				LOG.error("Item {} does not exist in collection {}", itemId,
+			if (enableChecks) {
+				final Item item = catalogClient.getItemById(itemId,
 						collectionName);
-				throw new IllegalArgumentException("Item does not exist");
-			}
-			final User user = userClient.findByEmail(email);
-			if (user == null) {
-				LOG.error("User {} does not exist", email);
-				throw new IllegalArgumentException("User does not exist");
+				if (item == null) {
+					LOG.error("Item {} does not exist in collection {}",
+							itemId, collectionName);
+					throw new IllegalArgumentException("Item does not exist");
+				}
+				final User user = userClient.findByEmail(email);
+				if (user == null) {
+					LOG.error("User {} does not exist", email);
+					throw new IllegalArgumentException("User does not exist");
+				}
 			}
 			action();
 		}
