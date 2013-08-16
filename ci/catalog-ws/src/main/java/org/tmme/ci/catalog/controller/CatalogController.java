@@ -79,7 +79,7 @@ public class CatalogController {
 
 	@RequestMapping(value = "/items/{type}", method = RequestMethod.GET, params = "itemids")
 	public @ResponseBody
-	List<Item> getItem(
+	List<Item> getItems(
 			@PathVariable(value = "type") final String typeName,
 			@RequestParam(value = "itemids", required = true) final List<String> itemIds) {
 		return catalogService.getItems(typeName, itemIds);
