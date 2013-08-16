@@ -30,6 +30,8 @@ public class RecommenderIRStatsEvaluatorTest extends
 				GenericRecommenderIRStatsEvaluator.CHOOSE_THRESHOLD, 1.0);
 	}
 
+	// Sample
+
 	@Test
 	public void testSampleDataUserAndPearson() throws Exception {
 		final IRStatistics result = testUser(SAMPLE_FILE,
@@ -93,4 +95,40 @@ public class RecommenderIRStatsEvaluatorTest extends
 		Assert.assertEquals(0.25, result.getPrecision());
 		Assert.assertEquals(0.5, result.getRecall());
 	}
+
+	// GroupLens
+
+/*
+	@Test
+	public void testGroupLensDataItemAndPearson() throws Exception {
+		final IRStatistics result = testItem(GROUP_LENS_FILE,
+				RecommenderSimilarity.PEARSON);
+		Assert.assertEquals(0.0, result.getPrecision());
+		Assert.assertEquals(1.0, result.getRecall());
+	}
+
+	@Test
+	public void testGroupLensDataItemAndEuclidean() throws Exception {
+		final IRStatistics result = testItem(GROUP_LENS_FILE,
+				RecommenderSimilarity.EUCLIDEAN);
+		Assert.assertEquals(0.0, result.getPrecision());
+		Assert.assertEquals(1.0, result.getRecall());
+	}
+
+	@Test
+	public void testGroupLensDataItemAndTanimoto() throws Exception {
+		final IRStatistics result = testItem(GROUP_LENS_FILE,
+				RecommenderSimilarity.TANIMOTO);
+		Assert.assertEquals(0.0, result.getPrecision());
+		Assert.assertEquals(1.0, result.getRecall());
+	}
+
+	@Test
+	public void testGroupLensDataItemAndLog() throws Exception {
+		final IRStatistics result = testItem(GROUP_LENS_FILE,
+				RecommenderSimilarity.LOG);
+		Assert.assertEquals(0.0, result.getPrecision());
+		Assert.assertEquals(0.5, result.getRecall());
+	}
+*/
 }

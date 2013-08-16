@@ -9,10 +9,6 @@ import org.apache.mahout.common.RandomUtils;
 public abstract class RecommenderEvaluatorTest extends
 		BaseEvaluatorTest<Double> {
 
-	protected static final String SAMPLE_FILE = "src/test/resources/sample.csv";
-	protected static final String GROUP_LENS_FILE = "src/test/resources/grouplens.csv";
-	protected static final String APPUP_FILE = "src/test/resources/appup.csv";
-
 	protected RecommenderEvaluator recommenderEvaluator;
 
 	protected void setUp(final RecommenderEvaluator evaluator) {
