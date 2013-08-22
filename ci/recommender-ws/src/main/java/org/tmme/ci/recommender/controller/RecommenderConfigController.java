@@ -18,7 +18,7 @@ public class RecommenderConfigController {
 	@Autowired
 	private RecommenderConfigService recommenderConfigService;
 
-	@RequestMapping(value = "/{type}.{itemid}", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public @ResponseBody
 	void configure(@RequestBody final ClusterConfig config) {
