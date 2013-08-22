@@ -38,6 +38,8 @@
 		<value>accept-recommendations</value>
 		<value>reject-recommendations</value>
 		<value>mongo_data_model_map</value>
+		<value>clusterconfig</value>
+		<value>clustereditem</value>
 	</util:list>
 
 	<bean id="catalogRepository"

@@ -6,24 +6,37 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.mahout.common.HadoopUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class InputFilesGenerator {
+public class FileUtils {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(InputFilesGenerator.class);
+	private static final Logger LOG = LoggerFactory.getLogger(FileUtils.class);
 
-	private InputFilesGenerator() {
+	private FileUtils() {
 		// avoid instantiation
 	}
 
-	public static void generateFile(final Configuration config,
+	public static void deleteFolder(final Configuration config,
+			final String folder) {
+		try {
+			final Path path = new Path(folder);
+			final FileSystem fs = FileSystem.get(config);
+			if (fs.exists(path)) {
+				HadoopUtil.delete(config, path);
+			}
+		} catch (final IOException e) {
+			LOG.error("Exception deleting folder {}. Message {}", folder,
+					e.getMessage());
+		}
+	}
+
+	public static void createFile(final Configuration config,
 			final String folder, final String fileName, final String content) {
 		FileSystem fileSystem = null;
 		FSDataOutputStream out = null;
 		try {
-
 			fileSystem = FileSystem.get(config);
 			final Path path = new Path(folder + "/" + fileName);
 			out = fileSystem.create(path);
