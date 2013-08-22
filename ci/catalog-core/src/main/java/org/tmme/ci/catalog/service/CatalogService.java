@@ -24,4 +24,6 @@ public interface CatalogService {
 
 	List<Item> getItems(String typeName, List<String> itemIds);
 
+	Map<String, List<Item>> getItemsForTypes(Set<String> typeNames);
+
 }

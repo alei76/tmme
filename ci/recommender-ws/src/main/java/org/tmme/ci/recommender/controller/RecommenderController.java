@@ -29,7 +29,7 @@ public class RecommenderController {
 	List<Item> contentBased(
 			@PathVariable(value = "type") final String typeName,
 			@PathVariable(value = "itemid") final String itemId) {
-		return null;
+		return cbRecommenderService.recommend(itemId, typeName, 5);
 	}
 
 	@RequestMapping(value = "/user/{userid}/{type}.{itemid}", method = RequestMethod.GET)

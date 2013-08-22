@@ -91,6 +91,13 @@ public class CatalogController {
 		return catalogService.getItems();
 	}
 
+	@RequestMapping(value = "/items", method = RequestMethod.GET, params = "types")
+	public @ResponseBody
+	Map<String, List<Item>> getAllItemsForTypes(
+			@RequestParam(value = "types", required = true) final Set<String> types) {
+		return catalogService.getItemsForTypes(types);
+	}
+
 	@ExceptionHandler({ IllegalArgumentException.class, IOException.class,
 			NullPointerException.class })
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Bad Request")

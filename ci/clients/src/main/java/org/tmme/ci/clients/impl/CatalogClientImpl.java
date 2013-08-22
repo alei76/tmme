@@ -40,8 +40,8 @@ public class CatalogClientImpl implements CatalogClient {
 		final ParameterizedTypeReference<List<Item>> typeRef = new ParameterizedTypeReference<List<Item>>() {
 		};
 		return restClient.exchange(catalogUrl + "/items/" + itemType
-				+ queryString(itemIds), new HttpEntity<Object>(buildHeaders()),
-				HttpMethod.GET, typeRef);
+				+ queryString("itemIds", itemIds), new HttpEntity<Object>(
+				buildHeaders()), HttpMethod.GET, typeRef);
 	}
 
 	@Override
@@ -53,9 +53,22 @@ public class CatalogClientImpl implements CatalogClient {
 						buildHeaders()), HttpMethod.GET, typeRef);
 	}
 
-	private String queryString(final List<String> itemIds) {
-		final Iterator<String> it = itemIds.iterator();
-		final StringBuilder sb = new StringBuilder("?itemids=");
+	@Override
+	public Map<String, List<Item>> getItemsForTypes(
+			final List<String> criteriaTypes) {
+		final ParameterizedTypeReference<Map<String, List<Item>>> typeRef = new ParameterizedTypeReference<Map<String, List<Item>>>() {
+		};
+		return restClient
+				.exchange(
+						catalogUrl + "/items"
+								+ queryString("types", criteriaTypes),
+						new HttpEntity<Object>(buildHeaders()), HttpMethod.GET,
+						typeRef);
+	}
+
+	private String queryString(final String name, final List<String> values) {
+		final Iterator<String> it = values.iterator();
+		final StringBuilder sb = new StringBuilder("?" + name + "=");
 		while (it.hasNext()) {
 			sb.append(it.next());
 			if (it.hasNext()) {

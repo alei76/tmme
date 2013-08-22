@@ -51,17 +51,7 @@ public class CatalogServiceImpl implements CatalogService {
 
 	@Override
 	public Map<String, List<Item>> getItems() {
-		final Set<String> itemTypes = getItemTypes();
-		final Map<String, List<Item>> items = new HashMap<String, List<Item>>();
-		if (CollectionUtils.isNotEmpty(itemTypes)) {
-			CollectionUtils.forAllDo(itemTypes, new Closure() {
-				@Override
-				public void execute(final Object typeName) {
-					items.put((String) typeName, getItems((String) typeName));
-				}
-			});
-		}
-		return items;
+		return getItemsForTypes(getItemTypes());
 	}
 
 	@Override
@@ -72,6 +62,20 @@ public class CatalogServiceImpl implements CatalogService {
 	@Override
 	public List<Item> getItems(final String typeName, final List<String> itemIds) {
 		return catalogRepository.findItemsByIds(itemIds, typeName);
+	}
+
+	@Override
+	public Map<String, List<Item>> getItemsForTypes(final Set<String> itemTypes) {
+		final Map<String, List<Item>> items = new HashMap<String, List<Item>>();
+		if (CollectionUtils.isNotEmpty(itemTypes)) {
+			CollectionUtils.forAllDo(itemTypes, new Closure() {
+				@Override
+				public void execute(final Object typeName) {
+					items.put((String) typeName, getItems((String) typeName));
+				}
+			});
+		}
+		return items;
 	}
 
 }

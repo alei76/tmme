@@ -13,4 +13,6 @@ public interface CatalogClient {
 
 	Map<String, List<Item>> getItems();
 
+	Map<String, List<Item>> getItemsForTypes(List<String> criteriaTypes);
+
 }
