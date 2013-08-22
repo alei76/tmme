@@ -113,6 +113,18 @@
 			</bean>
 		</constructor-arg>
 	</bean>
+	
+	<bean id="clusterTask" class="org.tmme.ci.recommender.cb.task.impl.ClusterTaskImpl" >
+		<constructor-arg ref="clusterConfigRepository" />
+		<constructor-arg ref="catalogClient" />
+		<constructor-arg ref="configuration" />
+	</bean>
+	
+	<bean id="configuration" class="org.tmme.ci.recommender.cb.utils.ConfigurationFactory"
+			factory-method="createNewConfiguration" >
+		<constructor-arg value="${cb.recommender.filesystem}" />
+		<constructor-arg value="${hadoop.home}/conf/core-site.xml" />
+	</bean>
 
 	<bean id="catalogClient" class="org.tmme.ci.clients.impl.CatalogClientImpl">
 		<constructor-arg ref="genericClient" />
