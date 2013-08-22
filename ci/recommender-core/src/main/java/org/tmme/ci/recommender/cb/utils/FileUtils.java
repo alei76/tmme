@@ -18,18 +18,21 @@ public class FileUtils {
 		// avoid instantiation
 	}
 
-	public static void deleteFolder(final Configuration config,
-			final String folder) {
+	public static void deletePath(final Configuration config, final Path path) {
 		try {
-			final Path path = new Path(folder);
 			final FileSystem fs = FileSystem.get(config);
 			if (fs.exists(path)) {
 				HadoopUtil.delete(config, path);
 			}
 		} catch (final IOException e) {
-			LOG.error("Exception deleting folder {}. Message {}", folder,
-					e.getMessage());
+			LOG.error("Exception deleting folder {}. Message {}",
+					path.getName(), e.getMessage());
 		}
+	}
+
+	public static void deleteFolder(final Configuration config,
+			final String folder) {
+		deletePath(config, new Path(folder));
 	}
 
 	public static void createFile(final Configuration config,
@@ -40,7 +43,7 @@ public class FileUtils {
 			fileSystem = FileSystem.get(config);
 			final Path path = new Path(folder + "/" + fileName);
 			out = fileSystem.create(path);
-			out.writeUTF(content);
+			out.writeBytes(content);
 
 		} catch (final IOException e) {
 			LOG.error("Exception writing file {} into folder {}. Message {}",
