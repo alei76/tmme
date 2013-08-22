@@ -14,8 +14,7 @@ public class SequenceFileTransformer {
 			final String inputDir, final String outputDir) throws Exception {
 		final SequenceFilesFromDirectory sffd = new SequenceFilesFromDirectory();
 		sffd.setConf(config);
-		ToolRunner.run(sffd,
-				new String[] { "-i " + inputDir, "-o" + outputDir });
+		ToolRunner.run(sffd, new String[] { "-i", inputDir, "-o", outputDir });
 	}
 
 }
