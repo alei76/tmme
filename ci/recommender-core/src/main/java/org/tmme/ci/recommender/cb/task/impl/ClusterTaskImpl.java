@@ -1,6 +1,5 @@
 package org.tmme.ci.recommender.cb.task.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,14 +10,11 @@ import org.apache.commons.lang.Validate;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.mahout.clustering.Cluster;
-import org.apache.mahout.clustering.kmeans.KMeansDriver;
-import org.apache.mahout.clustering.kmeans.RandomSeedGenerator;
-import org.apache.mahout.common.distance.CosineDistanceMeasure;
-import org.apache.mahout.common.distance.DistanceMeasure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tmme.ci.clients.CatalogClient;
 import org.tmme.ci.models.Item;
+import org.tmme.ci.recommender.cb.algorithm.Algorithm;
 import org.tmme.ci.recommender.cb.model.ClusterConfig;
 import org.tmme.ci.recommender.cb.repository.ClusterConfigRepository;
 import org.tmme.ci.recommender.cb.task.ClusterTask;
@@ -35,16 +31,20 @@ public class ClusterTaskImpl implements ClusterTask {
 	private final ClusterConfigRepository clusterConfigRepository;
 	private final CatalogClient catalogClient;
 	private final Configuration config;
+	private final Algorithm algorithm;
 
 	public ClusterTaskImpl(
 			final ClusterConfigRepository clusterConfigRepository,
-			final CatalogClient catalogClient, final Configuration config) {
+			final CatalogClient catalogClient, final Configuration config,
+			final Algorithm algorithm) {
 		Validate.notNull(clusterConfigRepository);
 		Validate.notNull(catalogClient);
 		Validate.notNull(config);
+		Validate.notNull(algorithm);
 		this.catalogClient = catalogClient;
 		this.clusterConfigRepository = clusterConfigRepository;
 		this.config = config;
+		this.algorithm = algorithm;
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class ClusterTaskImpl implements ClusterTask {
 				LOG.info("No items found for config type {}", type);
 				continue;
 			}
-			// TODO check if its better to cleanup everything
+
 			FileUtils.deleteFolder(config, type);
 
 			for (final Item item : items) {
@@ -118,35 +118,23 @@ public class ClusterTaskImpl implements ClusterTask {
 
 				final String vectorsFolder = sparseVectorOuputDir
 						+ "/tfidf-vectors";
-				final Path samples = new Path(vectorsFolder + "/part-r-00000");
-				final Path output = new Path(type + "/" + attributeName + "/"
-						+ "output");
-				FileUtils.deletePath(config, output);
+				final String inputDir = vectorsFolder + "/part-r-00000";
+				final String outputDir = type + "/" + attributeName + "/"
+						+ algorithm.toString();
 
-				final DistanceMeasure measure = new CosineDistanceMeasure();
-				final Path clustersIn = new Path(output, "random-seeds");
-				try {
-					RandomSeedGenerator.buildRandom(config, samples,
-							clustersIn, 3, measure);
-				} catch (final IOException e) {
-					LOG.error(
-							"Exception while generating random seeds. Message {}",
-							e.getMessage());
-					return;
-				}
+				FileUtils.deleteFolder(config, outputDir);
 
 				try {
-					KMeansDriver.run(config, samples, clustersIn, output,
-							measure, 0.01, 10, true, 0.0, true);
+					algorithm.compute(inputDir, outputDir);
+
 				} catch (final Exception ex) {
-					LOG.error(
-							"Exception while running kmeans driver. Message {}",
+					LOG.error("Exception while computing cluster. Message {}",
 							ex.getMessage());
 					return;
 				}
 
 				final List<List<Cluster>> clusters = ClusterHelper
-						.readClusters(config, output);
+						.readClusters(config, new Path(outputDir));
 
 				if (CollectionUtils.isNotEmpty(clusters)) {
 					for (final Cluster cluster : clusters

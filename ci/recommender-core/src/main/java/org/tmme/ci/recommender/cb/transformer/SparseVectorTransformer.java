@@ -1,27 +1,10 @@
 package org.tmme.ci.recommender.cb.transformer;
 
-import java.util.List;
-
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.Path;
-import org.apache.mahout.common.Pair;
-import org.apache.mahout.vectorizer.DictionaryVectorizer;
-import org.apache.mahout.vectorizer.DocumentProcessor;
-import org.apache.mahout.vectorizer.tfidf.TFIDFConverter;
-import org.tmme.ci.recommender.cb.analyzer.CustomAnalyzer;
-import org.tmme.ci.recommender.cb.utils.FileUtils;
+import org.apache.hadoop.util.ToolRunner;
+import org.apache.mahout.vectorizer.SparseVectorsFromSequenceFiles;
 
 public class SparseVectorTransformer {
-
-	private static final int minSupport = 5;
-	private static final int minDf = 5;
-	private static final int maxDFPercent = 95;
-	private static final int maxNGramSize = 1;
-	private static final float minLLRValue = 50;
-	private static final int reduceTasks = 1;
-	private static final int chunkSize = 200;
-	private static final int norm = 2;
-	private static final boolean sequentialAccessOutput = true;
 
 	private SparseVectorTransformer() {
 		// avoid instantiation
@@ -29,31 +12,16 @@ public class SparseVectorTransformer {
 
 	public static void toSparseVectors(final Configuration config,
 			final String inputDir, final String outputDir) throws Exception {
-
-		FileUtils.deleteFolder(config, outputDir);
-
-		final Path tokenizedPath = new Path(outputDir,
-				DocumentProcessor.TOKENIZED_DOCUMENT_OUTPUT_FOLDER);
-
-		DocumentProcessor.tokenizeDocuments(new Path(inputDir),
-				CustomAnalyzer.class, tokenizedPath, config);
-
-		DictionaryVectorizer.createTermFrequencyVectors(tokenizedPath,
-				new Path(outputDir),
-				DictionaryVectorizer.DOCUMENT_VECTOR_OUTPUT_FOLDER, config,
-				minSupport, maxNGramSize, minLLRValue, 2, true, reduceTasks,
-				chunkSize, sequentialAccessOutput, false);
-
-		final Pair<Long[], List<Path>> dfData = TFIDFConverter.calculateDF(
-				new Path(outputDir,
-						DictionaryVectorizer.DOCUMENT_VECTOR_OUTPUT_FOLDER),
-				new Path(outputDir), config, chunkSize);
-
-		TFIDFConverter.processTfIdf(new Path(outputDir,
-				DictionaryVectorizer.DOCUMENT_VECTOR_OUTPUT_FOLDER), new Path(
-				outputDir), config, dfData, minDf, maxDFPercent, norm, true,
-				sequentialAccessOutput, false, reduceTasks);
+		// ./mahout seq2sparse -i movies/description/seqfiles -o
+		// movies/description/vectors -a
+		// org.apache.lucene.analysis.standard.StandardAnalyzer -chunk 100 -md 1
+		// -xs 3.0 -wt TFIDF -n 2 -ow -seq -nv
+		final SparseVectorsFromSequenceFiles svfsf = new SparseVectorsFromSequenceFiles();
+		svfsf.setConf(config);
+		ToolRunner.run(svfsf, new String[] { "-i", inputDir, "-o", outputDir,
+				"-a", "org.apache.lucene.analysis.standard.StandardAnalyzer",
+				"-chunk", "100", "-md", "1", "-xs", "3.0", "-wt", "TFIDF",
+				"-n", "2", "-ow", "-seq", "-nv" });
 
 	}
-
 }

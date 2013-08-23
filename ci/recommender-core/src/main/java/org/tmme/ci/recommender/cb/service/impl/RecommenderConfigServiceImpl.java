@@ -15,8 +15,8 @@ public class RecommenderConfigServiceImpl implements RecommenderConfigService {
 	}
 
 	@Override
-	public void addConfig(final ClusterConfig criteria) {
-		repository.save(criteria);
+	public void addConfig(final ClusterConfig clusterConfig) {
+		repository.save(clusterConfig);
 	}
 
 }

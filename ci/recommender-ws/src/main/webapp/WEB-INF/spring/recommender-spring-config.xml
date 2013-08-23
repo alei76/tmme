@@ -118,6 +118,7 @@
 		<constructor-arg ref="clusterConfigRepository" />
 		<constructor-arg ref="catalogClient" />
 		<constructor-arg ref="configuration" />
+		<constructor-arg ref="algorithm" />
 	</bean>
 	
 	<bean id="configuration" class="org.tmme.ci.recommender.cb.utils.ConfigurationFactory"
@@ -140,6 +141,19 @@
 		class="org.tmme.ci.recommender.filter.impl.RejectRecommendationFilter">
 		<constructor-arg ref="analyticsClient" />
 		<constructor-arg value="${use.analytics}" />
+	</bean>
+	
+	<bean id="algorithm" factory-bean="algorithmFactory" factory-method="createAlgorithm">
+		<constructor-arg value="${cb.recommender.name}" />
+		<constructor-arg>
+			<bean id="argsMap" class="org.tmme.ci.common.utils.MapCreator" factory-method="createMap">
+				<constructor-arg value="${cb.recommender.args}" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="algorithmFactory" class="org.tmme.ci.recommender.cb.factory.impl.AlgorithmFactoryImpl" >
+		<constructor-arg ref="configuration" />
 	</bean>
 
 </beans>
