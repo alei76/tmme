@@ -125,6 +125,7 @@ public class ClusterTaskImpl implements ClusterTask {
 				FileUtils.deleteFolder(config, outputDir);
 
 				try {
+
 					algorithm.compute(inputDir, outputDir);
 
 				} catch (final Exception ex) {

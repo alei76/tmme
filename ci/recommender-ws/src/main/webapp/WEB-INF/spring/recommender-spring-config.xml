@@ -153,7 +153,7 @@
 	</bean>
 	
 	<bean id="algorithmFactory" class="org.tmme.ci.recommender.cb.factory.impl.AlgorithmFactoryImpl" >
-		<constructor-arg ref="configuration" />
+		<constructor-arg value="${mahout.home}/bin/mahout" />
 	</bean>
 
 </beans>

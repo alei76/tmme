@@ -1,20 +1,18 @@
 package org.tmme.ci.recommender.cb.algorithm.impl;
 
-import org.apache.commons.lang.Validate;
-import org.apache.hadoop.conf.Configuration;
+import org.mortbay.log.Log;
 import org.tmme.ci.recommender.cb.algorithm.Algorithm;
 
 public abstract class AbstractAlgorithm implements Algorithm {
 
-	private final Configuration configuration;
-
-	public AbstractAlgorithm(final Configuration configuration) {
-		Validate.notNull(configuration);
-		this.configuration = configuration;
+	@Override
+	public void compute(final String inputDir, final String outputDir)
+			throws Exception {
+		final String cmd = buildCmd(inputDir, outputDir);
+		Log.info("Executing the command {}", cmd);
+		Runtime.getRuntime().exec(cmd).waitFor();
 	}
 
-	protected Configuration getConfig() {
-		return configuration;
-	}
+	protected abstract String buildCmd(String inputDir, String outputDir);
 
 }

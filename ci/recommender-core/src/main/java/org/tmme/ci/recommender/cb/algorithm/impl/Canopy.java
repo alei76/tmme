@@ -3,9 +3,6 @@ package org.tmme.ci.recommender.cb.algorithm.impl;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.util.ToolRunner;
-import org.apache.mahout.clustering.canopy.CanopyDriver;
 
 public class Canopy extends AbstractAlgorithm {
 
@@ -13,31 +10,32 @@ public class Canopy extends AbstractAlgorithm {
 	private String t1;
 	private String t2;
 
-	public Canopy(final Configuration conf, final Map<String, String> args) {
-		super(conf);
+	private final String executable;
+
+	public Canopy(final String executable, final Map<String, String> args) {
+		Validate.notEmpty(executable);
+		this.executable = executable;
 		parseArgs(args);
 	}
 
 	@Override
-	public void compute(final String inputDir, final String outputDir)
-			throws Exception {
-		final CanopyDriver canopy = new CanopyDriver();
-		canopy.setConf(getConfig());
-		ToolRunner.run(canopy, new String[] { "-i", inputDir, "-o", outputDir,
-				"-dm", distanceMeasure, "-t1", t1, "-t2", t2, "-cl", "-ow",
-				"-xm", "mapreduce" });
+	protected String buildCmd(final String inputDir, final String outputDir) {
+		return new StringBuilder(executable).append(" -i ").append(inputDir)
+				.append(" -o ").append(outputDir).append(" -dm ")
+				.append(distanceMeasure).append(" -t1 ").append(t1)
+				.append(" -t2 ").append(t2).append(" -ow -cl").toString();
 	}
 
 	private void parseArgs(final Map<String, String> args) {
 		Validate.notEmpty(args);
 		final String dm = args.get("dm");
-		Validate.notNull(dm);
+		Validate.notEmpty(dm);
 		this.distanceMeasure = dm;
 		final String t1 = args.get("t1");
-		Validate.notNull(t1);
+		Validate.notEmpty(t1);
 		this.t1 = t1;
 		final String t2 = args.get("t2");
-		Validate.notNull(t2);
+		Validate.notEmpty(t2);
 		this.t2 = t2;
 
 	}
@@ -46,4 +44,5 @@ public class Canopy extends AbstractAlgorithm {
 	public String toString() {
 		return "canopy";
 	}
+
 }

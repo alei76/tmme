@@ -3,9 +3,6 @@ package org.tmme.ci.recommender.cb.algorithm.impl;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.util.ToolRunner;
-import org.apache.mahout.clustering.kmeans.KMeansDriver;
 
 public class KMeans extends AbstractAlgorithm {
 
@@ -13,31 +10,33 @@ public class KMeans extends AbstractAlgorithm {
 	private String k;
 	private String x;
 
-	public KMeans(final Configuration conf, final Map<String, String> args) {
-		super(conf);
+	private final String executable;
+
+	public KMeans(final String executable, final Map<String, String> args) {
+		Validate.notEmpty(executable);
+		this.executable = executable;
 		parseArgs(args);
 	}
 
 	@Override
-	public void compute(final String inputDir, final String outputDir)
-			throws Exception {
-		final KMeansDriver kmeans = new KMeansDriver();
-		kmeans.setConf(getConfig());
-		ToolRunner.run(kmeans, new String[] { "-c",
-				outputDir + "/random-seeds", "-i", inputDir, "-o", outputDir,
-				"-dm", distanceMeasure, "-k", k, "-x", x, "-ow", "-cl" });
+	protected String buildCmd(final String inputDir, final String outputDir) {
+		return new StringBuilder(executable).append(" kmeans -c ")
+				.append(outputDir).append("/random-seeds -i ").append(inputDir)
+				.append(" -o ").append(outputDir).append(" -dm ")
+				.append(distanceMeasure).append(" -k ").append(k)
+				.append(" -x ").append(x).append(" -ow -cl").toString();
 	}
 
 	private void parseArgs(final Map<String, String> args) {
 		Validate.notEmpty(args);
 		final String dm = args.get("dm");
-		Validate.notNull(dm);
+		Validate.notEmpty(dm);
 		this.distanceMeasure = dm;
 		final String k = args.get("k");
-		Validate.notNull(k);
+		Validate.notEmpty(k);
 		this.k = k;
 		final String x = args.get("x");
-		Validate.notNull(x);
+		Validate.notEmpty(x);
 		this.x = x;
 
 	}
