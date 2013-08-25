@@ -8,15 +8,15 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.Path;
-import org.apache.mahout.clustering.Cluster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tmme.ci.clients.CatalogClient;
 import org.tmme.ci.models.Item;
 import org.tmme.ci.recommender.cb.algorithm.Algorithm;
 import org.tmme.ci.recommender.cb.model.ClusterConfig;
+import org.tmme.ci.recommender.cb.model.ClusteredItem;
 import org.tmme.ci.recommender.cb.repository.ClusterConfigRepository;
+import org.tmme.ci.recommender.cb.repository.ClusteredItemRepository;
 import org.tmme.ci.recommender.cb.task.ClusterTask;
 import org.tmme.ci.recommender.cb.transformer.SequenceFileTransformer;
 import org.tmme.ci.recommender.cb.transformer.SparseVectorTransformer;
@@ -29,6 +29,7 @@ public class ClusterTaskImpl implements ClusterTask {
 			.getLogger(ClusterTaskImpl.class);
 
 	private final ClusterConfigRepository clusterConfigRepository;
+	private final ClusteredItemRepository clusteredItemRepository;
 	private final CatalogClient catalogClient;
 	private final Configuration config;
 	private final Algorithm algorithm;
@@ -36,15 +37,18 @@ public class ClusterTaskImpl implements ClusterTask {
 	public ClusterTaskImpl(
 			final ClusterConfigRepository clusterConfigRepository,
 			final CatalogClient catalogClient, final Configuration config,
-			final Algorithm algorithm) {
+			final Algorithm algorithm,
+			final ClusteredItemRepository clusteredItemRepository) {
 		Validate.notNull(clusterConfigRepository);
 		Validate.notNull(catalogClient);
 		Validate.notNull(config);
 		Validate.notNull(algorithm);
+		Validate.notNull(clusteredItemRepository);
 		this.catalogClient = catalogClient;
 		this.clusterConfigRepository = clusterConfigRepository;
 		this.config = config;
 		this.algorithm = algorithm;
+		this.clusteredItemRepository = clusteredItemRepository;
 	}
 
 	@Override
@@ -134,16 +138,12 @@ public class ClusterTaskImpl implements ClusterTask {
 					return;
 				}
 
-				final List<List<Cluster>> clusters = ClusterHelper
-						.readClusters(config, new Path(outputDir));
-
-				if (CollectionUtils.isNotEmpty(clusters)) {
-					for (final Cluster cluster : clusters
-							.get(clusters.size() - 1)) {
-						System.out.println("Cluster id: " + cluster.getId()
-								+ " center: "
-								+ cluster.getCenter().asFormatString());
-					}
+				final List<ClusteredItem> clusteredItems = ClusterHelper
+						.readClusteredItems(config, outputDir, attributeName);
+				if (CollectionUtils.isNotEmpty(clusteredItems)) {
+					// TODO delete just the ones that have this attributeName
+					clusteredItemRepository.deleteAll();
+					clusteredItemRepository.save(clusteredItems);
 				}
 			}
 

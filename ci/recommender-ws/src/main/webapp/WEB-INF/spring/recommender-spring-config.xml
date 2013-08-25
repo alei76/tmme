@@ -119,6 +119,7 @@
 		<constructor-arg ref="catalogClient" />
 		<constructor-arg ref="configuration" />
 		<constructor-arg ref="algorithm" />
+		<constructor-arg ref="clusteredItemRepository" />
 	</bean>
 	
 	<bean id="configuration" class="org.tmme.ci.recommender.cb.utils.ConfigurationFactory"

@@ -10,7 +10,9 @@ public class ClusteredItem {
 
 	@Indexed
 	private String clusterId;
-	@Indexed(unique = true)
+	@Indexed
+	private String attribute;
+	@Indexed
 	private String itemId;
 
 	public String getClusterId() {
@@ -27,6 +29,20 @@ public class ClusteredItem {
 
 	public void setItemId(final String itemId) {
 		this.itemId = itemId;
+	}
+
+	public void setAttribute(final String attribute) {
+		this.attribute = attribute;
+	}
+
+	public String getAttribute() {
+		return this.attribute;
+	}
+
+	@Override
+	public String toString() {
+		return "clusterId: " + clusterId + ", itemId:" + itemId
+				+ ", attribute:" + attribute;
 	}
 
 }
