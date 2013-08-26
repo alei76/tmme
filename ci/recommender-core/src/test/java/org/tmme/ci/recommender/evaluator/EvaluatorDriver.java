@@ -9,7 +9,7 @@ public class EvaluatorDriver {
 		String filename = "src/test/resources/sample4cf.csv";
 		final RecommenderEvaluatorRMSTest rms = new RecommenderEvaluatorRMSTest();
 		rms.setUp();
-		System.out.println("### Sample - RMSE - User Based ###");
+		System.out.println("### Sample4CF - RMSE - User Based ###");
 		double result = rms.testUser(filename, RecommenderSimilarity.EUCLIDEAN);
 		System.out.println("Euclidean Similarity: " + result);
 		result = rms.testUser(filename, RecommenderSimilarity.PEARSON);
@@ -19,7 +19,7 @@ public class EvaluatorDriver {
 		result = rms.testUser(filename, RecommenderSimilarity.LOG);
 		System.out.println("Log-Likelihood Similarity: " + result);
 
-		System.out.println("### Sample - RMSE - Item Based ###");
+		System.out.println("### Sample4CF - RMSE - Item Based ###");
 		result = rms.testItem(filename, RecommenderSimilarity.EUCLIDEAN);
 		System.out.println("Euclidean Similarity: " + result);
 		result = rms.testItem(filename, RecommenderSimilarity.PEARSON);
@@ -31,7 +31,7 @@ public class EvaluatorDriver {
 
 		final RecommenderEvaluatorAverageAbsoluteDifferenceTest aad = new RecommenderEvaluatorAverageAbsoluteDifferenceTest();
 		aad.setUp();
-		System.out.println("### Sample - AAD - User Based ###");
+		System.out.println("### Sample4CF - AAD - User Based ###");
 		result = aad.testUser(filename, RecommenderSimilarity.EUCLIDEAN);
 		System.out.println("Euclidean Similarity: " + result);
 		result = aad.testUser(filename, RecommenderSimilarity.PEARSON);
@@ -41,7 +41,7 @@ public class EvaluatorDriver {
 		result = aad.testUser(filename, RecommenderSimilarity.LOG);
 		System.out.println("Log-Likelihood Similarity: " + result);
 
-		System.out.println("### Sample - AAD - Item Based ###");
+		System.out.println("### Sample4CF - AAD - Item Based ###");
 		result = aad.testItem(filename, RecommenderSimilarity.EUCLIDEAN);
 		System.out.println("Euclidean Similarity: " + result);
 		result = aad.testItem(filename, RecommenderSimilarity.PEARSON);
@@ -53,7 +53,7 @@ public class EvaluatorDriver {
 
 		final RecommenderIRStatsEvaluatorTest irStats = new RecommenderIRStatsEvaluatorTest();
 		irStats.setUp();
-		System.out.println("### Sample - PrecisionRecall - User Based ###");
+		System.out.println("### Sample4CF - PrecisionRecall - User Based ###");
 		IRStatistics stats = irStats.testUser(filename,
 				RecommenderSimilarity.EUCLIDEAN);
 		System.out.println("Euclidean Similarity:");
@@ -72,7 +72,7 @@ public class EvaluatorDriver {
 		System.out.println(" Precision: " + stats.getPrecision());
 		System.out.println(" Recall: " + stats.getRecall());
 
-		System.out.println("### Sample - PrecisionRecall - Item Based ###");
+		System.out.println("### Sample4CF - PrecisionRecall - Item Based ###");
 		stats = irStats.testItem(filename, RecommenderSimilarity.EUCLIDEAN);
 		System.out.println("Euclidean Similarity:");
 		System.out.println(" Precision: " + stats.getPrecision());
