@@ -21,21 +21,21 @@ public class RecommenderEvaluatorAverageAbsoluteDifferenceTest extends
 	public void testSampleDataUserAndPearson() throws Exception {
 		final double result = testUser(SAMPLE_FILE,
 				RecommenderSimilarity.PEARSON);
-		Assert.assertEquals(1.0, result);
+		Assert.assertTrue(Double.isNaN(result));
 	}
 
 	@Test
 	public void testSampleDataUserAndEuclidean() throws Exception {
 		final double result = testUser(SAMPLE_FILE,
 				RecommenderSimilarity.EUCLIDEAN);
-		Assert.assertEquals(1.29, roundTwoDecimals(result));
+		Assert.assertEquals(1.0, roundTwoDecimals(result));
 	}
 
 	@Test
 	public void testSampleDataUserAndTanimoto() throws Exception {
 		final double result = testUser(SAMPLE_FILE,
 				RecommenderSimilarity.TANIMOTO);
-		Assert.assertEquals(1.0, result);
+		Assert.assertEquals(1.125, result);
 	}
 
 	@Test
@@ -48,27 +48,27 @@ public class RecommenderEvaluatorAverageAbsoluteDifferenceTest extends
 	public void testSampleDataItemAndPearson() throws Exception {
 		final double result = testItem(SAMPLE_FILE,
 				RecommenderSimilarity.PEARSON);
-		Assert.assertEquals(1.25, result);
+		Assert.assertTrue(Double.isNaN(result));
 	}
 
 	@Test
 	public void testSampleDataItemAndEuclidean() throws Exception {
 		final double result = testItem(SAMPLE_FILE,
 				RecommenderSimilarity.EUCLIDEAN);
-		Assert.assertEquals(1.09, roundTwoDecimals(result));
+		Assert.assertEquals(0.45, roundTwoDecimals(result));
 	}
 
 	@Test
 	public void testSampleDataItemAndTanimoto() throws Exception {
 		final double result = testItem(SAMPLE_FILE,
 				RecommenderSimilarity.TANIMOTO);
-		Assert.assertEquals(1.29, roundTwoDecimals(result));
+		Assert.assertEquals(0.67, roundTwoDecimals(result));
 	}
 
 	@Test
 	public void testSampleDataItemAndLog() throws Exception {
 		final double result = testItem(SAMPLE_FILE, RecommenderSimilarity.LOG);
-		Assert.assertEquals(0.99, roundTwoDecimals(result));
+		Assert.assertEquals(0.44, roundTwoDecimals(result));
 	}
 
 	// Client
@@ -77,7 +77,7 @@ public class RecommenderEvaluatorAverageAbsoluteDifferenceTest extends
 	public void testClientDataUserAndEuclidean() throws Exception {
 		final double result = testUser(CLIENT_FILE,
 				RecommenderSimilarity.EUCLIDEAN);
-		Assert.assertEquals(0.0, result);
+		Assert.assertEquals(0.17, roundTwoDecimals(result));
 	}
 
 	@Test
@@ -104,20 +104,20 @@ public class RecommenderEvaluatorAverageAbsoluteDifferenceTest extends
 	public void testClientDataItemAndEuclidean() throws Exception {
 		final double result = testItem(CLIENT_FILE,
 				RecommenderSimilarity.EUCLIDEAN);
-		Assert.assertEquals(0.30, roundTwoDecimals(result));
+		Assert.assertEquals(0.42, roundTwoDecimals(result));
 	}
 
 	@Test
 	public void testClientDataItemAndTanimoto() throws Exception {
 		final double result = testItem(CLIENT_FILE,
 				RecommenderSimilarity.TANIMOTO);
-		Assert.assertEquals(0.26, roundTwoDecimals(result));
+		Assert.assertEquals(0.42, roundTwoDecimals(result));
 	}
 
 	@Test
 	public void testClientDataItemAndLog() throws Exception {
 		final double result = testItem(CLIENT_FILE, RecommenderSimilarity.LOG);
-		Assert.assertEquals(0.32, roundTwoDecimals(result));
+		Assert.assertEquals(0.47, roundTwoDecimals(result));
 	}
 
 	// GroupLens
@@ -126,21 +126,21 @@ public class RecommenderEvaluatorAverageAbsoluteDifferenceTest extends
 	public void testGroupLensDataUserAndPearson() throws Exception {
 		final double result = testUser(GROUP_LENS_FILE,
 				RecommenderSimilarity.PEARSON);
-		Assert.assertEquals(0.98, roundTwoDecimals(result));
+		Assert.assertEquals(0.95, roundTwoDecimals(result));
 	}
 
 	@Test
 	public void testGroupLensDataUserAndEuclidean() throws Exception {
 		final double result = testUser(GROUP_LENS_FILE,
 				RecommenderSimilarity.EUCLIDEAN);
-		Assert.assertEquals(0.91, roundTwoDecimals(result));
+		Assert.assertEquals(0.92, roundTwoDecimals(result));
 	}
 
 	@Test
 	public void testGroupLensDataUserAndTanimoto() throws Exception {
 		final double result = testUser(GROUP_LENS_FILE,
 				RecommenderSimilarity.TANIMOTO);
-		Assert.assertEquals(0.88, roundTwoDecimals(result));
+		Assert.assertEquals(0.87, roundTwoDecimals(result));
 	}
 
 	@Test
@@ -154,7 +154,7 @@ public class RecommenderEvaluatorAverageAbsoluteDifferenceTest extends
 	public void testGroupLensDataItemAndPearson() throws Exception {
 		final double result = testItem(GROUP_LENS_FILE,
 				RecommenderSimilarity.PEARSON);
-		Assert.assertEquals(0.85, roundTwoDecimals(result));
+		Assert.assertEquals(0.84, roundTwoDecimals(result));
 	}
 
 	@Test
@@ -168,14 +168,14 @@ public class RecommenderEvaluatorAverageAbsoluteDifferenceTest extends
 	public void testGroupLensDataItemAndTanimoto() throws Exception {
 		final double result = testItem(GROUP_LENS_FILE,
 				RecommenderSimilarity.TANIMOTO);
-		Assert.assertEquals(0.80, roundTwoDecimals(result));
+		Assert.assertEquals(0.79, roundTwoDecimals(result));
 	}
 
 	@Test
 	public void testGroupLensDataItemAndLog() throws Exception {
 		final double result = testItem(GROUP_LENS_FILE,
 				RecommenderSimilarity.LOG);
-		Assert.assertEquals(0.82, roundTwoDecimals(result));
+		Assert.assertEquals(0.81, roundTwoDecimals(result));
 	}
 
 }
