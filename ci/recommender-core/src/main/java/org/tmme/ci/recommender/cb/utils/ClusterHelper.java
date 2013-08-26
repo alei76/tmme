@@ -17,6 +17,7 @@ import org.apache.mahout.clustering.iterator.ClusterWritable;
 import org.apache.mahout.common.iterator.sequencefile.PathFilters;
 import org.apache.mahout.common.iterator.sequencefile.PathType;
 import org.apache.mahout.common.iterator.sequencefile.SequenceFileDirValueIterable;
+import org.apache.mahout.math.Arrays;
 import org.apache.mahout.math.NamedVector;
 import org.apache.mahout.math.Vector;
 import org.apache.mahout.math.VectorWritable;
@@ -112,6 +113,8 @@ public class ClusterHelper {
 				}
 			}
 		}
+		LOG.debug("Clustered Items: {}",
+				Arrays.toString(clusteredItems.toArray()));
 		return clusteredItems;
 	}
 }
