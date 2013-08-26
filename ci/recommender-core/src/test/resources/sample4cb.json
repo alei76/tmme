@@ -1,0 +1,129 @@
+[ 
+{
+"id" : "101",
+"name" : "Forrest Gump",
+"description" : "Forrest Gump is a simple man with a low I.Q. but good intentions. He is running through childhood with his best and only friend Jenny. His 'mama' teaches him the ways of life and leaves him to choose his destiny. Forrest joins the army for service in Vietnam, finding new friends called Dan and Bubba, he wins medals, creates a famous shrimp fishing fleet, inspires people to jog, starts a ping-pong craze, create the smiley, write bumper stickers and songs, donating to people and meeting the president several times. However, this is all irrelevant to Forrest who can only think of his childhood sweetheart Jenny Curran. Who has messed up her life. Although in the end all he wants to prove is that anyone can love anyone.",
+"director" : "Robert Zemeckis"
+},
+{
+"id" : "102",
+"name" : "BraveHeart",
+"description" : "William Wallace is a Scottish rebel who leads an uprising against the cruel English ruler Edward the Longshanks, who wishes to inherit the crown of Scotland for himself. When he was a young boy, William Wallace's father and brother, along with many others, lost their lives trying to free Scotland. Once he loses another of his loved ones, William Wallace begins his long quest to make Scotland free once and for all, along with the assistance of Robert the Bruce.",
+"director": "Mel Gibson"
+
+},
+{
+"id" : "103",
+"name" : "The Godfather I",
+"description" : "The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding with his wife Wendy. His beloved son Michael has just come home from the war, but does not intend to become part of his father's business. Through Michael's life the nature of the family business becomes clear. The business of the family is just like the head of the family, kind and benevolent to those who give respect, but given to ruthless violence whenever anything stands against the good of the family. Don Vito lives his life in the way of the old country, but times are changing and some don't want to follow the old ways and look out for community and family. An up and coming rival of the Corleone family wants to start selling drugs in New York, and needs the Don's influence to further his plan. The clash of the Don's fading old world values and the new ways will demand a terrible price, especially from Michael, all for the sake of the family.",
+"director": "Francis Ford Coppola"
+},
+{
+"id" : "104",
+"name" : "The Godfather II",
+"description" : "The continuing saga of the Corleone crime family tells the story of a young Vito Corleone growing up in Sicily and in 1910s New York; and follows Michael Corleone in the 1950s as he attempts to expand the family business into Las Vegas, Hollywood and Cuba.",
+"director" : "Francis Ford Coppola"
+},
+{
+"id" : "105",
+"name" : "The Godfather III",
+"description" : "In the final instalment of the Godfather Trilogy, an aging Don Michael Corleone seeks to legitimize his crime family's interests and remove himself from the violent underworld but is kept back by the ambitions of the young. While he attempts to link the Corleone's finances with the Vatican, Michael must deal with the machinations of a hungrier gangster seeking to upset the existing Mafioso order and a young protoge's love affair with his daughter.",
+"director" : "Francis Ford Coppola"
+},
+{
+"id" : "106",
+"name" : "Gran Torino",
+"description" : "Walt Kowalski is a widower who holds onto his prejudices despite the changes in his Michigan neighborhood and the world around him. Kowalski is a grumpy, tough-minded, unhappy old man who can't get along with either his kids or his neighbors. He is a Korean War veteran whose prize possession is a 1972 Gran Torino he keeps in mint condition. When his neighbor Thao, a young Hmong teenager under pressure from his gang member cousin, tries to steal his Gran Torino, Kowalski sets out to reform the youth. Drawn against his will into the life of Thao's family, Kowalski is soon taking steps to protect them from the gangs that infest their neighborhood.",
+"director" : "Clint Eastwood"
+},
+{
+"id" : "107",
+"name" : "Back To The Future I",
+"description" : "It is the year 1985. Marty McFly, a mild-mannered high school student, stopped by Dr. Emmett L. Brown's laboratory to play around with an amplifier. Then he receives a message from Doc that he needs help from him for Doc's latest invention, a time machine made out of a DeLorean sports car that can travel through time instantaneously when it reaches a speed velocity of 88 MPH. Then, Doc was gunned down by Libyan Nationalists, Marty makes an effort to escape from the Lybians by using the time machine. Then Marty accidentally warps himself into 1955. Where he meets both of his parents when they were teenagers, then Marty unintentionally interrupts his parent's first meeting together, he then finds a younger version of Doc and together they try to find a way to get Marty's parents-to-be back together, and to get Marty back to 1985.",
+"director" : "Robert Zemeckis"
+},
+{
+"id" : "108",
+"name" : "Back To The Future II",
+"description" : "The second part of the trilogy begins as Doc, Marty, and Jennifer take the time-traveling DeLorean into the year 2015 to straighten out the future of the McFly family. But Biff Tannen steals the time machine and gives his younger self a book containing 50 years of sports statistics, which the young Biff uses to amass an enormous gambling fortune and transform idyllic Hill Valley into a living hell. To restore the present, Doc and Marty must return to the events of their previous adventure in 1955 and retrieve the book.",
+"director" : "Robert Zemeckis"
+},
+{
+"id" : "109",
+"name" : "Back To The Future III",
+"description" : "The conclusion of the trilogy sends Marty McFly on a rescue mission to the year 1885, where he must save Doc Brown from death at the hands of yet another member of the Tannen clan. However, there are a number of complications preventing a quick return to the future: a lack of gasoline for the time-traveling DeLorean, a band of gunslinging outlaws and a schoolmarm with affections for the smitten Doc.",
+"director" : "Robert Zemeckis"
+},
+{
+"id" : "110",
+"name" : "The Lord of the Rings: The Fellowship of the Ring",
+"description" : "The power of Bilbo Baggins's ring of invisibility may have been underestimated, Gandalf the Grey fears its power even with his unfathomable magical abilities. As the power of the one ring grows, so too do the armies of Sauron and Sarumon as their evil spreads across the lands of man, dwarf and elf alike. It is up to a ragtag band of heroes to carry the ring to Mount Doom, the evil place of its birth, and cast it into the eternal fires that forged it. Does the fellowship have what it takes to complete its task, or will the powers of evil overcome those of good leaving behind a world ravaged by the rage of Sauron, the Dark Lord?",
+"director" : "Peter Jackson"
+},
+{
+"id" : "111",
+"name" : "The Lord of the Rings: The Two Towers",
+"description" : "The Fellowship has been broken. Boromir is dead, Frodo Baggins and Samwise Gamgee have gone to Mordor alone to destroy the One Ring, Merry and Pippin have been captured by the Uruk-hai, and Aragorn, Legolas, and Gimli have made friends of the Rohan, a race of humans that are in the path of the upcoming war, led by its aging king, Théoden. The two towers between Mordor and Isengard, Barad-dúr and Orthanc, have united in their lust for destruction. The corrupt wizard Saruman, under the power of the Dark Lord Sauron, and his slimy assistant, Gríma Wormtongue, have created a grand Uruk-hai army bent on the destruction of Man and Middle-earth. The rebellion against Sauron is building up and will be led by Gandalf the White, who was thought to be dead after the Balrog captured him. One of the Ring's original bearers, the creature Gollum, has tracked Frodo and Sam down in search of his 'precious', but is captured by the Hobbits and used as a way to lead them to Mt. Doom. The War of the Ring has now begun",
+"director" : "Peter Jackson"
+},
+{
+"id" : "112",
+"name" : "The Lord of the Rings: The Return of the King",
+"description" : "The War of the Ring reaches its climax as the dark lord Sauron sets his sights on Minas Tirith, the capital of Gondor. The members of the fellowship in Rohan are warned of the impending attack when Pippin cannot resist looking into Saruman's palantir and is briefly contacted by the dark lord. King Theoden is too proud to send his men to help without being asked, so Gandalf and Pippin ride to Minas Tirith to see that this request is sent. They meet opposition there from Denethor, steward of the city and father of Faramir and the late Boromir. Denethor's family has acted as temporary guardians of Gondor for centuries until a member of the true line of kings returns. This member is none other than Aragorn, who must overcome his own self-doubt before he can take on the role he was destined to fulfill. Meanwhile, Frodo and Sam continue to carry the One Ring towards Mordor, guided by Gollum. What they don't know is that Gollum is leading them into a trap so that he can reclaim the Ring for himself. Though Sam suspects his deceit, Frodo is starting to be corrupted by the Ring's power and the mistrust of Sam this causes is fully exploited by Gollum. The only way good can prevail in this contest is if the Ring is destroyed, an event that is becoming harder every minute for Frodo to achieve. The fate of every living creature in Middle Earth will be decided once and for all as the Quest of the Ringbearer reaches its climax.",
+"director" : "Peter Jackson"
+},
+{
+"id" : "113",
+"name" : "Harry Potter and the Sorcerer's Stone",
+"description" : "Harry Potter and the Philospher's Stone is the first film in the Harry Potter series based on the novels by J.K. Rowling. It is the tale of Harry Potter, an ordinary 11-year-old boy serving as a sort of slave for his aunt and uncle who learns that he is actually a wizard and has been invited to attend the Hogwarts School for Witchcraft and Wizardry. Harry is snatched away from his mundane existence by Hagrid, the grounds keeper for Hogwarts, and quickly thrown into a world completely foreign to both him and the viewer. Famous for an incident that happened at his birth, Harry makes friends easily at his new school. He soon finds, however, that the wizarding world is far more dangerous for him than he would have imagined, and he quickly learns that not all wizards are ones to be trusted.",
+"director" : "Chris Columbus"
+},
+{
+"id" : "114",
+"name" : "Harry Potter and the Chamber of Secrets",
+"description" : "Harry Potter is in his second year of Hogwarts School of Witchcraft and Wizardry. He is visited by a house-elf named Dobby and warned not to go back to Hogwarts. Harry ignores his warning, and returns. He is still famous, although still disliked by Snape, Malfoy, and the rest of the Slytherins. But then, strange things start to happen. People are becoming petrified, and no-one knows what is doing it. Harry keeps hearing a voice.. a voice which seems to be coming from within the walls. They are told the story of the Chamber of Secrets. It is said that only Salazar Slytherin's true descendent will be able to open it. Harry, it turns out, is a Parsel-tongue. This means that he is able to speak/understand snakes. Everyone thinks that it's him that has opened the Chamber of Secrets because that is what Slytherin was famous for.",
+"director" : "Chris Columbus"
+},
+{
+"id" : "115",
+"name" : "Harry Potter and the Prisoner of Azkaban",
+"description" : "Harry Potter is having a tough time with his relatives (yet again). He runs away after using magic to inflate Uncle Vernon's sister Marge who was being offensive towards Harry's parents. Initially scared for using magic outside the school, he is pleasantly surprised that he won't be penalized after all. However, he soon learns that a dangerous criminal and Voldemort's trusted aide Sirius Black has escaped from the Azkaban prison and wants to kill Harry to avenge the Dark Lord. To worsen the conditions for Harry, vile creatures called Dementors are appointed to guard the school gates and inexplicably happen to have the most horrible effect on him. Little does Harry know that by the end of this year, many holes in his past (whatever he knows of it) will be filled up and he will have a clearer vision of what the future has in store.",
+"director" : "Alfonso Cuarón"
+},
+{
+"id" : "116",
+"name" : "Harry Potter and the Goblet of Fire",
+"description" : "Harry's fourth year at Hogwarts is about to start and he is enjoying the summer vacation with his friends. They get the tickets to The Quidditch World Cup Final but after the match is over, people dressed like Lord Voldemort's 'Death Eaters' set a fire to all the visitors' tents, coupled with the appearance of Voldemort's symbol, the 'Dark Mark' in the sky, which causes a frenzy across the magical community. That same year, Hogwarts is hosting 'The Triwizard Tournament', a magical tournament between three well-known schools of magic : Hogwarts, Beauxbatons and Durmstrang. The contestants have to be above the age of 17, and are chosen by a magical object called Goblet of Fire. On the night of selection, however, the Goblet spews out four names instead of the usual three, with Harry unwittingly being selected as the Fourth Champion. Since the magic cannot be reversed, Harry is forced to go with it and brave three exceedingly difficult tasks.",
+"director" : "Mike Newell"
+},
+{
+"id" : "117",
+"name" : "Harry Potter and the Order of the Phoenix",
+"description" : "After a lonely summer on Privet Drive, Harry returns to a Hogwarts full of ill-fortune. Few of students and parents believe him or Dumbledore that Voldemort is really back. The ministry had decided to step in by appointing a new Defence Against the Dark Arts teacher that proves to be the nastiest person Harry has ever encountered. Harry also can't help stealing glances with the beautiful Cho Chang. To top it off are dreams that Harry can't explain, and a mystery behind something Voldemort is searching for. With these many things Harry begins one of his toughest years at Hogwarts School of Witchcraft and Wizardry.",
+"director" : "David Yates"
+},
+{
+"id" : "118",
+"name" : "The Notebook",
+"description" : "An old man in a nursing home reads a story to an old woman each day. The story he reads follows two young lovers named Allie Hamilton and Noah Calhoun. They met one evening at a carnival many years ago. Allie's parents separate Noah and Allie. They disapprove of Noah's lack of wealth, and move Allie away. After waiting for Noah to write her for several years, Allie meets and becomes engaged to a handsome young soldier named Lon. In a local newspaper, Noah's picture catches Allie's eye. He is standing in front of a fully restored, 200-year-old home. The article is filled with praise for his accomplishments. Allie's heart nearly bursts. The last time she saw this house it was a rotted decaying shamble. She stood enfolded in Noah's arms in the great entryway and listened to his plans to buy and restore this house. Just the way she wanted it. With her love for Noah still alive, the picture pulls at her heart. She has to go back, see if Noah is okay, and tell him about her marriage. They both think the echo deep in their hearts, the one that has lasted all these years, is not shared by the other. The cry they could not stifle. It wasn't over for me.",
+"director" : "Nick Cassavetes"
+},
+{
+"id" : "119",
+"name" : "Saving Private Ryan",
+"description" : "Opening with the Allied invasion of Normandy on 6 June 1944, members of the 2nd Ranger Battalion under Cpt. Miller fight ashore to secure a beachhead. Amidst the fighting, two brothers are killed in action. Earlier in New Guinea, a third brother is KIA. Their mother, Mrs. Ryan, is to receive all three of the grave telegrams on the same day. The United States Army Chief of Staff, George C. Marshall, is given an opportunity to alleviate some of her grief when he learns of a fourth brother, Private James Ryan, and decides to send out 8 men (Cpt. Miller and select members from 2nd Rangers) to find him and bring him back home to his mother.",
+"director" : "Steven Spielberg"
+},
+{
+"id" : "120",
+"name" : "Black Book",
+"description" : "Israel 1956. Rachel, a Jew, rather unexpectedly meets an old friend at the kibbutz where she is working as a teacher. It brings back memories of her experiences in The Netherlands during the war, memories of betrayal. September 1944. Rachel is in trouble when her hiding place is bombed by allied troops. She gets in contact with a man from the resistance and joins a group of Jews who are to be smuggled across the Biesbosch by boat to the freed South Netherlands. Germans from a patrol boat murder them all however. Only Rachel is able to escape. She is rescued by a resistance group under the leadership of Gerben Kuipers. When Kuipers' son is captured after trying to smuggle weapons, he asks Rachel to seduce SS-hauptsturmführer Ludwig Müntze. Soon she will find out the attack in the Biesbosch wasn't a coincidence.",
+"director" : "Paul Verhoeven"
+},
+{
+"id" : "121",
+"name" : "The Fast and the Furious",
+"description" : "Los Angeles street racer Dominic Toretto falls under the suspicion of the LAPD as a string of high-speed electronics truck robberies rocks the area. Brian O'Connor, an officer of the LAPD, joins the ranks of Toretto's highly skilled racing crew undercover to convict Toretto. However, O'Connor finds himself both enamored with this new world and in love with Toretto's sister, Mia. As a rival racing crew gains strength, O'Connor must decide where his loyalties really lie.",
+"director" : "Rob Cohen"
+}
+]
