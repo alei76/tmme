@@ -1,5 +1,6 @@
 package org.tmme.ci.recommender.evaluator;
 
+import org.apache.mahout.cf.taste.eval.IRStatistics;
 import org.tmme.ci.recommender.cf.factory.RecommenderSimilarity;
 
 public class EvaluatorDriver {
@@ -50,6 +51,45 @@ public class EvaluatorDriver {
 		result = aad.testItem(filename, RecommenderSimilarity.LOG);
 		System.out.println("Log-Likelihood Similarity: " + result);
 
+		final RecommenderIRStatsEvaluatorTest irStats = new RecommenderIRStatsEvaluatorTest();
+		irStats.setUp();
+		System.out.println("### Sample - PrecisionRecall - User Based ###");
+		IRStatistics stats = irStats.testUser(filename,
+				RecommenderSimilarity.EUCLIDEAN);
+		System.out.println("Euclidean Similarity:");
+		System.out.println(" Precision: " + stats.getPrecision());
+		System.out.println(" Recall: " + stats.getRecall());
+		stats = irStats.testUser(filename, RecommenderSimilarity.PEARSON);
+		System.out.println("Pearson Similarity:");
+		System.out.println(" Precision: " + stats.getPrecision());
+		System.out.println(" Recall: " + stats.getRecall());
+		stats = irStats.testUser(filename, RecommenderSimilarity.TANIMOTO);
+		System.out.println("Jaccard Similarity:");
+		System.out.println(" Precision: " + stats.getPrecision());
+		System.out.println(" Recall: " + stats.getRecall());
+		stats = irStats.testUser(filename, RecommenderSimilarity.LOG);
+		System.out.println("Log-likelihood Similarity:");
+		System.out.println(" Precision: " + stats.getPrecision());
+		System.out.println(" Recall: " + stats.getRecall());
+
+		System.out.println("### Sample - PrecisionRecall - Item Based ###");
+		stats = irStats.testItem(filename, RecommenderSimilarity.EUCLIDEAN);
+		System.out.println("Euclidean Similarity:");
+		System.out.println(" Precision: " + stats.getPrecision());
+		System.out.println(" Recall: " + stats.getRecall());
+		stats = irStats.testItem(filename, RecommenderSimilarity.PEARSON);
+		System.out.println("Pearson Similarity:");
+		System.out.println(" Precision: " + stats.getPrecision());
+		System.out.println(" Recall: " + stats.getRecall());
+		stats = irStats.testItem(filename, RecommenderSimilarity.TANIMOTO);
+		System.out.println("Jaccard Similarity:");
+		System.out.println(" Precision: " + stats.getPrecision());
+		System.out.println(" Recall: " + stats.getRecall());
+		stats = irStats.testItem(filename, RecommenderSimilarity.LOG);
+		System.out.println("Log-likelihood Similarity:");
+		System.out.println(" Precision: " + stats.getPrecision());
+		System.out.println(" Recall: " + stats.getRecall());
+
 		filename = "src/test/resources/grouplens.csv";
 
 		System.out.println("### MovieLens - RMSE - User Based ###");
@@ -71,6 +111,7 @@ public class EvaluatorDriver {
 		System.out.println("Jaccard Similarity: " + result);
 		result = rms.testItem(filename, RecommenderSimilarity.LOG);
 		System.out.println("Log-Likelihood Similarity: " + result);
+
 	}
 
 }
