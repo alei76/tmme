@@ -20,10 +20,11 @@ public class Canopy extends AbstractAlgorithm {
 
 	@Override
 	protected String buildCmd(final String inputDir, final String outputDir) {
-		return new StringBuilder(executable).append(" -i ").append(inputDir)
-				.append(" -o ").append(outputDir).append(" -dm ")
-				.append(distanceMeasure).append(" -t1 ").append(t1)
-				.append(" -t2 ").append(t2).append(" -ow -cl").toString();
+		return new StringBuilder(executable).append(" canopy -i ")
+				.append(inputDir).append(" -o ").append(outputDir)
+				.append(" -dm ").append(distanceMeasure).append(" -t1 ")
+				.append(t1).append(" -t2 ").append(t2).append(" -ow -cl")
+				.toString();
 	}
 
 	private void parseArgs(final Map<String, String> args) {
