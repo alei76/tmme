@@ -14,7 +14,7 @@ import org.tmme.ci.recommender.cf.factory.impl.RecommenderFactoryImpl;
 
 public abstract class BaseEvaluatorTest<R> {
 
-	protected static final String SAMPLE_FILE = "src/test/resources/sample.csv";
+	protected static final String SAMPLE_FILE = "src/test/resources/sample4cf.csv";
 	protected static final String GROUP_LENS_FILE = "src/test/resources/grouplens.csv";
 	protected static final String CLIENT_FILE = "src/test/resources/client.csv";
 

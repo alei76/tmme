@@ -6,7 +6,7 @@ import org.tmme.ci.recommender.cf.factory.RecommenderSimilarity;
 public class EvaluatorDriver {
 
 	public static void main(final String[] args) throws Exception {
-		String filename = "src/test/resources/sample.csv";
+		String filename = "src/test/resources/sample4cf.csv";
 		final RecommenderEvaluatorRMSTest rms = new RecommenderEvaluatorRMSTest();
 		rms.setUp();
 		System.out.println("### Sample - RMSE - User Based ###");
