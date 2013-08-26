@@ -35,11 +35,12 @@ public class ContentBasedRecommenderService extends AbstractRecommenderService {
 		if (clusteredItem != null) {
 			final List<ClusteredItem> clusteredItems = repository
 					.findByClusterId(clusteredItem.getClusterId());
+			clusteredItems.remove(clusteredItem);
 			for (int i = 0; i < clusteredItems.size(); i++) {
 				if (i >= count) {
 					break;
 				}
-				itemIds.add(clusteredItem.getItemId());
+				itemIds.add(clusteredItems.get(i).getItemId());
 			}
 		}
 		LOG.debug("Clustered Items for {} : {}", id,

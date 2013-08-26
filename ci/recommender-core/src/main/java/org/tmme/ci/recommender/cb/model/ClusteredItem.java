@@ -1,5 +1,7 @@
 package org.tmme.ci.recommender.cb.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -37,6 +39,26 @@ public class ClusteredItem {
 
 	public String getAttribute() {
 		return this.attribute;
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(17, 31).append(this.itemId)
+				.append(this.clusterId).append(this.attribute).toHashCode();
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof ClusteredItem)) {
+			return false;
+		}
+		final ClusteredItem that = (ClusteredItem) obj;
+		return new EqualsBuilder().append(this.clusterId, that.clusterId)
+				.append(this.itemId, that.itemId)
+				.append(this.attribute, that.attribute).isEquals();
 	}
 
 	@Override

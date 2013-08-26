@@ -40,7 +40,7 @@ public class CatalogClientImpl implements CatalogClient {
 		final ParameterizedTypeReference<List<Item>> typeRef = new ParameterizedTypeReference<List<Item>>() {
 		};
 		return restClient.exchange(catalogUrl + "/items/" + itemType
-				+ queryString("itemIds", itemIds), new HttpEntity<Object>(
+				+ queryString("itemids", itemIds), new HttpEntity<Object>(
 				buildHeaders()), HttpMethod.GET, typeRef);
 	}
 
