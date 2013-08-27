@@ -2,43 +2,34 @@ package org.tmme.ci.recommender.cb.algorithm.impl;
 
 import java.util.Map;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 
 public class Canopy extends AbstractAlgorithm {
 
-	private String distanceMeasure;
 	private String t1;
 	private String t2;
 
-	private final String executable;
-
 	public Canopy(final String executable, final Map<String, String> args) {
-		Validate.notEmpty(executable);
-		this.executable = executable;
-		parseArgs(args);
+		super(executable, args);
 	}
 
 	@Override
 	protected String buildCmd(final String inputDir, final String outputDir) {
-		return new StringBuilder(executable).append(" canopy -i ")
+		return new StringBuilder(getExecutable()).append(" canopy -i ")
 				.append(inputDir).append(" -o ").append(outputDir)
-				.append(" -dm ").append(distanceMeasure).append(" -t1 ")
-				.append(t1).append(" -t2 ").append(t2).append(" -ow -cl")
-				.toString();
+				.append(" -dm ").append(getDistanceMeasureAsString())
+				.append(" -t1 ").append(t1).append(" -t2 ").append(t2)
+				.append(" -ow -cl").toString();
 	}
 
-	private void parseArgs(final Map<String, String> args) {
-		Validate.notEmpty(args);
-		final String dm = args.get("dm");
-		Validate.notEmpty(dm);
-		this.distanceMeasure = dm;
-		final String t1 = args.get("t1");
-		Validate.notEmpty(t1);
+	@Override
+	protected void parseArgs() {
+		final String t1 = getArgs().get("t1");
+		Validate.notBlank(t1);
 		this.t1 = t1;
-		final String t2 = args.get("t2");
-		Validate.notEmpty(t2);
+		final String t2 = getArgs().get("t2");
+		Validate.notBlank(t2);
 		this.t2 = t2;
-
 	}
 
 	@Override

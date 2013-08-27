@@ -2,54 +2,46 @@ package org.tmme.ci.recommender.cb.algorithm.impl;
 
 import java.util.Map;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 
 public class Dirichlet extends AbstractAlgorithm {
 
-	private String distanceMeasure;
 	private String a0;
 	private String md;
 	private String mp;
 	private String k;
 	private String x;
 
-	private final String executable;
-
 	public Dirichlet(final String executable, final Map<String, String> args) {
-		Validate.notEmpty(executable);
-		this.executable = executable;
-		parseArgs(args);
+		super(executable, args);
 	}
 
 	@Override
 	protected String buildCmd(final String inputDir, final String outputDir) {
-		return new StringBuilder(executable).append(" dirichlet -i ")
+		return new StringBuilder(getExecutable()).append(" dirichlet -i ")
 				.append(inputDir).append(" -o ").append(outputDir)
 				.append(" -a0 ").append(a0).append(" -md ").append(md)
 				.append(" -mp ").append(mp).append(" -dm ")
-				.append(distanceMeasure).append(" -k ").append(k)
+				.append(getDistanceMeasureAsString()).append(" -k ").append(k)
 				.append(" -x ").append(x).append(" -ow -cl -e").toString();
 	}
 
-	private void parseArgs(final Map<String, String> args) {
-		Validate.notEmpty(args);
-		final String a0 = args.get("a0");
-		Validate.notEmpty(a0);
+	@Override
+	protected void parseArgs() {
+		final String a0 = getArgs().get("a0");
+		Validate.notBlank(a0);
 		this.a0 = a0;
-		final String md = args.get("md");
-		Validate.notEmpty(md);
+		final String md = getArgs().get("md");
+		Validate.notBlank(md);
 		this.md = md;
-		final String mp = args.get("mp");
-		Validate.notEmpty(mp);
+		final String mp = getArgs().get("mp");
+		Validate.notBlank(mp);
 		this.mp = mp;
-		final String dm = args.get("dm");
-		Validate.notEmpty(dm);
-		this.distanceMeasure = dm;
-		final String k = args.get("k");
-		Validate.notEmpty(k);
+		final String k = getArgs().get("k");
+		Validate.notBlank(k);
 		this.k = k;
-		final String x = args.get("x");
-		Validate.notEmpty(x);
+		final String x = getArgs().get("x");
+		Validate.notBlank(x);
 		this.x = x;
 
 	}

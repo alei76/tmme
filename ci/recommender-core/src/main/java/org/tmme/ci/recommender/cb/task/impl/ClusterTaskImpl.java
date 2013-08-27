@@ -8,6 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.mahout.math.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tmme.ci.clients.CatalogClient;
@@ -15,6 +16,7 @@ import org.tmme.ci.models.Item;
 import org.tmme.ci.recommender.cb.algorithm.Algorithm;
 import org.tmme.ci.recommender.cb.model.ClusterConfig;
 import org.tmme.ci.recommender.cb.model.ClusteredItem;
+import org.tmme.ci.recommender.cb.model.InterClusterDistance;
 import org.tmme.ci.recommender.cb.repository.ClusterConfigRepository;
 import org.tmme.ci.recommender.cb.repository.ClusteredItemRepository;
 import org.tmme.ci.recommender.cb.task.ClusterTask;
@@ -33,12 +35,14 @@ public class ClusterTaskImpl implements ClusterTask {
 	private final CatalogClient catalogClient;
 	private final Configuration config;
 	private final Algorithm algorithm;
+	private final boolean metricsEnabled;
 
 	public ClusterTaskImpl(
 			final ClusterConfigRepository clusterConfigRepository,
 			final CatalogClient catalogClient, final Configuration config,
 			final Algorithm algorithm,
-			final ClusteredItemRepository clusteredItemRepository) {
+			final ClusteredItemRepository clusteredItemRepository,
+			final boolean metricsEnabled) {
 		Validate.notNull(clusterConfigRepository);
 		Validate.notNull(catalogClient);
 		Validate.notNull(config);
@@ -49,6 +53,7 @@ public class ClusterTaskImpl implements ClusterTask {
 		this.config = config;
 		this.algorithm = algorithm;
 		this.clusteredItemRepository = clusteredItemRepository;
+		this.metricsEnabled = metricsEnabled;
 	}
 
 	@Override
@@ -138,12 +143,10 @@ public class ClusterTaskImpl implements ClusterTask {
 					return;
 				}
 
-				final List<ClusteredItem> clusteredItems = ClusterHelper
-						.readClusteredItems(config, outputDir, attributeName);
-				if (CollectionUtils.isNotEmpty(clusteredItems)) {
-					// TODO delete just the ones that have this attributeName
-					clusteredItemRepository.deleteAll();
-					clusteredItemRepository.save(clusteredItems);
+				readClusteredItems(attributeName, outputDir);
+
+				if (metricsEnabled) {
+					readInterClusterDistance(outputDir);
 				}
 			}
 
@@ -151,4 +154,25 @@ public class ClusterTaskImpl implements ClusterTask {
 
 	}
 
+	private void readInterClusterDistance(final String outputDir) {
+		// TODO save it to the database if need to save statistics for later
+		final List<InterClusterDistance> icds = ClusterHelper
+				.calculateInterClusterDistance(config, outputDir,
+						algorithm.getDistanceMeasure());
+		if (CollectionUtils.isNotEmpty(icds)) {
+			LOG.info("InterClusterDistances: {}",
+					Arrays.toString(icds.toArray()));
+		}
+	}
+
+	private void readClusteredItems(final String attributeName,
+			final String outputDir) {
+		final List<ClusteredItem> clusteredItems = ClusterHelper
+				.readClusteredItems(config, outputDir, attributeName);
+		if (CollectionUtils.isNotEmpty(clusteredItems)) {
+			// TODO delete just the ones that have this attributeName
+			clusteredItemRepository.deleteAll();
+			clusteredItemRepository.save(clusteredItems);
+		}
+	}
 }

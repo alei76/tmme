@@ -157,6 +157,7 @@
 		<constructor-arg ref="configuration" />
 		<constructor-arg ref="algorithm" />
 		<constructor-arg ref="clusteredItemRepository" />
+		<constructor-arg value="${cb.recommender.task.metrics.enabled}" />
 	</bean>	
 	
 	<task:scheduler id="cbRecommendationScheduler" pool-size="1" />

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
@@ -14,6 +15,7 @@ import org.apache.hadoop.io.SequenceFile;
 import org.apache.mahout.clustering.Cluster;
 import org.apache.mahout.clustering.classify.WeightedVectorWritable;
 import org.apache.mahout.clustering.iterator.ClusterWritable;
+import org.apache.mahout.common.distance.DistanceMeasure;
 import org.apache.mahout.common.iterator.sequencefile.PathFilters;
 import org.apache.mahout.common.iterator.sequencefile.PathType;
 import org.apache.mahout.common.iterator.sequencefile.SequenceFileDirValueIterable;
@@ -24,6 +26,7 @@ import org.apache.mahout.math.VectorWritable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tmme.ci.recommender.cb.model.ClusteredItem;
+import org.tmme.ci.recommender.cb.model.InterClusterDistance;
 
 import com.google.common.collect.Lists;
 
@@ -116,5 +119,34 @@ public class ClusterHelper {
 		LOG.debug("Clustered Items: {}",
 				Arrays.toString(clusteredItems.toArray()));
 		return clusteredItems;
+	}
+
+	public static List<InterClusterDistance> calculateInterClusterDistance(
+			final Configuration config, final String outputDir,
+			final DistanceMeasure measure) {
+		final List<InterClusterDistance> interClusterDistances = new ArrayList<InterClusterDistance>();
+		final List<List<Cluster>> clustersList = readClusters(config, new Path(
+				outputDir));
+		if (CollectionUtils.isNotEmpty(clustersList)) {
+			for (final List<Cluster> clusters : clustersList) {
+				double max = 0;
+				double min = Double.MAX_VALUE;
+				double sum = 0;
+				int count = 0;
+				for (int i = 0; i < clusters.size(); i++) {
+					for (int j = i + 1; j < clusters.size(); j++) {
+						final double d = measure.distance(clusters.get(i)
+								.getCenter(), clusters.get(j).getCenter());
+						min = Math.min(d, min);
+						max = Math.max(d, max);
+						sum += d;
+						count++;
+					}
+				}
+				interClusterDistances.add(new InterClusterDistance(max, min,
+						(sum / count - min) / (max - min)));
+			}
+		}
+		return interClusterDistances;
 	}
 }
