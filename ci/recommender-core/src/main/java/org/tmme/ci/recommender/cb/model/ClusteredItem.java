@@ -63,8 +63,8 @@ public class ClusteredItem {
 
 	@Override
 	public String toString() {
-		return "[clusterId: " + clusterId + ", itemId:" + itemId
-				+ ", attribute:" + attribute + "]";
+		return "{clusterId: " + clusterId + ", itemId:" + itemId
+				+ ", attribute:" + attribute + "}";
 	}
 
 }

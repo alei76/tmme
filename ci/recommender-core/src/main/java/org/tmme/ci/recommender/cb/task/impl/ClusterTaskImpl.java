@@ -15,8 +15,8 @@ import org.tmme.ci.clients.CatalogClient;
 import org.tmme.ci.models.Item;
 import org.tmme.ci.recommender.cb.algorithm.Algorithm;
 import org.tmme.ci.recommender.cb.model.ClusterConfig;
+import org.tmme.ci.recommender.cb.model.ClusterDistance;
 import org.tmme.ci.recommender.cb.model.ClusteredItem;
-import org.tmme.ci.recommender.cb.model.InterClusterDistance;
 import org.tmme.ci.recommender.cb.repository.ClusterConfigRepository;
 import org.tmme.ci.recommender.cb.repository.ClusteredItemRepository;
 import org.tmme.ci.recommender.cb.task.ClusterTask;
@@ -156,8 +156,8 @@ public class ClusterTaskImpl implements ClusterTask {
 
 	private void readInterClusterDistance(final String outputDir) {
 		// TODO save it to the database if need to save statistics for later
-		final List<InterClusterDistance> icds = ClusterHelper
-				.calculateInterClusterDistance(config, outputDir,
+		final List<ClusterDistance> icds = ClusterHelper
+				.interClusterDistance(config, outputDir,
 						algorithm.getDistanceMeasure());
 		if (CollectionUtils.isNotEmpty(icds)) {
 			LOG.info("InterClusterDistances: {}",

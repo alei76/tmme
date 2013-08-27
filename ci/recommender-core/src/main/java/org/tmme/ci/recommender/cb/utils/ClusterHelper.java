@@ -25,8 +25,8 @@ import org.apache.mahout.math.Vector;
 import org.apache.mahout.math.VectorWritable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tmme.ci.recommender.cb.model.ClusterDistance;
 import org.tmme.ci.recommender.cb.model.ClusteredItem;
-import org.tmme.ci.recommender.cb.model.InterClusterDistance;
 
 import com.google.common.collect.Lists;
 
@@ -121,10 +121,10 @@ public class ClusterHelper {
 		return clusteredItems;
 	}
 
-	public static List<InterClusterDistance> calculateInterClusterDistance(
+	public static List<ClusterDistance> interClusterDistance(
 			final Configuration config, final String outputDir,
 			final DistanceMeasure measure) {
-		final List<InterClusterDistance> interClusterDistances = new ArrayList<InterClusterDistance>();
+		final List<ClusterDistance> interClusterDistances = new ArrayList<ClusterDistance>();
 		final List<List<Cluster>> clustersList = readClusters(config, new Path(
 				outputDir));
 		if (CollectionUtils.isNotEmpty(clustersList)) {
@@ -143,8 +143,9 @@ public class ClusterHelper {
 						count++;
 					}
 				}
-				interClusterDistances.add(new InterClusterDistance(max, min,
-						(sum / count - min) / (max - min)));
+				interClusterDistances.add(new ClusterDistance(max, min, (sum
+						/ count - min)
+						/ (max - min)));
 			}
 		}
 		return interClusterDistances;
